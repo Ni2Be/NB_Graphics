@@ -1,0 +1,16 @@
+﻿  NB_Utility.cpp
+  NB_Test_Application.cpp
+  main.cpp
+  Code wird generiert...
+main.obj : error LNK2019: Verweis auf nicht aufgelöstes externes Symbol "_glfwInit" in Funktion "_main".
+main.obj : error LNK2019: Verweis auf nicht aufgelöstes externes Symbol "_glfwTerminate" in Funktion "_main".
+main.obj : error LNK2019: Verweis auf nicht aufgelöstes externes Symbol "_glfwSetErrorCallback" in Funktion "_main".
+main.obj : error LNK2019: Verweis auf nicht aufgelöstes externes Symbol "_glfwCreateWindow" in Funktion "_main".
+main.obj : error LNK2019: Verweis auf nicht aufgelöstes externes Symbol "_glfwDestroyWindow" in Funktion "_main".
+main.obj : error LNK2019: Verweis auf nicht aufgelöstes externes Symbol "_glfwWindowShouldClose" in Funktion "_main".
+main.obj : error LNK2019: Verweis auf nicht aufgelöstes externes Symbol "_glfwSetWindowShouldClose" in Funktion ""void __cdecl key_callback(struct GLFWwindow *,int,int,int,int)" (?key_callback@@YAXPAUGLFWwindow@@HHHH@Z)".
+main.obj : error LNK2019: Verweis auf nicht aufgelöstes externes Symbol "_glfwPollEvents" in Funktion "_main".
+main.obj : error LNK2019: Verweis auf nicht aufgelöstes externes Symbol "_glfwSetKeyCallback" in Funktion "_main".
+D:\Programmieren\NB_Graphics\NB_Graphics\\..\OGL\glfw\lib-vc2015\glfw3.lib : warning LNK4272: Bibliothekcomputertyp "x64" steht in Konflikt mit dem Zielcomputertyp "X86"
+D:\Programmieren\NB_Graphics\NB_Graphics\\..\OGL\glfw\lib-vc2015\glfw3dll.lib : warning LNK4272: Bibliothekcomputertyp "x64" steht in Konflikt mit dem Zielcomputertyp "X86"
+D:\Programmieren\NB_Graphics\NB_Graphics\Debug\NB_Graphics.exe : fatal error LNK1120: 9 nicht aufgelöste Externe

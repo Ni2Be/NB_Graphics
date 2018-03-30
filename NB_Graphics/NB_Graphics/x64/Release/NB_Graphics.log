@@ -1,0 +1,10 @@
+﻿  NB_Test_Application.cpp
+  NB_Utility.cpp
+  NB_Window.cpp
+  main.cpp
+  Code wird generiert.
+  4 of 226 functions ( 1.8%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    4 functions had inline decision re-evaluated but remain unchanged
+  Codegenerierung ist abgeschlossen.
+  NB_Graphics.vcxproj -> D:\Programmieren\NB_Graphics\NB_Graphics\x64\Release\NB_Graphics.exe
