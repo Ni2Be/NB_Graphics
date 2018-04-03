@@ -195,10 +195,6 @@
     <ClInclude Include="NB_Shader.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="test_shader_color.frag" />
-    <None Include="test_shader_color.vert" />
-  </ItemGroup>
-  <ItemGroup>
     <Image Include="..\..\res\textures\awesomeface.png" />
     <Image Include="..\..\res\textures\container2.png" />
     <Image Include="..\..\res\textures\container2_specular.png" />
@@ -206,6 +202,10 @@
     <Image Include="..\..\res\textures\Holz.jpg" />
     <Image Include="..\..\res\textures\Stein.jpg" />
     <Image Include="..\..\res\textures\wall.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\res\shader\test_shader_texture.frag" />
+    <None Include="..\..\res\shader\test_shader_texture.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

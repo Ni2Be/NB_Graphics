@@ -26,10 +26,17 @@ Usage:
 
 // STL
 #include <string>
+#include <vector>
+#include <random>
+
 
 // NB_Lib
 #include "NB_Utility.h"
 #include "NB_Window.h"
+#include "NB_Camera.h"
+#include "NB_Material.h"
+#include "NB_Test_Shader.h"
+
 
 namespace NB
 {
@@ -50,8 +57,27 @@ namespace NB
 		double  m_current_frame;
 		double  m_last_frame;
 
+		//Camera
+		NB::NB_Camera cam1;
+
+		//Lights
+		const int                 CONST_LIGHT_COUNT = 12;
+		std::vector<NB::NB_Light> m_lights;
+
+		//Textures
+		NB::NB_Texture m_texture1;
+		NB::NB_Texture m_texture2;
+
+		//Objects
+		std::vector<std::vector<NB::NB_Cube>> m_flying_cubes;
+		NB::NB_Cube                           m_cube_one;
+		//Shader
+		NB::Test::Test_Shader_Texture m_texture_shader;
+
 		//
+		void initiate();
 		void application_loop();
+		void calculate_new_positions(float time);
 	};
 
 }

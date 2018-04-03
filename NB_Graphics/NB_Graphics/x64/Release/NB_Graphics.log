@@ -1,10 +1,13 @@
 ﻿  NB_Test_Application.cpp
-  NB_Utility.cpp
-  NB_Window.cpp
-  main.cpp
+d:\programmieren\nb_graphics\nb_graphics\nb_graphics\NB_Window.h(52): warning C4240: Nicht dem Standard entsprechende Erweiterung: Zugriff auf "NB::NB_Window::NB_Window_Properties" nun als "private" definiert, wurde zuvor als "public" definiert
+  d:\programmieren\nb_graphics\nb_graphics\nb_graphics\NB_Window.h(34): note: Siehe Deklaration von "NB::NB_Window::NB_Window_Properties"
+NB_Test_Application.cpp(75): warning C4305: "Argument": Verkürzung von "double" in "float"
+NB_Test_Application.cpp(127): warning C4244: "+=": Konvertierung von "double" in "float", möglicher Datenverlust
+NB_Test_Application.cpp(134): warning C4244: "Argument": Konvertierung von "double" in "float", möglicher Datenverlust
+NB_Test_Application.cpp(135): warning C4244: "Argument": Konvertierung von "double" in "float", möglicher Datenverlust
   Code wird generiert.
-  4 of 226 functions ( 1.8%) were compiled, the rest were copied from previous compilation.
+  123 of 1988 functions ( 6.2%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    4 functions had inline decision re-evaluated but remain unchanged
+    8 functions had inline decision re-evaluated but remain unchanged
   Codegenerierung ist abgeschlossen.
   NB_Graphics.vcxproj -> D:\Programmieren\NB_Graphics\NB_Graphics\x64\Release\NB_Graphics.exe

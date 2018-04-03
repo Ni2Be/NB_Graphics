@@ -4,43 +4,45 @@
 //GLM
 #include <glm.hpp>
 
+//DEBUG
+#include <iostream>
 
 NB::NB_Shader::NB_Shader(const std::string& file_name)
 	:
-	program(-1)
+	m_program(-1)
 {
 	build_program(file_name);
 }
 
 NB::NB_Shader::~NB_Shader()
 {
-	glDeleteProgram(program);
+	glDeleteProgram(m_program);
 }
 
 
 void NB::NB_Shader::build_program(const std::string& file_name)
 {
-	if (program != -1)
+	if (m_program != -1)
 	{
-		glDeleteProgram(program);
+		glDeleteProgram(m_program);
 	}
-	program = glCreateProgram();
+	m_program = glCreateProgram();
 
 	//compile shaders
 	GLuint vetex_shader    = create_shader(file_name + ".vert", GL_VERTEX_SHADER);
 	GLuint fragment_shader = create_shader(file_name + ".frag", GL_FRAGMENT_SHADER);
 
 	//link to program
-	glAttachShader(program, vetex_shader);
-	glAttachShader(program, fragment_shader);
+	glAttachShader(m_program, vetex_shader);
+	glAttachShader(m_program, fragment_shader);
 
-	glBindAttribLocation(program, 0, "position");
+	glBindAttribLocation(m_program, 0, "position");
 
-	glLinkProgram(program);
-	error_check(program, GL_LINK_STATUS, true, "Shader linking fail: ", file_name);
+	glLinkProgram(m_program);
+	error_check(m_program, GL_LINK_STATUS, true, "Shader linking fail: ", file_name);
 
-	glValidateProgram(program);
-	error_check(program, GL_VALIDATE_STATUS, true, "Program is invalid: ", file_name);
+	glValidateProgram(m_program);
+	error_check(m_program, GL_VALIDATE_STATUS, true, "Program is invalid: ", file_name);
 
 	glDeleteShader(vetex_shader);
 	glDeleteShader(fragment_shader);
@@ -48,7 +50,7 @@ void NB::NB_Shader::build_program(const std::string& file_name)
 
 void NB::NB_Shader::use()
 {
-	glUseProgram(program);
+	glUseProgram(m_program);
 }
 
 GLuint NB::NB_Shader::create_shader(const std::string& file_name, const GLenum shader_type)

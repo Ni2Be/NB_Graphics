@@ -1,5 +1,18 @@
 #include "NB_Rendering_Mesh.h"
 
+#include <numeric>
+
+#include <iostream>
+
+//TODO implement seperate Mesh class one with, one without indices
+NB::NB_Rendering_Mesh::NB_Rendering_Mesh(const std::vector<NB_Rendering_Vertex>& vertices)
+	:
+	m_vertices(vertices),
+	m_indices(vertices.size())
+{
+	std::iota(std::begin(m_indices), std::end(m_indices), 0);
+	setup_mesh();
+}
 
 
 NB::NB_Rendering_Mesh::NB_Rendering_Mesh(const std::vector<NB_Rendering_Vertex>& vertices,
@@ -33,7 +46,7 @@ void NB::NB_Rendering_Mesh::setup_mesh()
 	//GL_STREAM_DRAW  : the data will change every time it is drawn.
 	glBindBuffer(GL_ARRAY_BUFFER, m_VBO);
 	glBufferData(GL_ARRAY_BUFFER, m_vertices.size() * sizeof(m_vertices[0]), &(m_vertices[0]), GL_STREAM_DRAW);
-
+	 
 
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_EBO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_indices.size() * sizeof(m_indices[0]), &m_indices[0], GL_STATIC_DRAW);
@@ -46,14 +59,14 @@ void NB::NB_Rendering_Mesh::setup_mesh()
 		(GLvoid*)offsetof(NB_Rendering_Vertex, m_pos));
 
 	glEnableVertexAttribArray(1);
-	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE,
-		sizeof(NB_Rendering_Vertex),
-		(GLvoid*)offsetof(NB_Rendering_Vertex, m_color));
-
-	glEnableVertexAttribArray(2);
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE,
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE,
 		sizeof(NB_Rendering_Vertex),
 		(GLvoid*)offsetof(NB_Rendering_Vertex, m_uv));
+
+	glEnableVertexAttribArray(2);
+	glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE,
+		sizeof(NB_Rendering_Vertex),
+		(GLvoid*)offsetof(NB_Rendering_Vertex, m_color));
 
 	glEnableVertexAttribArray(3);
 	glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE,
@@ -65,7 +78,7 @@ void NB::NB_Rendering_Mesh::setup_mesh()
 	glBindVertexArray(0);
 }
 
-void NB::NB_Rendering_Mesh::draw()
+void NB::NB_Rendering_Mesh::draw() const
 {
 	glBindVertexArray(m_VAO);
 	glDrawElements(GL_TRIANGLES, m_draw_count, GL_UNSIGNED_INT, 0);

@@ -17,11 +17,15 @@ Usage:
 //GLM
 #include <gtx/transform.hpp>
 
+//STL
+#include <iostream>
+
 namespace NB
 {
 	class NB_Camera
 	{
 	public:
+		NB_Camera() {}
 		NB_Camera(float fov, float aspect, float z_near, float z_far);
 
 		inline void  look_at(glm::vec3 pos, glm::vec3 front, glm::vec3 up);
@@ -40,12 +44,21 @@ namespace NB
 		GLfloat aspect()         const { return this->m_aspect; }
 		GLfloat z_far()          const { return this->m_z_far; }
 		GLfloat z_near()         const { return this->m_z_near; }
+		
+		GLfloat& fov()            { return this->m_fov; }
+		GLfloat& aspect()         { return this->m_aspect; }
+		GLfloat& z_far()          { return this->m_z_far; }
+		GLfloat& z_near()         { return this->m_z_near; }
+
+
 
 		glm::mat4 projection()   const { return this->m_projection; }
 		glm::mat4 view()         const { return this->m_view; }
 		glm::vec3 camera_pos()   const { return this->m_camera_pos; }
 		glm::vec3 camera_front() const { return this->m_camera_front; }
 		glm::vec3 camera_up()    const { return this->m_camera_up; }
+
+		friend std::ostream& operator<<(std::ostream& stream, NB_Camera& camera);
 	protected:
 		GLfloat   m_fov;
 		GLfloat   m_aspect;
@@ -60,6 +73,8 @@ namespace NB
 
 		void update();
 	};
+
+	std::ostream& operator<<(std::ostream& stream, NB_Camera& camera);
 
 	inline void NB_Camera::look_at(glm::vec3 pos, glm::vec3 front, glm::vec3 up)
 	{

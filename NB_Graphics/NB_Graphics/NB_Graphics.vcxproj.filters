@@ -142,14 +142,6 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="test_shader_color.frag">
-      <Filter>Testing\Test_Shader</Filter>
-    </None>
-    <None Include="test_shader_color.vert">
-      <Filter>Testing\Test_Shader</Filter>
-    </None>
-  </ItemGroup>
-  <ItemGroup>
     <Image Include="..\..\res\textures\awesomeface.png">
       <Filter>Testing\Test_res\Test_Textures</Filter>
     </Image>
@@ -171,5 +163,13 @@
     <Image Include="..\..\res\textures\wall.jpg">
       <Filter>Testing\Test_res\Test_Textures</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\res\shader\test_shader_texture.frag">
+      <Filter>Testing\Test_Shader</Filter>
+    </None>
+    <None Include="..\..\res\shader\test_shader_texture.vert">
+      <Filter>Testing\Test_Shader</Filter>
+    </None>
   </ItemGroup>
 </Project>

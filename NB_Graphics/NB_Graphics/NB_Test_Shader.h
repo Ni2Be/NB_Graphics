@@ -18,11 +18,13 @@ Usage:
 #include "NB_Shader.h"
 #include "NB_Transformer.h"
 #include "NB_Camera.h"
-#include "NB_Object.h"
 #include "NB_Light.h"
+#include "NB_Object.h"
 
 namespace NB
 {
+	class NB_Object;
+
 	namespace Test
 	{
 
@@ -32,7 +34,7 @@ namespace NB
 			Test_Shader_Texture(int light_count)
 				:
 				NB::NB_Shader             (),
-				shader_location           ("../../../res/shader/texture_shader"),
+				shader_location           ("../../res/shader/test_shader_texture"),
 				light_count               (light_count),
 				uni_attenuation_const     (light_count),
 				uni_attenuation_lin       (light_count),
@@ -50,19 +52,18 @@ namespace NB
 			void attach(NB_Directional_Light&   dir_light);
 			void attach(NB_Light&               light);
 			void attach(std::vector<NB_Light>&  lights);
-			void attach(NB_Object&              object);
-			void attach(std::vector<NB_Object>& objects);
+
+			void update(NB_Object* object);
 
 			void update(
-				NB_Camera               cam,
+				NB_Camera&              cam,
 				NB_Object&              object,
 				NB_Directional_Light&   ambient,
 				std::vector<NB_Light*>& lights);
 		protected:
-			NB_Directional_Light*       dir_light;
-			std::vector<NB_Light*>      lights;
-			std::vector<NB_Object*>     objects;
-			NB_Camera*                  camera;
+			NB_Directional_Light*       m_dir_light;
+			std::vector<NB_Light*>      m_lights;
+			NB_Camera*                  m_camera;
 
 			std::string shader_location;
 

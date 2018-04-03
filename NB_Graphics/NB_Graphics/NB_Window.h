@@ -31,6 +31,8 @@ namespace NB
 	class NB_Window
 	{
 	public:
+		struct NB_Window_Properties;
+
 		NB_Window(int width, int height, std::string title);
 		~NB_Window();
 
@@ -39,25 +41,27 @@ namespace NB
 		inline void update();
 		inline void set_title(const std::string& title);
 
+		NB_Window::NB_Window_Properties& properties() { return m_properties; }
+
 		//only use this if you know what you're doing
 		GLFWwindow* window() { return m_window; }
 	private:
 		//Window
 		GLFWwindow* m_window;
-		glm::vec4   m_background_color;
 		struct NB_Window_Properties
 		{
 			NB_Window_Properties(int width, int height, const std::string title)
 				:
-				m_width (width),
-				m_height(height),
-				m_title (title)
+				width (width),
+				height(height),
+				title (title)
 			{}
-			int m_width;
-			int m_height;
-			std::string m_title;
+			int         width;
+			int         height;
+			std::string title;
+			glm::vec4   background_color;
 		};
-		NB_Window_Properties m_window_properties;
+		NB_Window_Properties m_properties;
 
 		//Setup
 		void set_up_glfw(int width, int height, const std::string title);
@@ -72,10 +76,10 @@ namespace NB
 
 	inline void NB_Window::clear()
 	{
-		glClearColor(m_background_color.r, 
-			         m_background_color.g, 
-			         m_background_color.b, 
-			         m_background_color.a);
+		glClearColor(m_properties.background_color.r,
+			         m_properties.background_color.g, 
+			         m_properties.background_color.b, 
+			         m_properties.background_color.a);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	}
 
@@ -84,10 +88,11 @@ namespace NB
 		//Swap buffer
 		glfwSwapBuffers(this->m_window);
 	}
+
 	void NB_Window::set_title(const std::string& title)
 	{
-		m_window_properties.m_title = title;
-		glfwSetWindowTitle(m_window, m_window_properties.m_title.c_str());
+		m_properties.title = title;
+		glfwSetWindowTitle(m_window, m_properties.title.c_str());
 	}
 
 	//Callbacks

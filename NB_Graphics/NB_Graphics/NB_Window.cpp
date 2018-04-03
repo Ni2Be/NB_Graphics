@@ -4,10 +4,10 @@
 
 NB::NB_Window::NB_Window(int width, int height, std::string title)
 	:
-	m_window_properties(width, height, title)
+	m_properties(width, height, title)
 {
 		//set the window properties
-		set_up_glfw(m_window_properties.m_width, m_window_properties.m_height, m_window_properties.m_title);
+		set_up_glfw(m_properties.width, m_properties.height, m_properties.title);
 
 		//set the openGL settings (openGL version is set in set_up_glfw())
 		set_up_glew();
@@ -21,7 +21,7 @@ NB::NB_Window::NB_Window(int width, int height, std::string title)
 }
 
 
-NB::NB_Window::~NB_Window()
+NB::NB_Window::~NB_Window() 
 {
 }
 

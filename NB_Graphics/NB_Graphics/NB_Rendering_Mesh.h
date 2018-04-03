@@ -33,7 +33,7 @@ namespace NB
 	{
 		friend class NB_Rendering_Mesh;
 		friend class NB_Mesh;
-	private:
+	public:
 		NB_Rendering_Vertex(const glm::vec3& pos,
 			                const glm::vec2& uv,
 			                const glm::vec4& color  = glm::vec4{ 1.0f,  1.0f, 1.0f, 1.0f },
@@ -44,7 +44,7 @@ namespace NB
 			m_color (color),
 			m_normal(normal)
 		{}
-
+	private:
 		glm::vec3 m_pos;
 		glm::vec2 m_uv;
 		glm::vec4 m_color;
@@ -54,8 +54,10 @@ namespace NB
 	class NB_Rendering_Mesh
 	{
 		friend class NB_Mesh;
-	private:
-		NB_Rendering_Mesh(){}
+	public:
+		NB_Rendering_Mesh() {}
+
+		NB_Rendering_Mesh(const std::vector<NB_Rendering_Vertex>& vertices);
 
 		NB_Rendering_Mesh(const std::vector<NB_Rendering_Vertex>& vertices,
 			              const std::vector<unsigned int>&        indices);
@@ -63,8 +65,9 @@ namespace NB
 		~NB_Rendering_Mesh();
 
 		void setup_mesh();
-		void draw();
+		void draw() const;
 
+	private:
 		std::vector<NB_Rendering_Vertex> m_vertices;
 		std::vector<unsigned int>        m_indices;
 

@@ -63,3 +63,29 @@ void NB::NB_Camera::update_fov(GLfloat fov)
 	this->m_fov = fov;
 	this->update();
 }
+
+std::ostream& NB::operator<<(std::ostream& stream, NB_Camera& camera)
+{
+	return stream
+		<< "pos:\n\tx: " << camera.camera_pos().x
+		<< " y: " << camera.camera_pos().y
+		<< " z: " << camera.camera_pos().z
+		<< std::endl
+		<< "front:\n\tx: " << camera.m_camera_front.x
+		<< " y: " << camera.m_camera_front.y
+		<< " z: " << camera.m_camera_front.z
+		<< std::endl
+		<< "up:\n\tx: " << camera.m_camera_up.x
+		<< " y: " << camera.m_camera_up.y
+		<< " z: " << camera.m_camera_up.z
+		<< std::endl
+		<< "fov: " << camera.fov()
+		<< std::endl
+		<< "aspect: " << camera.aspect()
+		<< std::endl
+		<< "z_near: " << camera.z_near()
+		<< std::endl
+		<< "z_far: " << camera.z_far()
+		<< std::endl;
+}
+

@@ -22,6 +22,7 @@ namespace NB
 	class NB_Texture
 	{
 	public:
+		NB_Texture(){}
 		NB_Texture(const std::string& file_name);
 		GLuint id;
 	};

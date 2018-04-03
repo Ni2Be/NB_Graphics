@@ -31,3 +31,8 @@ void NB::NB_Mesh::draw()
 {
 	//TODO
 }
+
+void NB::NB_Mesh::calculate_normals()
+{
+	//TODO
+}

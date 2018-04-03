@@ -65,9 +65,9 @@ namespace NB
 		void setup_mesh();
 		void draw();
 
-		std::vector<NB_Vertex>&   m_vertices() { return m_vertices; }
-		std::vector<NB_Triangle>& triangles()  { return m_triangles; }
-		std::vector<glm::vec2>&   uvs()        { return m_uvs; }
+		std::vector<NB_Vertex>&   vertices()  { return m_vertices; }
+		std::vector<NB_Triangle>& triangles() { return m_triangles; }
+		std::vector<glm::vec2>&   uvs()       { return m_uvs; }
 
 		void calculate_normals();
 	private:

@@ -16,15 +16,24 @@ Usage:
 //GLEW
 #include <GL/glew.h>
 
+//STL
+#include <string>
+
 namespace NB
 {
+	class NB_Object;
+
 	class NB_Shader
 	{
 	public:
-		void   use();
-		GLuint program;
+		NB_Shader() {}
+
+		void         use();
+		
+		int program() { return m_program; }
 	protected:
-		NB_Shader(){}
+		GLuint m_program;
+
 		explicit NB_Shader(const std::string& file_name);
 		~NB_Shader();
 
