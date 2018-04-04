@@ -20,6 +20,11 @@ NB::NB_Shader::~NB_Shader()
 }
 
 
+void NB::NB_Shader::attach(NB_Object& object)
+{
+	this->objects.push_back(&object);
+}
+
 void NB::NB_Shader::build_program(const std::string& file_name)
 {
 	if (m_program != -1)

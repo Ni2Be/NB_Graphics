@@ -12,6 +12,17 @@
 
 #include <iostream>
 
+
+void NB::Test::Test_Shader_Texture::draw()
+{
+	this->use();
+	for (auto o : this->objects)
+	{
+		this->update(o);
+		o->draw();
+	}
+}
+
 void NB::Test::Test_Shader_Texture::bind_uniforms()
 {
 	uni_transform  = glGetUniformLocation(m_program, "transform");

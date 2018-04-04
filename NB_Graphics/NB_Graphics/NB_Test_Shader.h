@@ -53,6 +53,8 @@ namespace NB
 			void attach(NB_Light&               light);
 			void attach(std::vector<NB_Light>&  lights);
 
+			void draw();
+
 			void update(NB_Object* object);
 
 			void update(

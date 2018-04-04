@@ -18,6 +18,7 @@ Usage:
 
 //STL
 #include <string>
+#include <vector>
 
 namespace NB
 {
@@ -28,10 +29,15 @@ namespace NB
 	public:
 		NB_Shader() {}
 
+		virtual void draw() {}
 		void         use();
+		virtual void update(NB_Object* object) {}
 		
 		int program() { return m_program; }
+		virtual void attach(NB_Object& object);
 	protected:
+		std::vector<NB_Object*> objects;
+
 		GLuint m_program;
 
 		explicit NB_Shader(const std::string& file_name);

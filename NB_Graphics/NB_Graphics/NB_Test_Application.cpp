@@ -8,6 +8,7 @@ NB::NB_Test_Application::NB_Test_Application()
 	m_last_frame(0.0f),
 	m_window(1200, 700, ""),
 	m_texture_shader(CONST_LIGHT_COUNT)
+
 {
 	initiate();
 }
@@ -37,14 +38,11 @@ void NB::NB_Test_Application::application_loop()
 
 		//Cube / Light movement
 		float time = static_cast<float>(glfwGetTime());
-		//calculate_new_positions(time);
+		calculate_new_positions(time);
 		//
 
 		//Draw
-		//for (auto vec : m_flying_cubes)
-		//	for(auto object : vec)
-		//		object.draw();
-		m_cube_one.draw();
+		m_texture_shader.draw();
 		//
 
 		m_window.update();
@@ -89,7 +87,7 @@ void NB::NB_Test_Application::initiate()
 	//Cube
 	m_cube_one = { glm::vec3(0.0f, 0.0f, 0.0f), glm::vec4{ 1.0f, 1.0f, 1.0f, 1.0f }, 1.0f, 1.0f, 1.0f, NB::NB_EMERALD };
 	m_cube_one.material().add_Texture(m_texture1, m_texture2);
-	m_cube_one.m_shader = &m_texture_shader;
+	m_cube_one.attach_to_shader(m_texture_shader);
 	//
 	
 	//Point lights
@@ -102,7 +100,7 @@ void NB::NB_Test_Application::initiate()
 	{
 		m_texture_shader.attach(m_lights[i]);
 	}
-	//
+	
 }
 
 void NB::NB_Test_Application::calculate_new_positions(float time)

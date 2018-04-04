@@ -21,7 +21,7 @@ Usage:
 #include "NB_Rendering_Mesh.h"
 #include "NB_Transformer.h"
 #include "NB_Material.h"
-#include "NB_Test_Shader.h"
+#include "NB_Shader.h"
 
 namespace NB
 {
@@ -51,9 +51,9 @@ namespace NB
 		glm::vec4&					color()    { return m_color; }
 		NB::NB_Material&			material() { return m_material; }
 
-		NB::Test::Test_Shader_Texture*   m_shader;//TODO make beautifuller
+		NB::NB_Shader*              m_shader;//TODO make beautifuller
 
-
+		void attach_to_shader(NB::NB_Shader& shader);
 		friend std::ostream& operator<<(std::ostream& stream, NB_Object& object);
 	protected:
 		

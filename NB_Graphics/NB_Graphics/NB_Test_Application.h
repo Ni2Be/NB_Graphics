@@ -36,7 +36,7 @@ Usage:
 #include "NB_Camera.h"
 #include "NB_Material.h"
 #include "NB_Test_Shader.h"
-
+#include "NB_Shader.h"
 
 namespace NB
 {

@@ -12,11 +12,15 @@ NB::NB_Object::NB_Object(const NB_Object& lhs)
 	this->m_shader   = lhs.m_shader;
 }
 
+
+void NB::NB_Object::attach_to_shader(NB::NB_Shader& shader)
+{
+	shader.attach(*this);
+	m_shader = &shader;
+}
+
 void NB::NB_Object::draw()
 {
-	//TODO make work
-	m_shader->use();
-	m_shader->update(this); 
 	m_rendering_mesh.draw();
 }
 
