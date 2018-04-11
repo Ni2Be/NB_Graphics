@@ -131,8 +131,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="NB_Standard_Shader.cpp" />
     <ClCompile Include="NB_Camera.cpp" />
     <ClCompile Include="NB_Material.cpp" />
+    <ClCompile Include="NB_Mesh.cpp" />
     <ClCompile Include="NB_Object.cpp" />
     <ClCompile Include="NB_Point_Light.cpp" />
     <ClCompile Include="NB_Rendering_Mesh.cpp" />
@@ -142,6 +144,7 @@
     <ClCompile Include="NB_Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="NB_Standard_Shader.h" />
     <ClInclude Include="NB_Camera.h" />
     <ClInclude Include="NB_Directional_Light.h" />
     <ClInclude Include="NB_Event_Handler.h" />
@@ -158,6 +161,10 @@
     <ClInclude Include="NB_Transform.h" />
     <ClInclude Include="NB_Utility.h" />
     <ClInclude Include="NB_Window.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\res\standard shader\standard_texture_shader.frag" />
+    <None Include="..\res\standard shader\standard_texture_shader.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

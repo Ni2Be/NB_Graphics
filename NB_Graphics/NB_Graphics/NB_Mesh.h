@@ -26,14 +26,18 @@ Usage:
 
 namespace NB
 {
+	//TODO could hold its own static std shader opject
+	class NB_Standard_Shader;
+
 	class NB_Mesh
 	{
 	public:
 		//constructor
 		NB_Mesh() {}
-		NB_Mesh(const std::vector<NB_Rendering_Vertex>& vertices);
-		NB_Mesh(const std::vector<NB_Rendering_Vertex>& vertices,
-			    const std::vector<unsigned int>&        indices);
+		NB_Mesh(NB_Rendering_Mesh& mesh, NB_Material& material, NB_Standard_Shader& shader);
+		//NB_Mesh(const std::vector<NB_Rendering_Mesh>& vertices);
+		//NB_Mesh(const std::vector<NB_Rendering_Vertex>& vertices,
+		//	    const std::vector<unsigned int>&        indices);
 		
 		//functions
 		void draw();
@@ -42,8 +46,11 @@ namespace NB
 		typedef int Matrial_Id;
 		typedef std::pair<NB_Rendering_Mesh, Matrial_Id> Material_Mesh;
 
+		//store meshes ordered by the material id, in draw() only update material if necessary
 		std::vector<Material_Mesh> m_sub_meshes;
 		std::vector<NB_Material>   m_materials;
+
+		NB_Standard_Shader* m_shader;
 
 		GLuint m_EBO;
 		GLuint m_VAO;

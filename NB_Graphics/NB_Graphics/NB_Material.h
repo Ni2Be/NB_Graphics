@@ -59,6 +59,11 @@ namespace NB
 		const NB_Texture& specular_map()const { return m_specular_map; }
 		const NB_Texture& normal_map()  const { return m_normal_map; }
 		const NB_Texture& height_map()  const { return m_height_map; }
+
+		const bool has_diffuse_map() const { return m_has_diffuse_map; }
+		const bool has_specular_map()const { return m_has_specular_map; }
+		const bool has_normal_map()  const { return m_has_normal_map; }
+		const bool has_height_map()  const { return m_has_height_map; }
 	private:
 		//member
 		glm::vec3 m_ambient;
@@ -73,6 +78,11 @@ namespace NB
 		NB_Texture m_specular_map;
 		NB_Texture m_normal_map;
 		NB_Texture m_height_map;
+
+		bool m_has_diffuse_map;
+		bool m_has_specular_map;
+		bool m_has_normal_map;
+		bool m_has_height_map;
 	};
 
 	const NB_Material NB_GOLD{

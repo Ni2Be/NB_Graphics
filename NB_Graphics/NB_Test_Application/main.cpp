@@ -19,6 +19,8 @@
 #include <NB_Graphics/NB_Illumination.h>
 #include <NB_Graphics/NB_Object.h>
 #include <NB_Graphics/NB_Material.h>
+#include <NB_Graphics/NB_Mesh.h>
+#include <NB_Graphics/NB_Standard_Shader.h>
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
@@ -35,7 +37,8 @@ int main()
 	nb_window.background_color() = glm::vec4(1.0, 0.2, 0.2, 1.0);
 	
 	// shader
-	NB_Test::NB_Simple_Test_Shader shader("D:/Programmieren/NB_Graphics/NB_Graphics/NB_Test_Application/res/shader/test_shader_simple");
+	//NB_Test::NB_Simple_Test_Shader shader("D:/Programmieren/NB_Graphics/NB_Graphics/NB_Test_Application/res/shader/test_shader_simple");
+	NB::NB_Standard_Shader std_shader;
 
 	//light
 	NB::NB_Directional_Light dir_light({ 0.5f, 0.5f, -0.3f });
@@ -52,18 +55,25 @@ int main()
 				glm::vec3(0.0f, 0.0f, -1.0f),
 				glm::vec3(0.0f, 1.0f, 0.0f));
 
-	shader.attach(camera);
-
 	//Material
-	NB::NB_Material material(NB::NB_PEARL);
-	NB::NB_Texture texture("D:/Programmieren/NB_Graphics/NB_Graphics/NB_Test_Application/res/textures/container2.png");
-	material.add_texture(texture);
+	NB::NB_Material material1(NB::NB_PEARL);
+	NB::NB_Material material2(NB::NB_PEARL);
+	NB::NB_Texture texture1("D:/Programmieren/NB_Graphics/NB_Graphics/NB_Test_Application/res/textures/container2.png");
+	NB::NB_Texture texture2("D:/Programmieren/NB_Graphics/NB_Graphics/NB_Test_Application/res/textures/container2_specular.png", NB::NB_SPECULAR);
+	material1.add_texture(texture1);
+	material1.add_texture(texture2);
 
-	NB::NB_Cube   cube(1.0f, 1.0f, 1.0f);
+	NB::NB_Cube cube(1.0f, 1.0f, 1.0f);
 	cube.transform().pos() = glm::vec3(0.0f, 0.0f, -1.0f);
+
+	NB::NB_Cube cube2(1.0f, 1.0f, 1.0f);
+	cube2.transform().pos() = glm::vec3(1.0f, 0.0f, -1.0f);
+
 
 	// uncomment this call to draw in wireframe polygons.
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
+	NB::NB_Mesh mesh(cube.m_rendering_mesh, material1, std_shader);
 
 	// render loop
 	// -----------
@@ -77,20 +87,21 @@ int main()
 		cube.transform().rot().y += 0.01 * cos(time);
 		cube.transform().rot().x += 0.01 * cos(time);
 
-		shader.use();
-		glActiveTexture(GL_TEXTURE0);
-		glBindTexture(GL_TEXTURE_2D, material.diffuse_map().id());
-		glUniform1i(shader.uni_material_texture, 0);
+		std_shader.use();
 
-		shader.update_dir_light(dir_light);
-		shader.update_camera(camera);
+		std_shader.update_dir_light(dir_light);
+		std_shader.update_camera(camera);
+		std_shader.update_transform(cube.transform());
 
-		shader.update_transform(cube.transform());
 
-		//obj.draw();
-		//squr.draw();
-		//mesh.draw();
-		cube.draw();
+		
+		//glActiveTexture(GL_TEXTURE0 + material.diffuse_map().id());
+		//glBindTexture(GL_TEXTURE_2D, material.diffuse_map().id());
+
+		mesh.draw();
+
+		std_shader.update_transform(cube2.transform());
+	    cube2.draw();
 
 		nb_window.update();
 	}

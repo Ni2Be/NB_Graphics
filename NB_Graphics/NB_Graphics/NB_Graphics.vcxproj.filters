@@ -40,6 +40,12 @@
     <Filter Include="NB_Object">
       <UniqueIdentifier>{35faf6a2-d839-4cb9-b1d9-3afea6e92580}</UniqueIdentifier>
     </Filter>
+    <Filter Include="res">
+      <UniqueIdentifier>{8075cba5-266a-4272-8f58-f2f4176bc092}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="res\standard shader">
+      <UniqueIdentifier>{7170cfd9-1551-476e-a466-25f854ed89d8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="NB_Point_Light.cpp">
@@ -68,6 +74,12 @@
     </ClCompile>
     <ClCompile Include="NB_Material.cpp">
       <Filter>NB_Material</Filter>
+    </ClCompile>
+    <ClCompile Include="NB_Mesh.cpp">
+      <Filter>NB_Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="NB_Standard_Shader.cpp">
+      <Filter>NB_Shader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -119,5 +131,16 @@
     <ClInclude Include="NB_Mesh.h">
       <Filter>NB_Mesh</Filter>
     </ClInclude>
+    <ClInclude Include="NB_Standard_Shader.h">
+      <Filter>NB_Shader</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\res\standard shader\standard_texture_shader.frag">
+      <Filter>res\standard shader</Filter>
+    </None>
+    <None Include="..\res\standard shader\standard_texture_shader.vert">
+      <Filter>res\standard shader</Filter>
+    </None>
   </ItemGroup>
 </Project>

@@ -43,7 +43,7 @@ namespace NB
 
 		//for debug
 		friend std::ostream& operator<<(std::ostream& stream, NB_Object& object);
-	protected:
+	//protected:
 		NB::NB_Transform m_transform;
 		glm::vec4        m_color;
 
