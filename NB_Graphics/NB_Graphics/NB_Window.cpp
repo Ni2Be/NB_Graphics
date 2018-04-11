@@ -1,13 +1,17 @@
+//TESTED
+
 #include "NB_Window.h"
 
 
 
 NB::NB_Window::NB_Window(int width, int height, std::string title)
 	:
-	m_properties(width, height, title)
+	m_width(width),
+	m_height(height),
+	m_title(title)
 {
 		//set the window properties
-		set_up_glfw(m_properties.width, m_properties.height, m_properties.title);
+		set_up_glfw(m_width, m_height, m_title);
 
 		//set the openGL settings (openGL version is set in set_up_glfw())
 		set_up_glew();
@@ -18,11 +22,6 @@ NB::NB_Window::NB_Window(int width, int height, std::string title)
 		glfwSetFramebufferSizeCallback(m_window, cb_framebuffer_size);
 		glfwSetWindowSizeCallback(m_window, cb_window_size);
 		glfwSetErrorCallback(cb_error);
-}
-
-
-NB::NB_Window::~NB_Window() 
-{
 }
 
 void NB::NB_Window::set_up_glfw(int width, int height, const std::string title)
@@ -71,6 +70,17 @@ void NB::NB_Window::set_up_glew()
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
+void NB::NB_Window::set_size(int width, int height) 
+{ 
+	this->m_width  = width; 
+	this->m_height = height; 
+	update_window_size(); 
+}
+
+void NB::NB_Window::update_window_size()
+{
+	glfwSetWindowSize(m_window, m_width, m_height);
+}
 
 void NB::cb_framebuffer_size(GLFWwindow* window, int width, int height)
 {

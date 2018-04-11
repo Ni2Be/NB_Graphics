@@ -15,9 +15,24 @@ Usage:
 
 #include <string>
 
+// GLFW
+#include <GLFW/glfw3.h>
 
 namespace NB
 {
+	namespace NB_Graphics
+	{
+		static void init()
+		{
+			glfwInit();
+		}
+
+		static void terminate()
+		{
+			glfwTerminate();
+		}
+	}
+
 	void error_log(const std::string location, 
 		           const std::string error);
 

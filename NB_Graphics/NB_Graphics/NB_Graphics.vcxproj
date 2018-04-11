@@ -1,5 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -19,37 +19,37 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{3479A558-3198-4E17-AC48-9E2CFEA2435D}</ProjectGuid>
-    <Keyword>Win32Proj</Keyword>
-    <RootNamespace>NB_Graphics</RootNamespace>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{BEA5C1A4-12D4-452B-AEB6-2F2E74152C3F}</ProjectGuid>
+    <RootNamespace>NBGraphics</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
-    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
-    <CharacterSet>Unicode</CharacterSet>
+    <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -69,143 +69,95 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <LinkIncremental>true</LinkIncremental>
-    <ReferencePath>$(SolutionDir)\..\OGL\glfw\lib-vc2015;$(SolutionDir)\..\OGL\glew\lib\Release\Win32;$(VC_ReferencesPath_x86);</ReferencePath>
-    <LibraryPath>$(SolutionDir)\..\OGL\glfw\lib-vc2015;$(SolutionDir)\..\OGL\glew\lib\Release\Win32;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
-  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-    <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(SolutionDir)\..\OGL\stb-master;$(SolutionDir)\..\OGL\assimp\include;$(SolutionDir)\..\OGL\glfw\include;$(SolutionDir)\..\OGL\glew\include;$(IncludePath)</IncludePath>
-    <ReferencePath>$(SolutionDir)\..\OGL\assimp\Release;$(SolutionDir)\..\OGL\glfw\lib-vc2015;$(SolutionDir)\..\OGL\glew\bin\Release\x64;$(ReferencePath)</ReferencePath>
-    <LibraryPath>$(SolutionDir)\..\OGL\assimp\Release;$(SolutionDir)\..\OGL\glfw\lib-vc2015;$(SolutionDir)\..\OGL\glew\lib\Release\x64;$(LibraryPath)</LibraryPath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <LinkIncremental>false</LinkIncremental>
-    <ReferencePath>$(SolutionDir)\..\OGL\glfw\lib-vc2015;$(SolutionDir)\..\OGL\glew\lib\Release\Win32;$(VC_ReferencesPath_x86);</ReferencePath>
-    <LibraryPath>$(SolutionDir)\..\OGL\glfw\lib-vc2015;$(SolutionDir)\..\OGL\glew\lib\Release\Win32;$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86);$(NETFXKitsDir)Lib\um\x86</LibraryPath>
+    <IncludePath>$(SolutionDir)\libs\stb-master;$(SolutionDir)\libs\assimp\include;$(SolutionDir)\libs\glfw\include;$(SolutionDir)\libs\glew\include;$(SolutionDir)\libs\glm;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <ReferencePath>$(SolutionDir)\libs\assimp\bin\x64;$(SolutionDir)\libs\glfw\lib-vc2015;$(SolutionDir)\libs\glew\bin\Release\x64;$(ReferencePath);$(VC_ReferencesPath_x64);</ReferencePath>
+    <LibraryPath>$(SolutionDir)\libs\assimp\lib\x64;$(SolutionDir)\libs\glfw\lib-vc2015;$(SolutionDir)\libs\glew\lib\Release\x64;$(LibraryPath);$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64</LibraryPath>
+    <ExecutablePath>$(VC_ExecutablePath_x64);$(WindowsSDK_ExecutablePath);$(VS_ExecutablePath);$(MSBuild_ExecutablePath);$(FxCopDir);$(PATH);</ExecutablePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-    <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(SolutionDir)\..\OGL\stb-master;$(SolutionDir)\..\OGL\assimp\include;$(SolutionDir)\..\OGL\glfw\include;$(SolutionDir)\..\OGL\glew\include;$(IncludePath)</IncludePath>
-    <ReferencePath>$(SolutionDir)\..\OGL\assimp\Release;$(SolutionDir)\..\OGL\glfw\lib-vc2015;$(SolutionDir)\..\OGL\glew\bin\Release\x64;$(ReferencePath)</ReferencePath>
-    <LibraryPath>$(SolutionDir)\..\OGL\assimp\Release;$(SolutionDir)\..\OGL\glfw\lib-vc2015;$(SolutionDir)\..\OGL\glew\lib\Release\x64;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)\libs;$(SolutionDir)\libs\assimp\include;$(SolutionDir)\libs\glfw\include;$(SolutionDir)\libs\glew\include;$(SolutionDir)\libs\glm;$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <ReferencePath>$(SolutionDir)\libs\assimp\bin\x64;$(SolutionDir)\libs\glfw\lib-vc2015;$(SolutionDir)\libs\glew\bin\Release\x64;$(ReferencePath);$(VC_ReferencesPath_x64);</ReferencePath>
+    <LibraryPath>$(SolutionDir)\libs\assimp\lib\x64;$(SolutionDir)\libs\glfw\lib-vc2015;$(SolutionDir)\libs\glew\lib\Release\x64;$(LibraryPath);$(VC_LibraryPath_x64);$(WindowsSDK_LibraryPath_x64);$(NETFXKitsDir)Lib\um\x64</LibraryPath>
+    <ExecutablePath>$(VC_ExecutablePath_x64);$(WindowsSDK_ExecutablePath);$(VS_ExecutablePath);$(MSBuild_ExecutablePath);$(FxCopDir);$(PATH);</ExecutablePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)\..\OGL\glfw\include;$(SolutionDir)\..\OGL\glew\include;$(IncludePath)</AdditionalIncludeDirectories>
+      <ConformanceMode>true</ConformanceMode>
     </ClCompile>
-    <Link>
-      <SubSystem>Console</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glew32.lib;glew32s.lib;glfw3.lib;glfw3dll.lib;openGL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
-    </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)\..\OGL\glm\glm;$(SolutionDir)\..\OGL\glew\include;$(SolutionDir)\..\OGL\glfw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)\..\OGL\glfw\lib-vc2015;$(SolutionDir)\..\OGL\glew\lib\Release\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>glew32.lib;glew32s.lib;glfw3.lib;glfw3dll.lib;openGL32.lib;assimp-vc140-mt.lib;user32.lib;gdi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)\..\OGL\glfw\include;$(SolutionDir)\..\OGL\glew\include;$(IncludePath)</AdditionalIncludeDirectories>
+      <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>glew32.lib;glew32s.lib;glfw3.lib;glfw3dll.lib;openGL32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <PrecompiledHeader>
-      </PrecompiledHeader>
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <SDLCheck>true</SDLCheck>
-      <AdditionalIncludeDirectories>$(SolutionDir)\..\OGL\glm\glm;$(SolutionDir)\..\OGL\glew\include;$(SolutionDir)\..\OGL\glfw\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <ConformanceMode>true</ConformanceMode>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
     <Link>
-      <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(SolutionDir)\..\OGL\glfw\lib-vc2015;$(SolutionDir)\..\OGL\glew\lib\Release\x64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <AdditionalDependencies>glew32.lib;glew32s.lib;glfw3.lib;glfw3dll.lib;openGL32.lib;assimp-vc140-mt.lib;user32.lib;gdi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp" />
     <ClCompile Include="NB_Camera.cpp" />
-    <ClCompile Include="NB_Light.cpp" />
-    <ClCompile Include="NB_Mesh.cpp" />
+    <ClCompile Include="NB_Material.cpp" />
     <ClCompile Include="NB_Object.cpp" />
+    <ClCompile Include="NB_Point_Light.cpp" />
     <ClCompile Include="NB_Rendering_Mesh.cpp" />
-    <ClCompile Include="NB_Test_Application.cpp" />
-    <ClCompile Include="NB_Test_Shader.cpp" />
+    <ClCompile Include="NB_Shader.cpp" />
     <ClCompile Include="NB_Texture.cpp" />
     <ClCompile Include="NB_Utility.cpp" />
     <ClCompile Include="NB_Window.cpp" />
-    <ClCompile Include="NB_Shader.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="NB_Material.h" />
     <ClInclude Include="NB_Camera.h" />
+    <ClInclude Include="NB_Directional_Light.h" />
+    <ClInclude Include="NB_Event_Handler.h" />
+    <ClInclude Include="NB_Graphics.h" />
+    <ClInclude Include="NB_Illumination.h" />
     <ClInclude Include="NB_Light.h" />
+    <ClInclude Include="NB_Material.h" />
     <ClInclude Include="NB_Mesh.h" />
     <ClInclude Include="NB_Object.h" />
+    <ClInclude Include="NB_Point_Light.h" />
     <ClInclude Include="NB_Rendering_Mesh.h" />
-    <ClInclude Include="NB_Test_Application.h" />
-    <ClInclude Include="NB_Test_Shader.h" />
+    <ClInclude Include="NB_Shader.h" />
     <ClInclude Include="NB_Texture.h" />
-    <ClInclude Include="NB_Transformer.h" />
+    <ClInclude Include="NB_Transform.h" />
     <ClInclude Include="NB_Utility.h" />
     <ClInclude Include="NB_Window.h" />
-    <ClInclude Include="NB_Shader.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="..\..\res\textures\awesomeface.png" />
-    <Image Include="..\..\res\textures\container2.png" />
-    <Image Include="..\..\res\textures\container2_specular.png" />
-    <Image Include="..\..\res\textures\example.png" />
-    <Image Include="..\..\res\textures\Holz.jpg" />
-    <Image Include="..\..\res\textures\Stein.jpg" />
-    <Image Include="..\..\res\textures\wall.jpg" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\res\shader\test_shader_texture.frag" />
-    <None Include="..\..\res\shader\test_shader_texture.vert" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

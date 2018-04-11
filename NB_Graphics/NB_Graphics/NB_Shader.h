@@ -1,3 +1,5 @@
+//TESTED
+
 /*
 NB_Shader:
 Attention:
@@ -19,6 +21,10 @@ Usage:
 //STL
 #include <string>
 #include <vector>
+#include <memory>
+
+//NB
+#include "NB_Camera.h"
 
 namespace NB
 {
@@ -27,39 +33,46 @@ namespace NB
 	class NB_Shader
 	{
 	public:
-		NB_Shader() {}
+		//functions
+		void use();
+		void attach(NB_Object& object);
+		void attach(NB_Camera& camera);
 
-		virtual void draw() {}
-		void         use();
-		virtual void update(NB_Object* object) {}
-		
-		int program() { return m_program; }
-		virtual void attach(NB_Object& object);
+		//get/set
+		NB_Camera& camera()  { return *m_camera; }
+
+		const int        program() const { return m_program; }
+		const NB_Camera& camera()  const { return *m_camera; }
 	protected:
-		std::vector<NB_Object*> objects;
-
-		GLuint m_program;
-
-		explicit NB_Shader(const std::string& file_name);
+		//constructor
+		NB_Shader() {}
+		explicit NB_Shader(const std::string file_name);
+		//destructor
 		~NB_Shader();
 
-		virtual void bind_uniforms() {}
+		//member
+		GLuint                  m_program;
+		std::vector<NB_Object*> m_objects;
+		NB_Camera*              m_camera;
 
+		//functions
 		GLuint create_shader(const std::string& text, const GLenum sader_type);
-
 		void build_program(const std::string& file_name);
-
 		void error_check  (GLuint             shader, 
 			               GLuint             flag, 
 			               bool               isProgram,
 			               const std::string& errorMessage, 
 			               const std::string& file_name);
-
+		//virtual
+		virtual void draw() {}
+		virtual void update(NB_Object* object) {}
+		virtual void bind_uniforms() {}
 	private:
-		//no copy
+		//TODO implement copy
 		NB_Shader(const NB_Shader&) {}
 		NB_Shader& operator=(const NB_Shader&) {}
 		//
+
 	};
 }
 

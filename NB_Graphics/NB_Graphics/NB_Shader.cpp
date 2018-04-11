@@ -1,13 +1,12 @@
+//TESTED
+
 #include "NB_Shader.h"
 #include "NB_Utility.h"
-
-//GLM
-#include <glm.hpp>
 
 //DEBUG
 #include <iostream>
 
-NB::NB_Shader::NB_Shader(const std::string& file_name)
+NB::NB_Shader::NB_Shader(const std::string file_name)
 	:
 	m_program(-1)
 {
@@ -19,10 +18,14 @@ NB::NB_Shader::~NB_Shader()
 	glDeleteProgram(m_program);
 }
 
-
 void NB::NB_Shader::attach(NB_Object& object)
 {
-	this->objects.push_back(&object);
+	this->m_objects.push_back(&object);
+}
+
+void NB::NB_Shader::attach(NB_Camera& camera)
+{
+	this->m_camera = &camera;
 }
 
 void NB::NB_Shader::build_program(const std::string& file_name)

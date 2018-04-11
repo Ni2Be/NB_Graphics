@@ -5,10 +5,12 @@
 #include <stb-master/stb_image.h>
 
 
-NB::NB_Texture::NB_Texture(const std::string& file_name)
+NB::NB_Texture::NB_Texture(const std::string& file_name, NB_Texture_Type type)
+	:
+	m_type(type)
 {
-	glGenTextures(1, &id);
-	glBindTexture(GL_TEXTURE_2D, id);
+	glGenTextures(1, &m_id);
+	glBindTexture(GL_TEXTURE_2D, m_id);
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_MIRRORED_REPEAT);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_MIRRORED_REPEAT);

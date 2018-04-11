@@ -1,175 +1,123 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Quelldateien">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
     <Filter Include="Headerdateien">
       <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
     </Filter>
     <Filter Include="Ressourcendateien">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="Utility">
-      <UniqueIdentifier>{ec50e025-bf19-48a4-a9fc-b5ae5626898a}</UniqueIdentifier>
+    <Filter Include="NB_Illumination">
+      <UniqueIdentifier>{47668358-72f2-488d-9a58-eee83252616d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Testing">
-      <UniqueIdentifier>{0ff874a7-50cd-4ab8-a99e-9e8203fbb5c1}</UniqueIdentifier>
+    <Filter Include="NB_Shader">
+      <UniqueIdentifier>{25b6e24a-576c-482e-91a6-8120161f87aa}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Graphics">
-      <UniqueIdentifier>{6c5b5e16-750d-42c1-b7bb-0005ef1a5e8d}</UniqueIdentifier>
+    <Filter Include="NB_Utility">
+      <UniqueIdentifier>{88e43007-0cb7-4550-8142-8d4405196d40}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Graphics\Camera">
-      <UniqueIdentifier>{1f09504e-265f-45a6-a8c2-6becdee44f40}</UniqueIdentifier>
+    <Filter Include="NB_Window">
+      <UniqueIdentifier>{f818fe86-8843-4fbc-a8c5-4791a7f51247}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Graphics\Shader">
-      <UniqueIdentifier>{03478710-1e5e-45dd-8f19-8e83d18eef0e}</UniqueIdentifier>
+    <Filter Include="NB_Mesh">
+      <UniqueIdentifier>{a6e6a28a-b5ed-424d-8b76-ec5126e833fc}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Graphics\Window">
-      <UniqueIdentifier>{d0be56b5-e887-42a0-87b7-01ac4cc89e85}</UniqueIdentifier>
+    <Filter Include="Quelldateien">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Testing\Test_Application">
-      <UniqueIdentifier>{f90942bd-d8d0-4fe1-bcaa-dd487c7d053d}</UniqueIdentifier>
+    <Filter Include="NB_Event_Handler">
+      <UniqueIdentifier>{c6227c47-9708-477e-9abf-f2479d75a65c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Testing\Test_Shader">
-      <UniqueIdentifier>{172f3a61-081b-445c-a573-186abdd9030c}</UniqueIdentifier>
+    <Filter Include="NB_Material">
+      <UniqueIdentifier>{f24adbe3-e4d5-474c-92e5-159d9cebafde}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Graphics\Transformer">
-      <UniqueIdentifier>{ca2c0de7-0e24-4574-ac8d-a4a1df799975}</UniqueIdentifier>
+    <Filter Include="NB_Camera">
+      <UniqueIdentifier>{8da3fd40-cbe7-4edb-8938-36f1c45443a6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Graphics\Light">
-      <UniqueIdentifier>{faae9d64-3275-4365-8dc3-adc4d20645aa}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Graphics\Object">
-      <UniqueIdentifier>{0060265b-51ba-4a1e-830f-9a2b61f0bd6a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Graphics\Mesh">
-      <UniqueIdentifier>{9e8a026a-6f7c-45ca-a881-a8a600954461}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Graphics\Material">
-      <UniqueIdentifier>{2ffdd722-dc99-4052-891a-37d68c7d490c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Graphics\Material\Texture">
-      <UniqueIdentifier>{a762be5a-4c64-404e-b744-312c498f8c66}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Testing\Test_res">
-      <UniqueIdentifier>{a99d074f-f040-4ddf-8b5d-fbf17ba17b8d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Testing\Test_res\Test_Textures">
-      <UniqueIdentifier>{a08dd4e0-ae4f-413c-980b-e029e3e4ec55}</UniqueIdentifier>
+    <Filter Include="NB_Object">
+      <UniqueIdentifier>{35faf6a2-d839-4cb9-b1d9-3afea6e92580}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
-      <Filter>Quelldateien</Filter>
-    </ClCompile>
-    <ClCompile Include="NB_Utility.cpp">
-      <Filter>Utility</Filter>
-    </ClCompile>
-    <ClCompile Include="NB_Test_Shader.cpp">
-      <Filter>Testing\Test_Shader</Filter>
-    </ClCompile>
-    <ClCompile Include="NB_Camera.cpp">
-      <Filter>Graphics\Camera</Filter>
+    <ClCompile Include="NB_Point_Light.cpp">
+      <Filter>NB_Illumination</Filter>
     </ClCompile>
     <ClCompile Include="NB_Shader.cpp">
-      <Filter>Graphics\Shader</Filter>
+      <Filter>NB_Shader</Filter>
+    </ClCompile>
+    <ClCompile Include="NB_Utility.cpp">
+      <Filter>NB_Utility</Filter>
     </ClCompile>
     <ClCompile Include="NB_Window.cpp">
-      <Filter>Graphics\Window</Filter>
-    </ClCompile>
-    <ClCompile Include="NB_Test_Application.cpp">
-      <Filter>Testing\Test_Application</Filter>
-    </ClCompile>
-    <ClCompile Include="NB_Light.cpp">
-      <Filter>Graphics\Light</Filter>
-    </ClCompile>
-    <ClCompile Include="NB_Object.cpp">
-      <Filter>Graphics\Object</Filter>
-    </ClCompile>
-    <ClCompile Include="NB_Mesh.cpp">
-      <Filter>Graphics\Mesh</Filter>
+      <Filter>NB_Window</Filter>
     </ClCompile>
     <ClCompile Include="NB_Rendering_Mesh.cpp">
-      <Filter>Graphics\Mesh</Filter>
+      <Filter>NB_Mesh</Filter>
     </ClCompile>
     <ClCompile Include="NB_Texture.cpp">
-      <Filter>Graphics\Material\Texture</Filter>
+      <Filter>NB_Material</Filter>
+    </ClCompile>
+    <ClCompile Include="NB_Camera.cpp">
+      <Filter>NB_Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="NB_Object.cpp">
+      <Filter>NB_Object</Filter>
+    </ClCompile>
+    <ClCompile Include="NB_Material.cpp">
+      <Filter>NB_Material</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="NB_Utility.h">
-      <Filter>Utility</Filter>
+    <ClInclude Include="NB_Light.h">
+      <Filter>NB_Illumination</Filter>
     </ClInclude>
-    <ClInclude Include="NB_Test_Shader.h">
-      <Filter>Testing\Test_Shader</Filter>
+    <ClInclude Include="NB_Directional_Light.h">
+      <Filter>NB_Illumination</Filter>
     </ClInclude>
-    <ClInclude Include="NB_Camera.h">
-      <Filter>Graphics\Camera</Filter>
+    <ClInclude Include="NB_Point_Light.h">
+      <Filter>NB_Illumination</Filter>
+    </ClInclude>
+    <ClInclude Include="NB_Illumination.h">
+      <Filter>NB_Illumination</Filter>
     </ClInclude>
     <ClInclude Include="NB_Shader.h">
-      <Filter>Graphics\Shader</Filter>
+      <Filter>NB_Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="NB_Utility.h">
+      <Filter>NB_Utility</Filter>
     </ClInclude>
     <ClInclude Include="NB_Window.h">
-      <Filter>Graphics\Window</Filter>
-    </ClInclude>
-    <ClInclude Include="NB_Test_Application.h">
-      <Filter>Testing\Test_Application</Filter>
-    </ClInclude>
-    <ClInclude Include="NB_Transformer.h">
-      <Filter>Graphics\Transformer</Filter>
-    </ClInclude>
-    <ClInclude Include="NB_Light.h">
-      <Filter>Graphics\Light</Filter>
-    </ClInclude>
-    <ClInclude Include="NB_Object.h">
-      <Filter>Graphics\Object</Filter>
-    </ClInclude>
-    <ClInclude Include="NB_Mesh.h">
-      <Filter>Graphics\Mesh</Filter>
+      <Filter>NB_Window</Filter>
     </ClInclude>
     <ClInclude Include="NB_Rendering_Mesh.h">
-      <Filter>Graphics\Mesh</Filter>
+      <Filter>NB_Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="NB_Event_Handler.h">
+      <Filter>NB_Event_Handler</Filter>
+    </ClInclude>
+    <ClInclude Include="NB_Graphics.h">
+      <Filter>Headerdateien</Filter>
     </ClInclude>
     <ClInclude Include="NB_Texture.h">
-      <Filter>Graphics\Material\Texture</Filter>
+      <Filter>NB_Material</Filter>
+    </ClInclude>
+    <ClInclude Include="NB_Camera.h">
+      <Filter>NB_Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="NB_Object.h">
+      <Filter>NB_Object</Filter>
+    </ClInclude>
+    <ClInclude Include="NB_Transform.h">
+      <Filter>NB_Object</Filter>
     </ClInclude>
     <ClInclude Include="NB_Material.h">
-      <Filter>Graphics\Material</Filter>
+      <Filter>NB_Material</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <Image Include="..\..\res\textures\awesomeface.png">
-      <Filter>Testing\Test_res\Test_Textures</Filter>
-    </Image>
-    <Image Include="..\..\res\textures\container2.png">
-      <Filter>Testing\Test_res\Test_Textures</Filter>
-    </Image>
-    <Image Include="..\..\res\textures\container2_specular.png">
-      <Filter>Testing\Test_res\Test_Textures</Filter>
-    </Image>
-    <Image Include="..\..\res\textures\example.png">
-      <Filter>Testing\Test_res\Test_Textures</Filter>
-    </Image>
-    <Image Include="..\..\res\textures\Holz.jpg">
-      <Filter>Testing\Test_res\Test_Textures</Filter>
-    </Image>
-    <Image Include="..\..\res\textures\Stein.jpg">
-      <Filter>Testing\Test_res\Test_Textures</Filter>
-    </Image>
-    <Image Include="..\..\res\textures\wall.jpg">
-      <Filter>Testing\Test_res\Test_Textures</Filter>
-    </Image>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\res\shader\test_shader_texture.frag">
-      <Filter>Testing\Test_Shader</Filter>
-    </None>
-    <None Include="..\..\res\shader\test_shader_texture.vert">
-      <Filter>Testing\Test_Shader</Filter>
-    </None>
+    <ClInclude Include="NB_Mesh.h">
+      <Filter>NB_Mesh</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

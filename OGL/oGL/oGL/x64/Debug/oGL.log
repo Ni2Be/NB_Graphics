@@ -1,3 +1,0 @@
-﻿  main.cpp
-d:\programmieren\graphic_lib\ogl\ogl\ogl\main.cpp(33): warning C4244: "=": Konvertierung von "int" in "float", möglicher Datenverlust
-  oGL.vcxproj -> D:\Programmieren\Graphic_lib\OGL\oGL\x64\Debug\oGL.exe

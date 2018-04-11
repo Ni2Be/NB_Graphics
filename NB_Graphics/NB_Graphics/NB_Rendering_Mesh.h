@@ -1,3 +1,5 @@
+//TESTED
+
 /*
 NB_Rendering_Mesh:
 Attention:
@@ -16,7 +18,7 @@ Usage:
 #define NB_RENDERING_MESH_H_INCLUDED
 
 //GLM
-#include <glm.hpp>
+#include <glm/glm.hpp>
 
 //GLEW
 #include <GL/glew.h>
@@ -24,30 +26,31 @@ Usage:
 //STL
 #include <vector>
 
+//NB
+#include "NB_Texture.h"
+
+
 namespace NB
 {
-	class NB_Vertex;
-	class NB_Mesh;
-
 	class NB_Rendering_Vertex
 	{
 		friend class NB_Rendering_Mesh;
 		friend class NB_Mesh;
 	public:
-		NB_Rendering_Vertex(const glm::vec3& pos,
-			                const glm::vec2& uv,
-			                const glm::vec4& color  = glm::vec4{ 1.0f,  1.0f, 1.0f, 1.0f },
-			                const glm::vec3& normal = glm::vec3{ 1.0f, 1.0f, 1.0f })
+		//constructor
+		NB_Rendering_Vertex(
+			const glm::vec3& pos,
+			const glm::vec3& normal = glm::vec3{ 0.0f, 0.0f, 0.0f },
+			const glm::vec2& uv = glm::vec2{ 0.0f, 0.0f })
 			:
 			m_pos   (pos),
 			m_uv    (uv),
-			m_color (color),
 			m_normal(normal)
 		{}
 	private:
+		//member
 		glm::vec3 m_pos;
 		glm::vec2 m_uv;
-		glm::vec4 m_color;
 		glm::vec3 m_normal;
 	};
 
@@ -55,19 +58,23 @@ namespace NB
 	{
 		friend class NB_Mesh;
 	public:
+		//constructor
 		NB_Rendering_Mesh() {}
-
 		NB_Rendering_Mesh(const std::vector<NB_Rendering_Vertex>& vertices);
-
 		NB_Rendering_Mesh(const std::vector<NB_Rendering_Vertex>& vertices,
 			              const std::vector<unsigned int>&        indices);
-
+		//destructor
 		~NB_Rendering_Mesh();
-
+		//copy
+		NB_Rendering_Mesh(const NB_Rendering_Mesh&);
+		friend void swap(NB_Rendering_Mesh& lhs, NB_Rendering_Mesh& rhs);
+		NB_Rendering_Mesh & operator=(const NB_Rendering_Mesh&);
+		
+		//functions
 		void setup_mesh();
-		void draw() const;
-
+		void draw();
 	private:
+		//member
 		std::vector<NB_Rendering_Vertex> m_vertices;
 		std::vector<unsigned int>        m_indices;
 
@@ -76,5 +83,6 @@ namespace NB
 		GLuint m_VBO;
 		GLuint m_draw_count;
 	};
+	void swap(NB::NB_Rendering_Mesh& lhs, NB::NB_Rendering_Mesh& rhs);
 }
 #endif

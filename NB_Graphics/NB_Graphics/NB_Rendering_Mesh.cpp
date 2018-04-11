@@ -1,3 +1,6 @@
+//TESTED
+
+
 #include "NB_Rendering_Mesh.h"
 
 #include <numeric>
@@ -14,7 +17,6 @@ NB::NB_Rendering_Mesh::NB_Rendering_Mesh(const std::vector<NB_Rendering_Vertex>&
 	setup_mesh();
 }
 
-
 NB::NB_Rendering_Mesh::NB_Rendering_Mesh(const std::vector<NB_Rendering_Vertex>& vertices,
 	                                     const std::vector<unsigned int>&        indices)
 	:
@@ -24,9 +26,34 @@ NB::NB_Rendering_Mesh::NB_Rendering_Mesh(const std::vector<NB_Rendering_Vertex>&
 	setup_mesh();
 }
 
+NB::NB_Rendering_Mesh::NB_Rendering_Mesh(const NB_Rendering_Mesh& rhs)
+	:
+	NB_Rendering_Mesh(rhs.m_vertices, rhs.m_indices) //setup_mesh() is called
+{}
+
+void NB::swap(NB_Rendering_Mesh& lhs, NB_Rendering_Mesh& rhs)
+{
+	using std::swap;
+	swap(lhs.m_vertices  , rhs.m_vertices);
+	swap(lhs.m_indices   , rhs.m_indices);
+	swap(lhs.m_EBO       , rhs.m_EBO);
+	swap(lhs.m_VAO       , rhs.m_VAO);
+	swap(lhs.m_VBO       , rhs.m_VBO);
+	swap(lhs.m_draw_count, rhs.m_draw_count);
+}
+
+NB::NB_Rendering_Mesh& NB::NB_Rendering_Mesh::operator=(const NB_Rendering_Mesh& right)
+{
+	NB::NB_Rendering_Mesh temp(right);
+	NB::swap(*this, temp);
+	return *this;
+}
+
 NB::NB_Rendering_Mesh::~NB_Rendering_Mesh()
 {
-	glDeleteVertexArrays(1, &m_VAO);
+	glDeleteVertexArrays(1, &m_VAO); 
+	glDeleteBuffers(1, &m_EBO);
+	glDeleteBuffers(1, &m_VBO);
 }
 
 
@@ -64,12 +91,7 @@ void NB::NB_Rendering_Mesh::setup_mesh()
 		(GLvoid*)offsetof(NB_Rendering_Vertex, m_uv));
 
 	glEnableVertexAttribArray(2);
-	glVertexAttribPointer(2, 4, GL_FLOAT, GL_FALSE,
-		sizeof(NB_Rendering_Vertex),
-		(GLvoid*)offsetof(NB_Rendering_Vertex, m_color));
-
-	glEnableVertexAttribArray(3);
-	glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE,
+	glVertexAttribPointer(2, 3, GL_FLOAT, GL_FALSE,
 		sizeof(NB_Rendering_Vertex),
 		(GLvoid*)offsetof(NB_Rendering_Vertex, m_normal));
 
@@ -78,7 +100,7 @@ void NB::NB_Rendering_Mesh::setup_mesh()
 	glBindVertexArray(0);
 }
 
-void NB::NB_Rendering_Mesh::draw() const
+void NB::NB_Rendering_Mesh::draw()
 {
 	glBindVertexArray(m_VAO);
 	glDrawElements(GL_TRIANGLES, m_draw_count, GL_UNSIGNED_INT, 0);

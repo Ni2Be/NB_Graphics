@@ -4,65 +4,75 @@ Attention:
 Purpose:
 Usage:
 */
-
 #ifdef NB_PRAGMA_ONCE_SUPPORT
 #pragma once
 #endif
 #ifndef NB_MATRIAL_H_INCLUDED
 #define NB_MATRIAL_H_INCLUDED
 
-#include <glm.hpp>
+//GLM
+#include <glm/glm.hpp>
 
-//
+//NB
 #include "NB_Texture.h"
 
 namespace NB
 {
-	struct NB_Material
+	class NB_Material
 	{
+	public:
+		//consturctor
 		NB_Material() {}
-
 		NB_Material(float strength, float ambient_strength)
-			:
-			strength        (strength), 
-			ambient_strength(ambient_strength)
-		{}
-
+			:m_strength(strength), m_ambient_strength(ambient_strength){}
 		NB_Material(glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, float shininess)
-			:
-			ambient  (ambient), 
-			diffuse  (diffuse), 
-			specular (specular), 
-			shininess(shininess) 
-		{}
+			:m_ambient(ambient), m_diffuse(diffuse), m_specular(specular), m_shininess(shininess) {}
+		NB_Material(glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, float shininess, NB_Texture& diffuse_map, NB_Texture& specular_map)
+			:m_ambient(ambient), m_diffuse(diffuse), m_specular(specular), m_shininess(shininess), m_diffuse_map(diffuse_map), m_specular_map(specular_map) {}
+
+		//functions
+		void add_texture(NB_Texture& texture);
+
+		//get/set
+		glm::vec3& ambient()       { return m_ambient; }
+		glm::vec3& diffuse()       { return m_diffuse; }
+		glm::vec3& specular()      { return m_ambient; }
+
+		float& shininess()         { return m_shininess; }
+		float& strength()          { return m_strength; }
+		float& ambient_strength()  { return m_ambient_strength; }
+
+		NB_Texture& diffuse_map()  { return m_diffuse_map; }
+		NB_Texture& specular_map() { return m_specular_map; }
+		NB_Texture& normal_map()   { return m_normal_map; }
+		NB_Texture& height_map()   { return m_height_map; }
+
+		const glm::vec3& ambient()      const { return m_ambient; }
+		const glm::vec3& diffuse()      const { return m_diffuse; }
+		const glm::vec3& specular()     const { return m_ambient; }
+		 							
+		const float& shininess()        const { return m_shininess; }
+		const float& strength()         const { return m_strength; }
+		const float& ambient_strength() const { return m_ambient_strength; }
+		 							
+		const NB_Texture& diffuse_map() const { return m_diffuse_map; }
+		const NB_Texture& specular_map()const { return m_specular_map; }
+		const NB_Texture& normal_map()  const { return m_normal_map; }
+		const NB_Texture& height_map()  const { return m_height_map; }
+	private:
+		//member
+		glm::vec3 m_ambient;
+		glm::vec3 m_diffuse;
+		glm::vec3 m_specular;
 		
-		NB_Material(glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, float shininess, NB_Texture& texture, NB_Texture& diffuse_map)
-			:
-			ambient     (ambient), 
-			diffuse     (diffuse), 
-			specular    (specular), 
-			shininess   (shininess), 
-			texture     (&texture), 
-			specular_map(&diffuse_map) 
-		{}
+		float m_shininess;
+		float m_strength;
+		float m_ambient_strength;
 
-		glm::vec3 ambient;
-		glm::vec3 diffuse;
-		glm::vec3 specular;
-		float     shininess;
-
-		//only used by light
-		float strength;
-		float ambient_strength;
-
-		NB_Texture* texture;
-		NB_Texture* specular_map;
-
-		inline void add_Texture(NB_Texture& texture, NB_Texture& diffuse_map)
-		{
-			this->texture = &texture;
-			this->specular_map = &diffuse_map;
-		}
+		NB_Texture m_diffuse_map;
+		NB_Texture m_specular_map;
+		NB_Texture m_normal_map;
+		NB_Texture m_height_map;
 	};
 
 	const NB_Material NB_GOLD{
