@@ -36,13 +36,11 @@ namespace NB
 	class NB_Standard_Shader : public NB_Shader
 	{
 	public:
-		NB_Standard_Shader()
-			:
-			NB::NB_Shader("../res/standard shader/standard_texture_shader")
+		static NB_Standard_Shader& shader()
 		{
-			bind_uniforms();
+			static NB_Standard_Shader m_shader;
+			return m_shader;
 		}
-
 		void bind_uniforms();
 
 		void update_material(NB::NB_Material& material);
@@ -59,6 +57,11 @@ namespace NB
 		GLint uni_texture_normal_map;
 		GLint uni_texture_height_map;
 
+		GLint uni_has_diffuse_map;
+		GLint uni_has_specular_map;
+		GLint uni_has_normal_map;
+		GLint uni_has_height_map;
+
 		//oject
 		GLint uni_transform;
 
@@ -72,6 +75,16 @@ namespace NB
 		GLint uni_dir_light_color;
 		GLint uni_dir_light_ambient_strength;
 		GLint uni_dir_light_strength;
+	private:
+		//use NB_Standard_Shader::shader() to use the static shader object
+		NB_Standard_Shader()
+			:
+			NB::NB_Shader("../res/standard shader/standard_texture_shader")
+		{
+			bind_uniforms();
+		}
+		NB_Standard_Shader(const NB_Standard_Shader&);
+		NB_Standard_Shader& operator=(const NB_Standard_Shader&);
 	};
 }
 

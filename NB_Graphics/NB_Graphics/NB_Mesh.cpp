@@ -1,6 +1,15 @@
 #include "NB_Mesh.h"
 #include "NB_Standard_Shader.h"
 
+NB::NB_Mesh::NB_Mesh(NB_Rendering_Mesh& mesh, NB_Material& material)
+	:
+	m_shader(&NB_Standard_Shader::shader())
+{
+	m_materials.push_back(material);
+	//TODO don't push back multiple materials that are the same (maybe heap)
+	m_sub_meshes.push_back({ mesh, m_materials.size() - 1 });
+}
+
 NB::NB_Mesh::NB_Mesh(NB_Rendering_Mesh& mesh, NB_Material& material, NB_Standard_Shader& shader)
 	:
 	m_shader(&shader)

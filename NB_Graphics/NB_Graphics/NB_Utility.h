@@ -18,6 +18,7 @@ Usage:
 // GLFW
 #include <GLFW/glfw3.h>
 
+
 namespace NB
 {
 	namespace NB_Graphics

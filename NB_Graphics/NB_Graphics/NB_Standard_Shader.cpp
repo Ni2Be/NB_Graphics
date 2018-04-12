@@ -9,6 +9,7 @@
 //GLM
 #include <glm/gtc/type_ptr.hpp>
 
+
 void NB::NB_Standard_Shader::bind_uniforms()
 {
 	//TODO material
@@ -23,6 +24,11 @@ void NB::NB_Standard_Shader::bind_uniforms()
 	glUniform1i(uni_texture_normal_map, 2);
 	uni_texture_height_map = glGetUniformLocation(NB_Shader::m_program, "height_map");
 	glUniform1i(uni_texture_height_map, 3);
+
+	uni_has_diffuse_map	 = glGetUniformLocation(NB_Shader::m_program, "has_diffuse_map");
+	uni_has_specular_map = glGetUniformLocation(NB_Shader::m_program, "has_specular_map");
+	uni_has_normal_map	 = glGetUniformLocation(NB_Shader::m_program, "has_normal_map");
+	uni_has_height_map   = glGetUniformLocation(NB_Shader::m_program, "has_height_map");
 
 	//transform
 	uni_transform  = glGetUniformLocation(NB_Shader::m_program, "transform");
@@ -42,27 +48,39 @@ void NB::NB_Standard_Shader::bind_uniforms()
 
 void NB::NB_Standard_Shader::update_material(NB::NB_Material& material)
 {
-	//TODO make work
+	//TODO check performace
 	if (material.has_diffuse_map())
 	{
 		glActiveTexture(GL_TEXTURE0 + 0);
 		glBindTexture(GL_TEXTURE_2D, material.diffuse_map().id());
+		glUniform1i(uni_has_diffuse_map, GL_TRUE);
 	}
+	else
+		glUniform1i(uni_has_diffuse_map, GL_FALSE);
 	if (material.has_specular_map())
 	{
 		glActiveTexture(GL_TEXTURE0 + 1);
 		glBindTexture(GL_TEXTURE_2D, material.specular_map().id());
+		glUniform1i(uni_has_specular_map, GL_TRUE);
 	}
+	else
+		glUniform1i(uni_has_specular_map, GL_FALSE);
 	if (material.has_normal_map())
 	{
 		glActiveTexture(GL_TEXTURE0 + 2);
 		glBindTexture(GL_TEXTURE_2D, material.normal_map().id());
+		glUniform1i(uni_has_normal_map, GL_TRUE);
 	}
+	else
+		glUniform1i(uni_has_normal_map, GL_FALSE);
 	if (material.has_height_map())
 	{
 		glActiveTexture(GL_TEXTURE0 + 3);
 		glBindTexture(GL_TEXTURE_2D, material.height_map().id());
+		glUniform1i(uni_has_height_map, GL_TRUE);
 	}
+	else
+		glUniform1i(uni_has_height_map, GL_FALSE);
 }
 
 void NB::NB_Standard_Shader::update_transform(NB::NB_Transform& transform)

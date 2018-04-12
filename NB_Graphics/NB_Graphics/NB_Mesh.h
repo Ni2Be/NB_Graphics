@@ -26,19 +26,17 @@ Usage:
 
 namespace NB
 {
-	//TODO could hold its own static std shader opject
 	class NB_Standard_Shader;
 
 	class NB_Mesh
 	{
 	public:
+		//TODO the submash should probably hold the material
 		//constructor
 		NB_Mesh() {}
+		NB_Mesh(NB_Rendering_Mesh& mesh, NB_Material& material);
 		NB_Mesh(NB_Rendering_Mesh& mesh, NB_Material& material, NB_Standard_Shader& shader);
-		//NB_Mesh(const std::vector<NB_Rendering_Mesh>& vertices);
-		//NB_Mesh(const std::vector<NB_Rendering_Vertex>& vertices,
-		//	    const std::vector<unsigned int>&        indices);
-		
+
 		//functions
 		void draw();
 	private:

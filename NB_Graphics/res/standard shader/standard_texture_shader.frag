@@ -5,6 +5,12 @@ uniform sampler2D specular_map;
 uniform sampler2D normal_map;
 uniform sampler2D height_map;
 
+uniform bool has_diffuse_map;
+uniform bool has_specular_map;
+uniform bool has_normal_map;
+uniform bool has_height_map;
+
+
 struct Material
 {	
 	vec3  direction;

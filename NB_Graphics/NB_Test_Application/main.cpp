@@ -35,10 +35,6 @@ int main()
 
 	NB::NB_Window nb_window(SCR_WIDTH, SCR_HEIGHT, "NB Test");
 	nb_window.background_color() = glm::vec4(1.0, 0.2, 0.2, 1.0);
-	
-	// shader
-	//NB_Test::NB_Simple_Test_Shader shader("D:/Programmieren/NB_Graphics/NB_Graphics/NB_Test_Application/res/shader/test_shader_simple");
-	NB::NB_Standard_Shader std_shader;
 
 	//light
 	NB::NB_Directional_Light dir_light({ 0.5f, 0.5f, -0.3f });
@@ -73,7 +69,7 @@ int main()
 	// uncomment this call to draw in wireframe polygons.
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
-	NB::NB_Mesh mesh(cube.m_rendering_mesh, material1, std_shader);
+	NB::NB_Mesh mesh(cube.m_rendering_mesh, material1);
 
 	// render loop
 	// -----------
@@ -87,20 +83,16 @@ int main()
 		cube.transform().rot().y += 0.01 * cos(time);
 		cube.transform().rot().x += 0.01 * cos(time);
 
-		std_shader.use();
+		NB::NB_Standard_Shader::shader().use();
 
-		std_shader.update_dir_light(dir_light);
-		std_shader.update_camera(camera);
-		std_shader.update_transform(cube.transform());
+		NB::NB_Standard_Shader::shader().update_dir_light(dir_light);
+		NB::NB_Standard_Shader::shader().update_camera(camera);
+		NB::NB_Standard_Shader::shader().update_transform(cube.transform());
 
-
-		
-		//glActiveTexture(GL_TEXTURE0 + material.diffuse_map().id());
-		//glBindTexture(GL_TEXTURE_2D, material.diffuse_map().id());
 
 		mesh.draw();
 
-		std_shader.update_transform(cube2.transform());
+		NB::NB_Standard_Shader::shader().update_transform(cube2.transform());
 	    cube2.draw();
 
 		nb_window.update();

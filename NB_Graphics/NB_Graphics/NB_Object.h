@@ -16,15 +16,12 @@ Usage:
 //GLM
 #include <glm/glm.hpp>
 
-//
+//NB
+#include "NB_Standard_Shader.h"
 #include "NB_Rendering_Mesh.h"
 #include "NB_Transform.h"
 namespace NB
 {
-	namespace Test 
-	{
-		class Test_Shader_Texture;
-	}
 	class NB_Object
 	{
 	public:
