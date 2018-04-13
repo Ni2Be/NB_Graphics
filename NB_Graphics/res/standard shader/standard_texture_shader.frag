@@ -47,6 +47,9 @@ void main()
 
 	//output   
    frag_color = vec4(light_strength, 1.0f);
+   
+   //DEBUG
+   //frag_color = texture(diffuse_map, vertex_uv);
 }
 
 vec3 calc_directional_light(Directional_Light light, vec3 vertex_dir, vec3 vertex_pos)

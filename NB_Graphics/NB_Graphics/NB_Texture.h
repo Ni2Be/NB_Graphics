@@ -28,6 +28,8 @@ namespace NB
 		NB_HEIGHT
 	};
 
+	//TODO Texture catalog ordered by filepath
+
 	class NB_Texture
 	{
 	public:
@@ -39,6 +41,16 @@ namespace NB
 		const GLuint&          id()        const { return m_id; }  
 		const std::string&     file_path() const { return m_file_path; }
 		const NB_Texture_Type& type()      const { return m_type; }
+
+		//TODO name convention
+		//TODO don't load from picture, use openGL to generate
+		//TODO do I you really need an one pixel color generator???
+		//singeltons
+		static NB_Texture& WHITE()
+		{
+			static NB_Texture static_texture("../res/standard textures/white.png");
+			return static_texture;
+		}
 	private:
 		std::string     m_file_path;
 		GLuint          m_id;

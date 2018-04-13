@@ -45,7 +45,6 @@ namespace NB
 		NB::NB_Transform m_transform;
 		glm::vec4        m_color;
 		NB::NB_Mesh      m_mesh;
-
 	};
 	std::ostream& operator<<(std::ostream& stream, NB_Object& object);
 

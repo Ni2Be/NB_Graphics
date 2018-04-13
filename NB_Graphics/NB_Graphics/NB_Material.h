@@ -31,7 +31,7 @@ namespace NB
 			:m_ambient(ambient), m_diffuse(diffuse), m_specular(specular), m_shininess(shininess), m_diffuse_map(diffuse_map), m_specular_map(specular_map) {}
 
 		//functions
-		void add_texture(NB_Texture& texture);
+		void add_texture(const NB_Texture& texture);
 
 		//get/set
 		glm::vec3& ambient()       { return m_ambient; }

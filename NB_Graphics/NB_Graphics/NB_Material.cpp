@@ -1,6 +1,8 @@
 #include "NB_Material.h"
+#include <iostream>
 
-void NB::NB_Material::add_texture(NB_Texture& texture)
+
+void NB::NB_Material::add_texture(const NB_Texture& texture)
 {
 	if (texture.type()           == NB_DIFFUSE)
 	{

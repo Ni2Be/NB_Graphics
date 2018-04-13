@@ -81,6 +81,9 @@
     <ClCompile Include="NB_Standard_Shader.cpp">
       <Filter>NB_Shader</Filter>
     </ClCompile>
+    <ClCompile Include="NB_Model.cpp">
+      <Filter>NB_Object</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NB_Light.h">
@@ -133,6 +136,9 @@
     </ClInclude>
     <ClInclude Include="NB_Standard_Shader.h">
       <Filter>NB_Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="NB_Model.h">
+      <Filter>NB_Object</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

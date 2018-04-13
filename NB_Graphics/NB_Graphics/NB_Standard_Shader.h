@@ -38,8 +38,8 @@ namespace NB
 	public:
 		static NB_Standard_Shader& shader()
 		{
-			static NB_Standard_Shader m_shader;
-			return m_shader;
+			static NB_Standard_Shader static_shader;
+			return static_shader;
 		}
 		void bind_uniforms();
 

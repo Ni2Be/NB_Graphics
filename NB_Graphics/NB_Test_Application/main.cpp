@@ -21,13 +21,14 @@
 #include <NB_Graphics/NB_Material.h>
 #include <NB_Graphics/NB_Mesh.h>
 #include <NB_Graphics/NB_Standard_Shader.h>
+#include <NB_Graphics/NB_Model.h>
 
 void framebuffer_size_callback(GLFWwindow* window, int width, int height);
 void processInput(GLFWwindow *window);
 
 // settings
-const unsigned int SCR_WIDTH = 800;
-const unsigned int SCR_HEIGHT = 600;
+const unsigned int SCR_WIDTH = 1200;
+const unsigned int SCR_HEIGHT = 800;
 
 int main()
 {
@@ -61,10 +62,27 @@ int main()
 	material1.add_texture(texture2);
 	material2.add_texture(texture0);
 
-	NB::NB_Cube cube(1.0f, 1.0f, 1.0f);
-	cube.transform().pos() = glm::vec3(0.0f, 0.0f, -1.0f);
+	NB::NB_Material material3 = material1;
+	material2 = material1;
+	
+	//NB::NB_Model model("D:/Programmieren/NB_Graphics/NB_Graphics/NB_Test_Application/res/models/nano/nanosuit.obj");
+	//model.transform().pos() = glm::vec3(0.0f, -0.7f, -1.0f);
+	//model.transform().set_scale(0.1f);
 
-	cube.mesh().mesh().attach(material1);
+	//NB::NB_Model model("D:/Programmieren/NB_Graphics/NB_Graphics/NB_Test_Application/res/models/lion/kobanB.obj");
+	//model.transform().pos() = glm::vec3(0.0f, 0.2f, -1.0f);
+	//model.transform().set_scale(0.35f);
+
+	NB::NB_Model model("D:/Programmieren/NB_Graphics/NB_Graphics/NB_Test_Application/res/models/turtle/Turtle_fixed.obj");
+	model.transform().pos() = glm::vec3(0.0f, -0.2f, -1.0f);
+	model.transform().rot().x = 3 * glm::half_pi<float>();
+	model.transform().set_scale(0.007f);
+	//TODO don't load multiple textures for turtle
+
+	NB::NB_Cube cube(1.0f, 1.0f, 1.0f);
+	cube.transform().pos() = glm::vec3(-1.0f, 0.0f, -1.0f);
+
+	cube.mesh().mesh().attach(material3);
 
 	NB::NB_Cube cube2(1.0f, 1.0f, 1.0f);
 	cube2.transform().pos() = glm::vec3(1.0f, 0.0f, -1.0f);
@@ -81,19 +99,20 @@ int main()
 		NB::NB_Event_Handler::poll_events();
 		nb_window.clear();
 
-		float time = glfwGetTime();
-
-		cube.transform().rot().y += 0.01 * cos(time);
-		cube.transform().rot().x += 0.01 * cos(time);
-
-		NB::NB_Standard_Shader::shader().use();
-
 		NB::NB_Standard_Shader::shader().update_light(dir_light);
 		NB::NB_Standard_Shader::shader().update_camera(camera);
 
 
-		cube.draw();
-	    cube2.draw();
+		float time = glfwGetTime();
+		cube.transform().rot().y += 0.01 * cos(time);
+		cube.transform().rot().x += 0.01 * cos(time);
+
+		model.transform().rot().y += 0.001;
+
+
+		//cube.draw();
+		model.draw();
+	    //cube2.draw();
 
 		nb_window.update();
 	}

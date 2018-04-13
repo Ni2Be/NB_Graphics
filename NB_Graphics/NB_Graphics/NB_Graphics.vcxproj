@@ -131,6 +131,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="NB_Model.cpp" />
     <ClCompile Include="NB_Standard_Shader.cpp" />
     <ClCompile Include="NB_Camera.cpp" />
     <ClCompile Include="NB_Material.cpp" />
@@ -144,6 +145,7 @@
     <ClCompile Include="NB_Window.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="NB_Model.h" />
     <ClInclude Include="NB_Standard_Shader.h" />
     <ClInclude Include="NB_Camera.h" />
     <ClInclude Include="NB_Directional_Light.h" />

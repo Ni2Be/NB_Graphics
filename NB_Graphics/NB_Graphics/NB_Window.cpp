@@ -67,7 +67,7 @@ void NB::NB_Window::set_up_glew()
 
 	//Enable alpha blending
 	glEnable(GL_BLEND);
-	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
 void NB::NB_Window::set_size(int width, int height) 
