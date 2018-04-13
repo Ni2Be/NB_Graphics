@@ -27,7 +27,7 @@ Usage:
 #include <vector>
 
 //NB
-#include "NB_Texture.h"
+#include "NB_Material.h"
 
 
 namespace NB
@@ -73,10 +73,17 @@ namespace NB
 		//functions
 		void setup_mesh();
 		void draw();
+		void attach(NB_Material& material);
+
+		//get/set
+		NB_Material& material() { return *m_material; }
+		const NB_Material& material() const { return *m_material; }
 	private:
 		//member
 		std::vector<NB_Rendering_Vertex> m_vertices;
 		std::vector<unsigned int>        m_indices;
+
+		NB_Material* m_material;
 
 		GLuint m_EBO;
 		GLuint m_VAO;

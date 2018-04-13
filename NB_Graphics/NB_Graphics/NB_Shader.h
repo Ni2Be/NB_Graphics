@@ -29,13 +29,15 @@ Usage:
 namespace NB
 {
 	class NB_Object;
+	class NB_Material;
+	class NB_Transform;
+	class NB_Light;
 
 	class NB_Shader
 	{
 	public:
 		//functions
 		void use();
-		void attach(NB_Object& object);
 		void attach(NB_Camera& camera);
 
 		//get/set
@@ -43,6 +45,15 @@ namespace NB
 
 		const int        program() const { return m_program; }
 		const NB_Camera& camera()  const { return *m_camera; }
+		
+		//virtual
+		virtual void draw() {}
+		virtual void update_transform(NB::NB_Transform& transform) {}
+		virtual void update_light    (NB::NB_Light& dir_light) {}
+		virtual void update_camera   (NB::NB_Camera& camera) {}
+		virtual void update_material (NB::NB_Material& material) {}
+		virtual void bind_uniforms   () {}
+
 	protected:
 		//constructor
 		NB_Shader() {}
@@ -52,7 +63,6 @@ namespace NB
 
 		//member
 		GLuint                  m_program;
-		std::vector<NB_Object*> m_objects;
 		NB_Camera*              m_camera;
 
 		//functions
@@ -63,10 +73,6 @@ namespace NB
 			               bool               isProgram,
 			               const std::string& errorMessage, 
 			               const std::string& file_name);
-		//virtual
-		virtual void draw() {}
-		virtual void update(NB_Object* object) {}
-		virtual void bind_uniforms() {}
 	private:
 		//TODO implement copy
 		NB_Shader(const NB_Shader&) {}

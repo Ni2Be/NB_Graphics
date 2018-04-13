@@ -52,7 +52,22 @@ void main()
 vec3 calc_directional_light(Directional_Light light, vec3 vertex_dir, vec3 vertex_pos)
 {
 	//Ambient
-	vec3 ambient_light = light.ambient_strength * light.color * vec3(texture(diffuse_map, vertex_uv));
-
-	return ambient_light + max(dot(vertex_dir, -light.direction), 0.0f) * light.strength * vec3(texture(diffuse_map, vertex_uv)) / vec3(texture(specular_map, vertex_uv))* light.color;
+	vec3 ambient_light;
+	if (has_diffuse_map)
+	{
+		ambient_light += light.ambient_strength * light.color * vec3(texture(diffuse_map, vertex_uv));
+		ambient_light += max(dot(vertex_dir, -light.direction), 0.0f) 
+		                 * light.strength 
+						 * vec3(texture(diffuse_map, vertex_uv))
+						 * light.color;
+	}
+	if (has_specular_map)
+	{
+		ambient_light += light.ambient_strength * light.color * vec3(texture(specular_map, vertex_uv));
+		ambient_light += max(dot(vertex_dir, -light.direction), 0.0f) 
+		                 * light.strength 
+						 * vec3(texture(specular_map, vertex_uv))
+						 * light.color;
+	}
+	return ambient_light;
 }

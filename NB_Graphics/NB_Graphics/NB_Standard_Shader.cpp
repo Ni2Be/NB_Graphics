@@ -97,7 +97,7 @@ void NB::NB_Standard_Shader::update_camera(NB::NB_Camera& camera)
 	glUniform3fv      (uni_camera_pos, 1, glm::value_ptr(camera.pos()));
 }
 
-void NB::NB_Standard_Shader::update_dir_light(NB::NB_Directional_Light& dir_light)
+void NB::NB_Standard_Shader::update_light(NB::NB_Directional_Light& dir_light)
 {
 	glUniform3fv(uni_dir_light_direction, 1, glm::value_ptr(dir_light.direction()));
 	glUniform3fv(uni_dir_light_color, 1, glm::value_ptr(dir_light.color()));

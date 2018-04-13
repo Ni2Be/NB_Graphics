@@ -16,7 +16,6 @@ NB::NB_Texture::NB_Texture(const std::string& file_name, NB_Texture_Type type)
 
 	if (image_data == nullptr)
 		NB::error_log("NB::NB_Texture::NB_Texture", "Texture loading fail: " + file_name);
-	//
 
 	glGenTextures(1, &m_id);
 	glBindTexture(GL_TEXTURE_2D, m_id);

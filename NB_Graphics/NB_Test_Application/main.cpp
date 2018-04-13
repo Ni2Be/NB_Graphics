@@ -46,30 +46,33 @@ int main()
 			(GLfloat)1200 / (GLfloat)700,
 			0.1f,
 			1000.0f);
-		camera.look_at(
-				glm::vec3(0.0f, 0.0f, 1.5f),
-				glm::vec3(0.0f, 0.0f, -1.0f),
-				glm::vec3(0.0f, 1.0f, 0.0f));
+	camera.look_at(
+			glm::vec3(0.0f, 0.0f, 1.5f),
+			glm::vec3(0.0f, 0.0f, -1.0f),
+			glm::vec3(0.0f, 1.0f, 0.0f));
 
 	//Material
 	NB::NB_Material material1(NB::NB_PEARL);
 	NB::NB_Material material2(NB::NB_PEARL);
+	NB::NB_Texture texture0("D:/Programmieren/NB_Graphics/NB_Graphics/NB_Test_Application/res/textures/white.png");
 	NB::NB_Texture texture1("D:/Programmieren/NB_Graphics/NB_Graphics/NB_Test_Application/res/textures/container2.png");
 	NB::NB_Texture texture2("D:/Programmieren/NB_Graphics/NB_Graphics/NB_Test_Application/res/textures/container2_specular.png", NB::NB_SPECULAR);
 	material1.add_texture(texture1);
 	material1.add_texture(texture2);
+	material2.add_texture(texture0);
 
 	NB::NB_Cube cube(1.0f, 1.0f, 1.0f);
 	cube.transform().pos() = glm::vec3(0.0f, 0.0f, -1.0f);
 
+	cube.mesh().mesh().attach(material1);
+
 	NB::NB_Cube cube2(1.0f, 1.0f, 1.0f);
 	cube2.transform().pos() = glm::vec3(1.0f, 0.0f, -1.0f);
 
+	cube2.mesh().mesh().attach(material2);
 
 	// uncomment this call to draw in wireframe polygons.
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
-	NB::NB_Mesh mesh(cube.m_rendering_mesh, material1);
 
 	// render loop
 	// -----------
@@ -85,14 +88,11 @@ int main()
 
 		NB::NB_Standard_Shader::shader().use();
 
-		NB::NB_Standard_Shader::shader().update_dir_light(dir_light);
+		NB::NB_Standard_Shader::shader().update_light(dir_light);
 		NB::NB_Standard_Shader::shader().update_camera(camera);
-		NB::NB_Standard_Shader::shader().update_transform(cube.transform());
 
 
-		mesh.draw();
-
-		NB::NB_Standard_Shader::shader().update_transform(cube2.transform());
+		cube.draw();
 	    cube2.draw();
 
 		nb_window.update();

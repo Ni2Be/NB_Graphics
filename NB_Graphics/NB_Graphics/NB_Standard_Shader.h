@@ -45,7 +45,7 @@ namespace NB
 
 		void update_material(NB::NB_Material& material);
 		void update_transform(NB::NB_Transform& transform);
-		void update_dir_light(NB::NB_Directional_Light& dir_light);
+		void update_light(NB::NB_Directional_Light& dir_light);
 		void update_camera(NB::NB_Camera& camera);
 
 

@@ -23,37 +23,42 @@ Usage:
 #include "NB_Texture.h"
 #include "NB_Rendering_Mesh.h"
 #include "NB_Material.h"
+#include "NB_Transform.h"
 
 namespace NB
 {
-	class NB_Standard_Shader;
+	class NB_Shader;
 
 	class NB_Mesh
 	{
 	public:
-		//TODO the submash should probably hold the material
 		//constructor
-		NB_Mesh() {}
-		NB_Mesh(NB_Rendering_Mesh& mesh, NB_Material& material);
-		NB_Mesh(NB_Rendering_Mesh& mesh, NB_Material& material, NB_Standard_Shader& shader);
+		NB_Mesh();
+		NB_Mesh(const NB_Rendering_Mesh& mesh);
+		NB_Mesh(const NB_Rendering_Mesh& mesh, NB_Shader& shader);
 
 		//functions
 		void draw();
+
+		//get/set
+		NB_Rendering_Mesh&              mesh()              { return m_sub_meshes[0]; }
+		NB_Rendering_Mesh&              sub_mesh(int index) { return m_sub_meshes[index]; }
+		std::vector<NB_Rendering_Mesh>& sub_meshes()        { return m_sub_meshes; }
+		NB_Shader&                      shader()            { return *m_shader; }
+		NB_Transform&                   transform()         { return m_transform; }
+
+		
+		const NB_Rendering_Mesh&              mesh()              const { return m_sub_meshes[0]; }
+		const NB_Rendering_Mesh&              sub_mesh(int index) const { return m_sub_meshes[index]; }
+		const std::vector<NB_Rendering_Mesh>& sub_meshes()        const { return m_sub_meshes; }
+		const NB_Shader&                      shader()            const { return *m_shader; }
+		const NB_Transform&                   transform()         const { return m_transform; }
 	private:
 		//member
-		typedef int Matrial_Id;
-		typedef std::pair<NB_Rendering_Mesh, Matrial_Id> Material_Mesh;
+		std::vector<NB_Rendering_Mesh> m_sub_meshes;
+		NB_Transform                   m_transform;
 
-		//store meshes ordered by the material id, in draw() only update material if necessary
-		std::vector<Material_Mesh> m_sub_meshes;
-		std::vector<NB_Material>   m_materials;
-
-		NB_Standard_Shader* m_shader;
-
-		GLuint m_EBO;
-		GLuint m_VAO;
-		GLuint m_VBO;
-		GLuint m_draw_count;
+		NB_Shader* m_shader;
 	};
 }
 #endif

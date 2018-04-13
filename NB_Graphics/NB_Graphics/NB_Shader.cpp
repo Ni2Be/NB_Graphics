@@ -18,11 +18,6 @@ NB::NB_Shader::~NB_Shader()
 	glDeleteProgram(m_program);
 }
 
-void NB::NB_Shader::attach(NB_Object& object)
-{
-	this->m_objects.push_back(&object);
-}
-
 void NB::NB_Shader::attach(NB_Camera& camera)
 {
 	this->m_camera = &camera;

@@ -29,7 +29,9 @@ NB::NB_Rendering_Mesh::NB_Rendering_Mesh(const std::vector<NB_Rendering_Vertex>&
 NB::NB_Rendering_Mesh::NB_Rendering_Mesh(const NB_Rendering_Mesh& rhs)
 	:
 	NB_Rendering_Mesh(rhs.m_vertices, rhs.m_indices) //setup_mesh() is called
-{}
+{
+	this->m_material = rhs.m_material;
+}
 
 void NB::swap(NB_Rendering_Mesh& lhs, NB_Rendering_Mesh& rhs)
 {
@@ -40,6 +42,7 @@ void NB::swap(NB_Rendering_Mesh& lhs, NB_Rendering_Mesh& rhs)
 	swap(lhs.m_VAO       , rhs.m_VAO);
 	swap(lhs.m_VBO       , rhs.m_VBO);
 	swap(lhs.m_draw_count, rhs.m_draw_count);
+	swap(lhs.m_material  , rhs.m_material);
 }
 
 NB::NB_Rendering_Mesh& NB::NB_Rendering_Mesh::operator=(const NB_Rendering_Mesh& right)
@@ -105,4 +108,9 @@ void NB::NB_Rendering_Mesh::draw()
 	glBindVertexArray(m_VAO);
 	glDrawElements(GL_TRIANGLES, m_draw_count, GL_UNSIGNED_INT, 0);
 	glBindVertexArray(0);
+}
+
+void NB::NB_Rendering_Mesh::attach(NB_Material& material)
+{
+	this->m_material = &material;
 }
