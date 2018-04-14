@@ -12,7 +12,7 @@ NB::NB_Texture::NB_Texture(const std::string& file_name, NB_Texture_Type type)
 {	//load picture
 	int width, height, color_channels;
 
-	stbi_set_flip_vertically_on_load(0);
+	stbi_set_flip_vertically_on_load(1);
 	unsigned char* image_data = stbi_load(file_name.c_str(), &width, &height, &color_channels, 4);
 
 	if (image_data == nullptr)

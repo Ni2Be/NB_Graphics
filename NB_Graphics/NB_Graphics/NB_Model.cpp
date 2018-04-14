@@ -1,10 +1,10 @@
 #include "NB_Model.h"
 #include "NB_Utility.h"
 
-void NB::NB_Model::loadModel(std::string path)
+void NB::NB_Model::load_model(std::string path)
 {
 	Assimp::Importer import;
-	const aiScene* scene = import.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_GenNormals);
+	const aiScene* scene = import.ReadFile(path, aiProcess_Triangulate | aiProcess_GenNormals);
 	
 
 	if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode)
@@ -34,66 +34,118 @@ void NB::NB_Model::process_node(aiNode* node, const aiScene* scene)
 	}
 }
 
-NB::NB_Rendering_Mesh NB::NB_Model::process_mesh(aiMesh* mesh, const aiScene* scene)
+NB::NB_Rendering_Mesh NB::NB_Model::process_mesh(aiMesh* assimp_mesh, const aiScene* scene)
 {
+	NB::log("NB::NB_Model::process_mesh", "New Submesh\nMaterial count: "
+		+ std::to_string(scene->mNumMaterials)
+		+ "\nMaterial index: "
+		+ std::to_string(assimp_mesh->mMaterialIndex));
+
 	//material
-	//TODO set right material parameters from mesh
-	NB::NB_Material material(NB::NB_PEARL);
-
-	std::cout << "\n\nNew Submesh" << std::endl;
-	std::cout << "Material count: " << scene->mNumMaterials << std::endl;
-	std::cout << "Material index: " << mesh->mMaterialIndex << std::endl;
-
-	if (mesh->mMaterialIndex >= 0)
-	{
-		aiMaterial *ai_material = scene->mMaterials[mesh->mMaterialIndex];
-
-		if (ai_material->GetTextureCount(aiTextureType_DIFFUSE) > 0)
-		{
-			aiString diffuse_dict;
-			ai_material->GetTexture(aiTextureType_DIFFUSE, (unsigned int)0, &diffuse_dict);
-			NB_Texture diffuse(this->m_path + "/" + diffuse_dict.C_Str(), NB::NB_DIFFUSE);
-			material.add_texture(diffuse);
-
-			std::cout << "Texture path: " << this->m_path + "/" + diffuse_dict.C_Str() << std::endl;
-			std::cout << "Texture count: " << ai_material->GetTextureCount(aiTextureType_DIFFUSE) << std::endl;
-		}
-		if (ai_material->GetTextureCount(aiTextureType_SPECULAR) > 0)
-		{
-			aiString specular_dict;
-			ai_material->GetTexture(aiTextureType_SPECULAR, (unsigned int)0, &specular_dict);
-			NB_Texture specular(this->m_path + "/" + specular_dict.C_Str(), NB::NB_SPECULAR);
-			material.add_texture(specular);
-
-			std::cout << "Texture path: " << this->m_path + "/" + specular_dict.C_Str() << std::endl;
-			std::cout << "Texture count: " << ai_material->GetTextureCount(aiTextureType_SPECULAR) << std::endl;
-		}
-	}
+	const NB::NB_Material& material = process_material(assimp_mesh, scene);
 	m_materials.push_back(material);
 
 	//verticies
-	std::vector<NB_Rendering_Vertex> vertices;
+	const std::vector<NB_Rendering_Vertex>& vertices = process_vertices(assimp_mesh, scene);
 
-	for (GLuint i = 0; i < mesh->mNumVertices; i++)
-	{
-		vertices.push_back
-			(
-			NB::NB_Rendering_Vertex{
-				glm::vec3{ mesh->mVertices[i].x        , mesh->mVertices[i].y        , mesh->mVertices[i].z },
-				glm::vec3{ mesh->mNormals[i].x         , mesh->mNormals[i].y         , mesh->mNormals[i].z },
-				glm::vec2{ mesh->mTextureCoords[0][i].x, mesh->mTextureCoords[0][i].y } }
-			);
-	}
 	//indices
-	std::vector<GLuint> indices;
-	for (GLuint i = 0; i < mesh->mNumFaces; i++)
-	{
-		aiFace face = mesh->mFaces[i];
-		for (GLuint j = 0; j < face.mNumIndices; j++)
-			indices.push_back(face.mIndices[j]);
-	}
+	const std::vector<GLuint>& indices = process_indices(assimp_mesh, scene);
+
 	NB_Rendering_Mesh rendering_mesh(vertices, indices);
 	rendering_mesh.attach(m_materials.back());
 	return rendering_mesh;
 }
 
+
+NB::NB_Material NB::NB_Model::process_material(aiMesh* assimp_mesh, const aiScene* scene)
+{
+	NB_Material material(NB::NB_PLASTIC_WHITE); //standard values if nothing is defined
+
+	aiColor3D temp_color;
+	scene->mMaterials[assimp_mesh->mMaterialIndex]->Get(AI_MATKEY_COLOR_DIFFUSE, temp_color);
+	if (&temp_color != nullptr)
+		material.diffuse() = glm::vec3(temp_color.r, temp_color.g, temp_color.b);
+	scene->mMaterials[assimp_mesh->mMaterialIndex]->Get(AI_MATKEY_COLOR_SPECULAR, temp_color);
+	if (&temp_color != nullptr)
+		material.specular() = glm::vec3(temp_color.r, temp_color.g, temp_color.b);
+	scene->mMaterials[assimp_mesh->mMaterialIndex]->Get(AI_MATKEY_COLOR_AMBIENT, temp_color);
+	if (&temp_color != nullptr)
+		material.ambient() = glm::vec3(temp_color.r, temp_color.g, temp_color.b);
+	
+	double temp_double;
+	scene->mMaterials[assimp_mesh->mMaterialIndex]->Get(AI_MATKEY_SHININESS_STRENGTH, temp_double);
+	if (&temp_double != nullptr)
+		material.shininess() = temp_double;
+
+	if (assimp_mesh->mMaterialIndex >= 0)
+	{
+		aiMaterial *assimp_material = scene->mMaterials[assimp_mesh->mMaterialIndex];
+
+		process_texture(assimp_material, aiTextureType_DIFFUSE, material, NB::NB_DIFFUSE);
+		process_texture(assimp_material, aiTextureType_SPECULAR, material, NB::NB_SPECULAR);
+		process_texture(assimp_material, aiTextureType_NORMALS, material, NB::NB_NORMAL);
+		process_texture(assimp_material, aiTextureType_HEIGHT, material, NB::NB_HEIGHT);
+	}
+	return material;
+}
+
+
+void NB::NB_Model::process_texture(aiMaterial* assimp_matrial, aiTextureType assimp_type, NB_Material& nb_material, NB_Texture_Type nb_type)
+{
+	if (assimp_matrial->GetTextureCount(assimp_type) > 0)
+	{
+		aiString assimp_texture_path;
+		assimp_matrial->GetTexture(assimp_type, (unsigned int)0, &assimp_texture_path);
+		NB_Texture texture(this->m_path + "/" + assimp_texture_path.C_Str(), nb_type);
+		nb_material.add_texture(texture);
+
+		NB::log("NB::NB_Model::process_texture", "Texture path: "
+			+ this->m_path + "/" + assimp_texture_path.C_Str()
+			+ "\nTexture count: "
+			+ std::to_string(assimp_matrial->GetTextureCount(assimp_type)));
+	}
+}
+
+std::vector<NB::NB_Rendering_Vertex> NB::NB_Model::process_vertices(aiMesh* assimp_mesh, const aiScene* scene)
+{
+	std::vector<NB_Rendering_Vertex> vertices;
+
+	if (assimp_mesh->HasTextureCoords(0))
+	{
+		for (GLuint i = 0; i < assimp_mesh->mNumVertices; i++)
+		{
+			vertices.push_back
+			(
+				NB::NB_Rendering_Vertex{
+					glm::vec3{ assimp_mesh->mVertices[i].x        , assimp_mesh->mVertices[i].y        , assimp_mesh->mVertices[i].z },
+					glm::vec3{ assimp_mesh->mNormals[i].x         , assimp_mesh->mNormals[i].y         , assimp_mesh->mNormals[i].z },
+					glm::vec2{ assimp_mesh->mTextureCoords[0][i].x, assimp_mesh->mTextureCoords[0][i].y } }
+			);
+		}
+	}
+	else
+	{
+		for (GLuint i = 0; i < assimp_mesh->mNumVertices; i++)
+		{
+			vertices.push_back
+			(
+				NB::NB_Rendering_Vertex{
+					glm::vec3{ assimp_mesh->mVertices[i].x        , assimp_mesh->mVertices[i].y        , assimp_mesh->mVertices[i].z },
+					glm::vec3{ assimp_mesh->mNormals[i].x         , assimp_mesh->mNormals[i].y         , assimp_mesh->mNormals[i].z }}
+			);
+		}
+	}
+	return vertices;
+}
+
+std::vector<GLuint> NB::NB_Model::process_indices(aiMesh* assimp_mesh, const aiScene* scene)
+{
+	std::vector<GLuint> indices;
+	for (GLuint i = 0; i < assimp_mesh->mNumFaces; i++)
+	{
+		aiFace face = assimp_mesh->mFaces[i];
+		for (GLuint j = 0; j < face.mNumIndices; j++)
+			indices.push_back(face.mIndices[j]);
+	}
+	return indices;
+}

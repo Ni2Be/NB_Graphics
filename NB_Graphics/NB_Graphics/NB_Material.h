@@ -37,8 +37,9 @@ namespace NB
 		glm::vec3& ambient()       { return m_ambient; }
 		glm::vec3& diffuse()       { return m_diffuse; }
 		glm::vec3& specular()      { return m_ambient; }
-
+		
 		float& shininess()         { return m_shininess; }
+		float& shininess_exponent(){ return m_shininess_exponent; }
 		float& strength()          { return m_strength; }
 		float& ambient_strength()  { return m_ambient_strength; }
 
@@ -51,9 +52,10 @@ namespace NB
 		const glm::vec3& diffuse()      const { return m_diffuse; }
 		const glm::vec3& specular()     const { return m_ambient; }
 		 							
-		const float& shininess()        const { return m_shininess; }
-		const float& strength()         const { return m_strength; }
-		const float& ambient_strength() const { return m_ambient_strength; }
+		const float& shininess()         const { return m_shininess; }
+		const float& shininess_exponent()const { return m_shininess_exponent; }
+		const float& strength()          const { return m_strength; }
+		const float& ambient_strength()  const { return m_ambient_strength; }
 		 							
 		const NB_Texture& diffuse_map() const { return m_diffuse_map; }
 		const NB_Texture& specular_map()const { return m_specular_map; }
@@ -69,8 +71,9 @@ namespace NB
 		glm::vec3 m_ambient;
 		glm::vec3 m_diffuse;
 		glm::vec3 m_specular;
-		
+
 		float m_shininess;
+		float m_shininess_exponent;
 		float m_strength;
 		float m_ambient_strength;
 

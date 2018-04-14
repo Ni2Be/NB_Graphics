@@ -19,6 +19,8 @@ Usage:
 #include <GLFW/glfw3.h>
 
 
+#define NB_LOG
+
 namespace NB
 {
 	namespace NB_Graphics
@@ -36,6 +38,9 @@ namespace NB
 
 	void error_log(const std::string location, 
 		           const std::string error);
+
+	void log(const std::string location, 
+		     const std::string error);
 
 	std::string load_file_to_string(const std::string& file_name);
 

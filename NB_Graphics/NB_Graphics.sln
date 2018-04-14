@@ -6,6 +6,9 @@ MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NB_Graphics", "NB_Graphics\NB_Graphics.vcxproj", "{BEA5C1A4-12D4-452B-AEB6-2F2E74152C3F}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "NB_Test_Application", "NB_Test_Application\NB_Test_Application.vcxproj", "{2DA93F6C-69C0-42F8-B364-734B1B6CE957}"
+	ProjectSection(ProjectDependencies) = postProject
+		{BEA5C1A4-12D4-452B-AEB6-2F2E74152C3F} = {BEA5C1A4-12D4-452B-AEB6-2F2E74152C3F}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

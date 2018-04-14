@@ -18,6 +18,13 @@ void NB::error_log(const std::string location, const std::string error)
 	std::cerr << std::endl << "In " << location << std::endl << error << std::endl;
 }
 
+void NB::log(const std::string location, const std::string info)
+{
+#ifdef NB_LOG
+	std::cout << std::endl << "In " << location << std::endl << info << std::endl;
+#endif
+}
+
 //Simple file loading
 std::string NB::load_file_to_string(const std::string& file_name)
 {

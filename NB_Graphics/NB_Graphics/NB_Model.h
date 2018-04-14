@@ -36,7 +36,7 @@ namespace NB
 			:
 			NB_Object(color)
 		{
-			this->loadModel(path);
+			this->load_model(path);
 		}
 
 		//TODO implement animation
@@ -46,9 +46,14 @@ namespace NB
 		std::vector<NB_Material> m_materials;
 		
 		//functions
-		void              loadModel  (std::string path);
-		void              process_node(aiNode* node, const aiScene* scene);
-		NB_Rendering_Mesh process_mesh(aiMesh* mesh, const aiScene* scene);
+		void                             load_model  (std::string path);
+		void                             process_node(aiNode* node, const aiScene* scene);
+		NB_Rendering_Mesh                process_mesh(aiMesh* assimp_mesh, const aiScene* scene);
+
+		NB_Material                      process_material(aiMesh* assimp_mesh, const aiScene* scene);
+		void                             process_texture (aiMaterial* assimp_material, aiTextureType assimp_type, NB_Material& nb_material, NB_Texture_Type nb_type);
+		std::vector<NB_Rendering_Vertex> process_vertices(aiMesh* assimp_mesh, const aiScene* scene);
+		std::vector<GLuint>              process_indices (aiMesh* assimp_mesh, const aiScene* scene);
 	};
 }
 #endif

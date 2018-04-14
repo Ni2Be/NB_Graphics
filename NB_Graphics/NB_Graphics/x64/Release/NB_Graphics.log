@@ -1,2 +1,8 @@
-﻿  NB_Window.cpp
+﻿  NB_Model.cpp
+d:\programmieren\nb_graphics\nb_graphics\nb_graphics\nb_model.cpp(78): warning C4244: "=": Konvertierung von "double" in "float", möglicher Datenverlust
+  NB_Shader.cpp
+  NB_Standard_Shader.cpp
+  NB_Texture.cpp
+  NB_Utility.cpp
+  NB_Window.cpp
   NB_Graphics.vcxproj -> D:\Programmieren\NB_Graphics\NB_Graphics\x64\Release\NB_Graphics.lib
