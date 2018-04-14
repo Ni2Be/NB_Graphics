@@ -16,6 +16,8 @@ Usage:
 
 //STL
 #include <string>
+#include <unordered_set>
+#include <unordered_map>
 
 namespace NB
 {
@@ -28,7 +30,25 @@ namespace NB
 		NB_HEIGHT
 	};
 
-	//TODO Texture catalog ordered by filepath
+	class NB_Texture_Catalog
+	{
+	public:
+		//singeltons
+		static NB_Texture_Catalog& catalog()
+		{
+			static NB_Texture_Catalog static_catalog;
+			return static_catalog;
+		}
+
+		//functions
+		//returns true if texture is new else false
+		bool   check     (std::string path);
+		void   registarte(std::string path, GLuint texture_id);
+		GLuint get_id    (std::string path);
+	private:
+		//member
+		std::unordered_map<std::string, GLuint> m_texture_catalog;
+	};
 
 	class NB_Texture
 	{
@@ -44,7 +64,7 @@ namespace NB
 
 		//TODO name convention
 		//TODO don't load from picture, use openGL to generate
-		//TODO do I you really need an one pixel color generator???
+		//TODO do I really need an one pixel color generator???
 		//singeltons
 		static NB_Texture& WHITE()
 		{

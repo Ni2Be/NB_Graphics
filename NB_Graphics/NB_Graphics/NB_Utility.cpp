@@ -15,13 +15,13 @@ void NB::error_log(const std::string location, const std::string error)
 #ifdef NB_ERROR_LOG
 	NB_Err.err_log(NB::NB_Error(NB::NB_ERROR, location, error));
 #endif
-	std::cerr << std::endl << "In " << location << std::endl << error << std::endl;
+	NB::log("ERROR " + location, error);
 }
 
 void NB::log(const std::string location, const std::string info)
 {
 #ifdef NB_LOG
-	std::cout << std::endl << "In " << location << std::endl << info << std::endl;
+	std::cout << std::endl << "location: \"" << location << "\"" << std::endl << info << std::endl;
 #endif
 }
 

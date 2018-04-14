@@ -57,9 +57,9 @@ int main()
 	NB::NB_Material material2(NB::NB_PEARL);
 	NB::NB_Texture texture0("D:/Programmieren/NB_Graphics/NB_Graphics/NB_Test_Application/res/textures/awesomeface.png");
 	NB::NB_Texture texture1("D:/Programmieren/NB_Graphics/NB_Graphics/NB_Test_Application/res/textures/container2.png");
-	NB::NB_Texture texture2("D:/Programmieren/NB_Graphics/NB_Graphics/NB_Test_Application/res/textures/container2_specular.png", NB::NB_SPECULAR);
-	material1.add_texture(texture0);
-	material1.add_texture(texture0);
+	NB::NB_Texture texture2("D:/Programmieren/NB_Graphics/NB_Graphics/NB_Test_Application/res/textures/container2.png", NB::NB_SPECULAR);
+	material1.add_texture(texture1);
+	material1.add_texture(texture2);
 	material2.add_texture(texture0);
 
 	NB::NB_Material material3 = material1;
@@ -77,8 +77,7 @@ int main()
 	//model.transform().pos() = glm::vec3(0.0f, -0.2f, -1.0f);
 	//model.transform().rot().x = 3 * glm::half_pi<float>();
 	//model.transform().set_scale(0.007f);
-	//TODO don't load multiple textures for turtle
-
+	
 	NB::NB_Cube cube(1.0f, 1.0f, 1.0f);
 	cube.transform().pos() = glm::vec3(-1.0f, 0.0f, -1.0f);
 
