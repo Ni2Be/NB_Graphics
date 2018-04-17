@@ -1,6 +1,6 @@
 ﻿  Code wird generiert.
-  10 of 1556 functions ( 0.6%) were compiled, the rest were copied from previous compilation.
+  4 of 1547 functions ( 0.3%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    8 functions had inline decision re-evaluated but remain unchanged
+    2 functions had inline decision re-evaluated but remain unchanged
   Codegenerierung ist abgeschlossen.
   NB_Test_Application.vcxproj -> D:\Programmieren\NB_Graphics\NB_Graphics\x64\Release\NB_Test_Application.exe

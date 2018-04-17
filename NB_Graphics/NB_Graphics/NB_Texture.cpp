@@ -28,7 +28,7 @@ NB::NB_Texture::NB_Texture(const std::string& file_name, NB_Texture_Type type)
 	//Texture isn't loaded
 	if (NB_Texture_Catalog::catalog().check(file_name))
 	{
-		NB::log("NB_Texture", "loading: " + file_name);
+		NB::event_log("NB_Texture", "loading: " + file_name);
 		//load picture
 		int width, height, color_channels;
 
@@ -61,7 +61,7 @@ NB::NB_Texture::NB_Texture(const std::string& file_name, NB_Texture_Type type)
 	//texture is loaded
 	else
 	{
-		NB::log("NB::NB_Texture::NB_Texture", "from texture catalog: " + file_name);
+		NB::event_log("NB::NB_Texture::NB_Texture", "from texture catalog: " + file_name);
 		this->m_id = NB_Texture_Catalog::catalog().get_id(file_name);
 	}
 }

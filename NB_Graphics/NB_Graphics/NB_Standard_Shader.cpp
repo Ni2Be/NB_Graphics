@@ -16,15 +16,18 @@ void NB::NB_Standard_Shader::bind_uniforms()
 
 	//textures, set locations
 	NB_Shader::use();
-	uni_texture_diffuse = glGetUniformLocation(NB_Shader::m_program, "diffuse_map");
-	glUniform1i(uni_texture_diffuse, 0);
-	uni_texture_specular_map = glGetUniformLocation(NB_Shader::m_program, "specular_map");
-	glUniform1i(uni_texture_specular_map, 1);
-	uni_texture_normal_map = glGetUniformLocation(NB_Shader::m_program, "normal_map");
-	glUniform1i(uni_texture_normal_map, 2);
-	uni_texture_height_map = glGetUniformLocation(NB_Shader::m_program, "height_map");
-	glUniform1i(uni_texture_height_map, 3);
+	texture_unit_diffuse_map = 0;
+	glUniform1i(glGetUniformLocation(NB_Shader::m_program, "diffuse_map"), texture_unit_diffuse_map);
+	
+	texture_unit_specular_map = 1;
+	glUniform1i(glGetUniformLocation(NB_Shader::m_program, "specular_map"), texture_unit_specular_map);
 
+	texture_unit_normal_map = 2;
+	glUniform1i(glGetUniformLocation(NB_Shader::m_program, "normal_map"), texture_unit_normal_map);
+	
+	texture_unit_height_map = 3;
+	glUniform1i(glGetUniformLocation(NB_Shader::m_program, "height_map"), texture_unit_height_map);
+	
 	uni_has_diffuse_map	 = glGetUniformLocation(NB_Shader::m_program, "has_diffuse_map");
 	uni_has_specular_map = glGetUniformLocation(NB_Shader::m_program, "has_specular_map");
 	uni_has_normal_map	 = glGetUniformLocation(NB_Shader::m_program, "has_normal_map");
@@ -51,7 +54,7 @@ void NB::NB_Standard_Shader::update_material(NB::NB_Material& material)
 	//TODO check performace
 	if (material.has_diffuse_map())
 	{
-		glActiveTexture(GL_TEXTURE0 + 0);
+		glActiveTexture(GL_TEXTURE0 + texture_unit_diffuse_map);
 		glBindTexture(GL_TEXTURE_2D, material.diffuse_map().id());
 		glUniform1i(uni_has_diffuse_map, GL_TRUE);
 	}
@@ -59,7 +62,7 @@ void NB::NB_Standard_Shader::update_material(NB::NB_Material& material)
 		glUniform1i(uni_has_diffuse_map, GL_FALSE);
 	if (material.has_specular_map())
 	{
-		glActiveTexture(GL_TEXTURE0 + 1);
+		glActiveTexture(GL_TEXTURE0 + texture_unit_specular_map);
 		glBindTexture(GL_TEXTURE_2D, material.specular_map().id());
 		glUniform1i(uni_has_specular_map, GL_TRUE);
 	}
@@ -67,7 +70,7 @@ void NB::NB_Standard_Shader::update_material(NB::NB_Material& material)
 		glUniform1i(uni_has_specular_map, GL_FALSE);
 	if (material.has_normal_map())
 	{
-		glActiveTexture(GL_TEXTURE0 + 2);
+		glActiveTexture(GL_TEXTURE0 + texture_unit_normal_map);
 		glBindTexture(GL_TEXTURE_2D, material.normal_map().id());
 		glUniform1i(uni_has_normal_map, GL_TRUE);
 	}
@@ -75,7 +78,7 @@ void NB::NB_Standard_Shader::update_material(NB::NB_Material& material)
 		glUniform1i(uni_has_normal_map, GL_FALSE);
 	if (material.has_height_map())
 	{
-		glActiveTexture(GL_TEXTURE0 + 3);
+		glActiveTexture(GL_TEXTURE0 + texture_unit_height_map);
 		glBindTexture(GL_TEXTURE_2D, material.height_map().id());
 		glUniform1i(uni_has_height_map, GL_TRUE);
 	}
@@ -99,8 +102,8 @@ void NB::NB_Standard_Shader::update_camera(NB::NB_Camera& camera)
 
 void NB::NB_Standard_Shader::update_light(NB::NB_Directional_Light& dir_light)
 {
-	glUniform3fv(uni_dir_light_direction, 1, glm::value_ptr(dir_light.direction()));
-	glUniform3fv(uni_dir_light_color, 1, glm::value_ptr(dir_light.color()));
-	glUniform1f (uni_dir_light_strength, dir_light.strength());
+	glUniform3fv(uni_dir_light_direction       , 1, glm::value_ptr(dir_light.direction()));
+	glUniform3fv(uni_dir_light_color           , 1, glm::value_ptr(dir_light.color()));
+	glUniform1f (uni_dir_light_strength        , dir_light.strength());
 	glUniform1f (uni_dir_light_ambient_strength, dir_light.ambient_strength());
 }

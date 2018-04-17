@@ -66,12 +66,13 @@ namespace NB
 		NB_Camera*              m_camera;
 
 		//functions
-		GLuint create_shader(const std::string& text, const GLenum sader_type);
+		GLuint create_shader(const std::string& text, const GLenum shader_type);
 		void build_program(const std::string& file_name);
-		void error_check  (GLuint             shader, 
+		enum NB_Check_Type {NB_PROGRAM, NB_SHADER};
+		void error_check  (GLuint             check_object_id,
 			               GLuint             flag, 
-			               bool               isProgram,
-			               const std::string& errorMessage, 
+			               NB_Check_Type      check_type,
+			               const std::string& error_message, 
 			               const std::string& file_name);
 	private:
 		//TODO implement copy

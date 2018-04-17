@@ -52,10 +52,10 @@ namespace NB
 		//material
 
 		//textures (not really used as uniforms, just to mention they exist in shader)
-		GLint uni_texture_diffuse;
-		GLint uni_texture_specular_map;
-		GLint uni_texture_normal_map;
-		GLint uni_texture_height_map;
+		GLint texture_unit_diffuse_map;
+		GLint texture_unit_specular_map;
+		GLint texture_unit_normal_map;
+		GLint texture_unit_height_map;
 
 		GLint uni_has_diffuse_map;
 		GLint uni_has_specular_map;

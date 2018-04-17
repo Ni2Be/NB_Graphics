@@ -70,7 +70,7 @@ void NB::NB_Rendering_Mesh::setup_mesh()
 
 	glBindVertexArray(m_VAO);
 
-	//type of the target, size of the send data, pointer to the data, usage:
+	//TODO type of the target, size of the send data, pointer to the data, usage:
 	//GL_STATIC_DRAW  : the data will most likely not change at all or very rarely.
 	//GL_DYNAMIC_DRAW : the data is likely to change a lot.
 	//GL_STREAM_DRAW  : the data will change every time it is drawn.

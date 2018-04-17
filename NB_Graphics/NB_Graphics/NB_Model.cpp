@@ -36,7 +36,7 @@ void NB::NB_Model::process_node(aiNode* node, const aiScene* scene)
 
 NB::NB_Rendering_Mesh NB::NB_Model::process_mesh(aiMesh* assimp_mesh, const aiScene* scene)
 {
-	NB::log("NB::NB_Model::process_mesh", "New Submesh\nMaterial count: "
+	NB::event_log("NB::NB_Model::process_mesh", "New Submesh\nMaterial count: "
 		+ std::to_string(scene->mNumMaterials)
 		+ "\nMaterial index: "
 		+ std::to_string(assimp_mesh->mMaterialIndex));
@@ -99,7 +99,7 @@ void NB::NB_Model::process_texture(aiMaterial* assimp_matrial, aiTextureType ass
 		NB_Texture texture(this->m_path + "/" + assimp_texture_path.C_Str(), nb_type);
 		nb_material.add_texture(texture);
 
-		NB::log("NB::NB_Model::process_texture", "Texture path: "
+		NB::event_log("NB::NB_Model::process_texture", "Texture path: "
 			+ this->m_path + "/" + assimp_texture_path.C_Str()
 			+ "\nTexture count: "
 			+ std::to_string(assimp_matrial->GetTextureCount(assimp_type)));
