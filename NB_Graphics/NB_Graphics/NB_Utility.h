@@ -19,7 +19,7 @@ Usage:
 #include <GLFW/glfw3.h>
 
 
-//#define NB_EVENT_LOG
+#define NB_EVENT_LOG
 
 namespace NB
 {

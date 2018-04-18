@@ -15,7 +15,7 @@ out vec3 vertex_normal;
 void main()
 {
 	vertex_uv     = uv;
-	vertex_normal = mat3(transpose(inverse(transform))) * normal;
+	vertex_normal = normal;
 	vertex_pos    = vec3(transform * vec4(pos, 1.0f));
 	gl_Position   = projection * view * transform * vec4(pos, 1.0);
 }

@@ -50,8 +50,14 @@ namespace NB
 		virtual void move_z(float delta);
 
 		glm::vec3& position() { return m_position; }
+		float attenuation_const() { return m_attenuation_const; }
+		float attenuation_lin()   { return m_attenuation_lin; }
+		float attenuation_quad()  { return m_attenuation_quad; }
 
-		const glm::vec3& position() const { return m_position; }
+		const glm::vec3& position()          const { return m_position; }
+		const float      attenuation_const() const { return m_attenuation_const; }
+		const float      attenuation_lin()   const { return m_attenuation_lin; }
+		const float      attenuation_quad()  const { return m_attenuation_quad; }
 	protected:
 		float m_attenuation_const;
 		float m_attenuation_lin;

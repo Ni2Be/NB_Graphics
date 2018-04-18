@@ -72,10 +72,17 @@ NB::NB_Material NB::NB_Model::process_material(aiMesh* assimp_mesh, const aiScen
 	if (&temp_color != nullptr)
 		material.ambient() = glm::vec3(temp_color.r, temp_color.g, temp_color.b);
 	
-	double temp_double;
-	scene->mMaterials[assimp_mesh->mMaterialIndex]->Get(AI_MATKEY_SHININESS_STRENGTH, temp_double);
-	if (&temp_double != nullptr)
-		material.shininess() = temp_double;
+	float temp_float;
+	scene->mMaterials[assimp_mesh->mMaterialIndex]->Get(AI_MATKEY_SHININESS, temp_float);
+	
+	//TODO warning message if not an obj file
+	temp_float = temp_float / 4000.0f;//.obj files shininess 0 to 4000
+
+	if (&temp_float != nullptr)
+		material.shininess() = temp_float;
+
+
+
 
 	if (assimp_mesh->mMaterialIndex >= 0)
 	{

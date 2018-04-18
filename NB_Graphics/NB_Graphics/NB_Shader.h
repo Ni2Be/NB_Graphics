@@ -47,7 +47,7 @@ namespace NB
 		const NB_Camera& camera()  const { return *m_camera; }
 		
 		//virtual
-		virtual void draw() {}
+		//virtual void draw() {}
 		virtual void update_transform(NB::NB_Transform& transform) {}
 		virtual void update_light    (NB::NB_Light& dir_light) {}
 		virtual void update_camera   (NB::NB_Camera& camera) {}

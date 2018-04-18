@@ -1,3 +1,2 @@
-﻿  main.cpp
-LINK : warning LNK4098: Standardbibliothek "MSVCRT" steht in Konflikt mit anderen Bibliotheken; /NODEFAULTLIB:Bibliothek verwenden.
-  NB_Graphics.vcxproj -> D:\Programmieren\NB_Graphics\NB_Graphics\x64\Debug\NB_Graphics.exe
+﻿  NB_Texture.cpp
+d:\programmieren\nb_graphics\nb_graphics\nb_graphics\nb_texture.cpp(5): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "stb-master/stb_image.h": No such file or directory

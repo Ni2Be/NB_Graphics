@@ -31,7 +31,7 @@ namespace NB
 			glm::vec3 direction, 
 			glm::vec4 color             = { 1.0f, 1.0f, 1.0f, 1.0f },
 			float     strength          = 1.0f,
-			float     ambient_strength  = 0.05f)
+			float     ambient_strength  = 0.00f)
 			:
 			NB_Light(color, 
 				     strength, 

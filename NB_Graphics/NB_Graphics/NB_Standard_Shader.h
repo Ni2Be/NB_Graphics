@@ -46,10 +46,15 @@ namespace NB
 		void update_material(NB::NB_Material& material);
 		void update_transform(NB::NB_Transform& transform);
 		void update_light(NB::NB_Directional_Light& dir_light);
+		void update_light(std::vector<NB::NB_Point_Light>& point_light);
 		void update_camera(NB::NB_Camera& camera);
 
 
 		//material
+		GLint uni_material_ambient;
+		GLint uni_material_diffuse;
+		GLint uni_material_specular;
+		GLint uni_material_shininess;
 
 		//textures (not really used as uniforms, just to mention they exist in shader)
 		GLint texture_unit_diffuse_map;
@@ -69,6 +74,17 @@ namespace NB
 		GLint uni_camera_pos;
 		GLint uni_projection;
 		GLint uni_view;
+
+		//point light
+		const int C_MAX_POINT_LIGHT_COUNT = 32;
+		GLint uni_point_light_count;
+		std::vector<GLint> uni_attenuation_const;
+		std::vector<GLint> uni_attenuation_lin;
+		std::vector<GLint> uni_attenuation_quad;
+		std::vector<GLint> uni_light_strength;
+		std::vector<GLint> uni_light_pos;
+		std::vector<GLint> uni_light_color;
+		std::vector<GLint> uni_light_ambient_strength;
 
 		//dir light
 		GLint uni_dir_light_direction;
