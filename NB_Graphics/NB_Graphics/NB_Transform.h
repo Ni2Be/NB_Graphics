@@ -32,7 +32,7 @@ namespace NB
 
 		//functions
 		inline glm::mat4 const get_model();
-		inline void      set_scale(float vector);
+		inline void      set_scale(float factor);
 		
 		//get/set
 		glm::vec3& pos()   { return m_pos; }
@@ -50,7 +50,7 @@ namespace NB
 	};
 
 
-	//TODO maybe implement static objects that don't need to be updated every time
+	//TODO maybe implement objects that don't need to be updated every time
 	inline glm::mat4 const NB_Transform::get_model()
 	{
 		glm::mat4 pos_mat   = glm::translate(m_pos);
