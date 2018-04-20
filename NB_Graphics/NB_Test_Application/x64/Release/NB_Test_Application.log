@@ -1,1 +1,12 @@
-﻿  NB_Test_Application.vcxproj -> D:\Programmieren\NB_Graphics\NB_Graphics\x64\Release\NB_Test_Application.exe
+﻿  main.cpp
+d:\programmieren\nb_graphics\nb_graphics\nb_test_application\main.cpp(99): warning C4305: "Argument": Verkürzung von "double" in "float"
+d:\programmieren\nb_graphics\nb_graphics\nb_test_application\main.cpp(130): warning C4244: "Initialisierung": Konvertierung von "double" in "float", möglicher Datenverlust
+d:\programmieren\nb_graphics\nb_graphics\nb_test_application\main.cpp(139): warning C4244: "+=": Konvertierung von "double" in "float", möglicher Datenverlust
+d:\programmieren\nb_graphics\nb_graphics\nb_test_application\main.cpp(140): warning C4244: "+=": Konvertierung von "double" in "float", möglicher Datenverlust
+d:\programmieren\nb_graphics\nb_graphics\nb_test_application\main.cpp(141): warning C4244: "+=": Konvertierung von "double" in "float", möglicher Datenverlust
+  Code wird generiert.
+  1 of 1756 functions ( 0.1%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    3 functions had inline decision re-evaluated but remain unchanged
+  Codegenerierung ist abgeschlossen.
+  NB_Test_Application.vcxproj -> D:\Programmieren\NB_Graphics\NB_Graphics\x64\Release\NB_Test_Application.exe

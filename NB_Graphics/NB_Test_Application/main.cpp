@@ -63,7 +63,7 @@ int main()
 	
 	NB::NB_Model model("D:/Programmieren/NB_Graphics/NB_Graphics/NB_Test_Application/res/models/nano/nanosuit.obj");
 	model.transform().pos() = glm::vec3(0.0f, -0.5f, 0.0f);
-	model.transform().set_scale(0.1f);
+	model.transform().set_scale(0.17f);
 
 	//NB::NB_Model ground("D:/Programmieren/NB_Graphics/NB_Graphics/NB_Test_Application/res/models/ground/model.obj");
 	//ground.transform().pos() = glm::vec3(0.0f, -1.2f, 0.0f);
@@ -75,7 +75,7 @@ int main()
 	//model.transform().pos() = glm::vec3(0.0f, 0.35f, 0.0f);
 	//model.transform().set_scale(0.5f);
 	//model.mesh().mesh().material().add_texture(texture3);
-	//model.mesh().mesh().material().shininess() = 0.2f;
+	//model.mesh().mesh().material().shininess() = 0.9f;
 
 	//NB::NB_Model model("D:/Programmieren/NB_Graphics/NB_Graphics/NB_Test_Application/res/models/turtle/Turtle_fixed.obj");
 	//model.transform().pos() = glm::vec3(0.0f, -0.2f, -1.0f);
@@ -97,7 +97,7 @@ int main()
 	std::mt19937 gen(rd());
 	std::uniform_real_distribution<float> dismin2_2(-2, 2);
 	std::uniform_real_distribution<float> dis0_1(0.1, 0.9);
-	std::uniform_real_distribution<float> dis1_20(1, 20);
+	std::uniform_real_distribution<float> dis1_20(1, 20);	
 
 	NB::NB_Material material2(NB::NB_PEARL);
 	NB::NB_Texture texture0("D:/Programmieren/NB_Graphics/NB_Graphics/NB_Test_Application/res/textures/white.png");
@@ -128,8 +128,11 @@ int main()
 		NB::NB_Standard_Shader::shader().update_light(point_lights);
 
 		float time = glfwGetTime();
-		cube.transform().rot().y += 0.01 * cos(time);
-		cube.transform().rot().x += 0.01 * cos(time);
+		//cube.transform().rot().y += 0.01 * cos(time);
+		//cube.transform().rot().x += 0.01 * cos(time);
+
+		cube.mesh().mesh().material().shininess() = 0.5f * cos(time) + 0.5f;
+		std::cout << cube.mesh().mesh().material().shininess() << std::endl;
 
 		for (auto& point_light : point_lights)
 		{
@@ -140,11 +143,11 @@ int main()
 		for (int i = 0; i < point_lights.size(); i++)
 			light_cubes[i].transform().pos() = point_lights[i].position();
 
-		model.transform().rot().y += 0.001;
+		//model.transform().rot().y += 0.001;
 
-		//cube.draw();
-		model.draw();
-	   // cube2.draw();
+		cube.draw();
+		//model.draw();
+	    //cube2.draw();
 		//for (auto& light_cube : light_cubes)	
 		//	light_cube.draw();
 

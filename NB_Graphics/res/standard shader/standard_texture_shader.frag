@@ -71,6 +71,10 @@ void main()
 	//output   
    frag_color = vec4(light_strength, 1.0f);
    
+   
+	if (material.shininess > 0.5)
+		frag_color = vec4(0.0f);
+
    //DEBUG
    //frag_color = texture(diffuse_map, vertex_uv);
 }
@@ -107,21 +111,22 @@ vec3 calc_point_light(Point_Light light, vec3 vertex_dir, vec3 vertex_pos, vec3 
 
 	//Diffuse
 	float diffuse_strength = max(dot(vertex_dir, light_direction), 0.0f);
-	vec3 diffuse_light = light.strength * diffuse_strength * light.color * vec3(texture(diffuse_map, vertex_uv));
+	vec3 diffuse_light     = light.strength * diffuse_strength * light.color * vec3(texture(diffuse_map, vertex_uv));
 
 	//Specular	
 	vec3 specular_light    = vec3(0.0f,0.0f,0.0f);
 	if (has_specular_map)
 	{
 		//vec3 halfway_direction = normalize(light_direction + view_dir);
-		//float specular_strength = pow(max(dot(vertex_dir, halfway_direction), 0.0), material.shininess);
-		vec3 reflect_direction = reflect(-light_direction, vertex_dir); 
-		float specular_strength = pow(max(dot(view_dir, reflect_direction), 0.0), material.shininess);
-		specular_light += light.strength * specular_strength * light.color * vec3(texture(specular_map, vertex_uv));
+		//float specular_strength = pow(max(dot(vertex_dir, halfway_direction), 0.0), material.shininess * 128);
+		vec3 reflect_direction  = reflect(-light_direction, vertex_dir); 
+		float specular_strength = pow(max(dot(view_dir, reflect_direction), 0.0), material.shininess * 256);
+		specular_light          += specular_strength * light.color * vec3(texture(specular_map, vertex_uv));
 	}
 
+
 	//Attenuation
-	float distance = length(light.position - vertex_pos);
+	float distance    = length(light.position - vertex_pos);
 	float attenuation = 1.0f / (light.attenuation_const + light.attenuation_lin * distance + light.attenuation_quad * pow(distance, 2));   
 
 	//SUM

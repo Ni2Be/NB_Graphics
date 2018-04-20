@@ -1,1 +1,6 @@
-﻿  NB_Graphics.vcxproj -> D:\Programmieren\NB_Graphics\NB_Graphics\x64\Release\NB_Graphics.lib
+﻿  NB_Mesh.cpp
+  NB_Model.cpp
+  NB_Object.cpp
+  NB_Standard_Shader.cpp
+d:\programmieren\nb_graphics\nb_graphics\nb_graphics\nb_standard_shader.cpp(154): warning C4267: "Argument": Konvertierung von "size_t" nach "GLint", Datenverlust möglich
+  NB_Graphics.vcxproj -> D:\Programmieren\NB_Graphics\NB_Graphics\x64\Release\NB_Graphics.lib
