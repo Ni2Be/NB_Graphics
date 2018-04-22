@@ -41,17 +41,23 @@ namespace NB
 		NB_Rendering_Vertex(
 			const glm::vec3& pos,
 			const glm::vec3& normal = glm::vec3{ 0.0f, 0.0f, 0.0f },
-			const glm::vec2& uv = glm::vec2{ 0.0f, 0.0f })
+			const glm::vec2& uv = glm::vec2{ 0.0f, 0.0f },
+			const glm::vec3& tangent = glm::vec3{ 0.0f, 0.0f, 0.0f },
+			const glm::vec3& bi_tangent = glm::vec3{ 0.0f, 0.0f, 0.0f })
 			:
 			m_pos   (pos),
 			m_uv    (uv),
-			m_normal(normal)
+			m_normal(normal),
+			m_tangent(tangent),
+			m_bi_tangent(bi_tangent)
 		{}
 	private:
 		//member
 		glm::vec3 m_pos;
 		glm::vec2 m_uv;
 		glm::vec3 m_normal;
+		glm::vec3 m_tangent;
+		glm::vec3 m_bi_tangent;
 	};
 
 	class NB_Rendering_Mesh

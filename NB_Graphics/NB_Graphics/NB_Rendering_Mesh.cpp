@@ -98,6 +98,16 @@ void NB::NB_Rendering_Mesh::setup_mesh()
 		sizeof(NB_Rendering_Vertex),
 		(GLvoid*)offsetof(NB_Rendering_Vertex, m_normal));
 
+	glEnableVertexAttribArray(3);
+	glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE,
+		sizeof(NB_Rendering_Vertex),
+		(GLvoid*)offsetof(NB_Rendering_Vertex, m_tangent));
+
+	glEnableVertexAttribArray(4);
+	glVertexAttribPointer(4, 3, GL_FLOAT, GL_FALSE,
+		sizeof(NB_Rendering_Vertex),
+		(GLvoid*)offsetof(NB_Rendering_Vertex, m_bi_tangent));
+
 	//unbinde
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);

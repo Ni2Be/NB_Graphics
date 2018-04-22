@@ -18,9 +18,9 @@ void NB::NB_Standard_Shader::bind_uniforms()
 	{
 		std::string num = std::to_string(i);
 
-		uni_attenuation_const.push_back     (glGetUniformLocation(m_program, ("point_lights[" + num + "].attenuation_const").c_str()));
-		uni_attenuation_lin.push_back       (glGetUniformLocation(m_program, ("point_lights[" + num + "].attenuation_lin").c_str()));
-		uni_attenuation_quad.push_back      (glGetUniformLocation(m_program, ("point_lights[" + num + "].attenuation_quad").c_str()));
+		uni_light_attenuation_const.push_back(glGetUniformLocation(m_program, ("point_lights[" + num + "].attenuation_const").c_str()));
+		uni_light_attenuation_lin.push_back  (glGetUniformLocation(m_program, ("point_lights[" + num + "].attenuation_lin").c_str()));
+		uni_light_attenuation_quad.push_back (glGetUniformLocation(m_program, ("point_lights[" + num + "].attenuation_quad").c_str()));
 		uni_light_pos.push_back             (glGetUniformLocation(m_program, ("point_lights[" + num + "].position").c_str()));
 		uni_light_color.push_back           (glGetUniformLocation(m_program, ("point_lights[" + num + "].color").c_str()));
 		uni_light_strength.push_back        (glGetUniformLocation(m_program, ("point_lights[" + num + "].strength").c_str()));
@@ -141,10 +141,10 @@ void NB::NB_Standard_Shader::update_light(std::vector<NB::NB_Point_Light>& point
 	//Light
 	for(int i = 0; i < point_lights.size(); i++)
 	{
-		glUniform1f(uni_attenuation_const[i]     , point_lights[i].attenuation_const());
-		glUniform1f(uni_attenuation_lin[i]       , point_lights[i].attenuation_lin());
-		glUniform1f(uni_attenuation_quad[i]      , point_lights[i].attenuation_quad());
-		glUniform1f(uni_light_ambient_strength[i], point_lights[i].ambient_strength());
+		glUniform1f(uni_light_attenuation_const[i], point_lights[i].attenuation_const());
+		glUniform1f(uni_light_attenuation_lin[i]  , point_lights[i].attenuation_lin());
+		glUniform1f(uni_light_attenuation_quad[i] , point_lights[i].attenuation_quad());
+		glUniform1f(uni_light_ambient_strength[i] , point_lights[i].ambient_strength());
 
 		glUniform3f(uni_light_pos[i]             , point_lights[i].position().x, point_lights[i].position().y, point_lights[i].position().z);
 		glUniform3f(uni_light_color[i]           , point_lights[i].color().r, point_lights[i].color().g, point_lights[i].color().b);

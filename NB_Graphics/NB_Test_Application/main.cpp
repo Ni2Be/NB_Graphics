@@ -38,31 +38,28 @@ int main()
 	NB::NB_Window nb_window(SCR_WIDTH, SCR_HEIGHT, "NB Test");
 	nb_window.background_color() = glm::vec4(0.0, 0.0, 0.0, 1.0);
 
-	//light
-	NB::NB_Directional_Light dir_light({ 0.5f, 0.5f, 0.3f });
-	//NB::NB_Point_Light       point_light({ -0.2f, -0.2f, -0.2f });
 
 	//camera
 	NB::NB_Camera camera(
-			glm::radians(45.0f),
-			(GLfloat)1200 / (GLfloat)700,
-			0.1f,
-			1000.0f);
+		glm::radians(45.0f),
+		(GLfloat)SCR_WIDTH / (GLfloat)SCR_HEIGHT,
+		0.1f,
+		1000.0f);
 	camera.look_at(
-			glm::vec3(0.0f, 0.0f, 3.5f),
-			glm::vec3(0.0f, 0.0f, -1.0f),
-			glm::vec3(0.0f, 1.0f, 0.0f));
+		glm::vec3(0.0f, 0.0f, 2.5f),
+		glm::vec3(0.0f, 0.3f, -1.0f),
+		glm::vec3(0.0f, 1.0f, 0.0f));
 
 	//Material
-	NB::NB_Material material1(NB::NB_PEARL);
-	NB::NB_Texture texture1("D:/Programmieren/NB_Graphics/NB_Graphics/NB_Test_Application/res/textures/container2.png");
-	NB::NB_Texture texture2("D:/Programmieren/NB_Graphics/NB_Graphics/NB_Test_Application/res/textures/container2_specular.png", NB::NB_SPECULAR);
-	material1.add_texture(texture1);
-	material1.add_texture(texture2);
+	NB::NB_Material container_mat(NB::NB_PEARL);
+	//NB::NB_Texture container_dif("D:/Programmieren/NB_Graphics/NB_Graphics/NB_Test_Application/res/textures/container2.png");
+	//NB::NB_Texture container_spec("D:/Programmieren/NB_Graphics/NB_Graphics/NB_Test_Application/res/textures/container2_specular.png", NB::NB_SPECULAR);
+	//container_mat.add_texture(container_dif);
+	//container_mat.add_texture(container_spec);
 
-	
+
 	NB::NB_Model model("D:/Programmieren/NB_Graphics/NB_Graphics/NB_Test_Application/res/models/nano/nanosuit.obj");
-	model.transform().pos() = glm::vec3(0.0f, -0.5f, 0.0f);
+	model.transform().pos() = glm::vec3(0.5f, -1.2f, 0.0f);
 	model.transform().set_scale(0.17f);
 
 	//NB::NB_Model ground("D:/Programmieren/NB_Graphics/NB_Graphics/NB_Test_Application/res/models/ground/model.obj");
@@ -81,40 +78,54 @@ int main()
 	//model.transform().pos() = glm::vec3(0.0f, -0.2f, -1.0f);
 	//model.transform().rot().x = 3 * glm::half_pi<float>();
 	//model.transform().set_scale(0.007f);
-	
-	NB::NB_Cube cube(1.0f, 1.0f, 1.0f);
-	cube.transform().pos() = glm::vec3(-1.0f, 0.0f, 0.0f);
 
-	cube.mesh().mesh().attach(material1);
+	NB::NB_Cube container(1.0f, 1.0f, 1.0f);
+	container.transform().pos() = glm::vec3(-1.0f, 0.0f, 0.0f);
+	container.mesh().mesh().attach(container_mat);
 
 	NB::NB_Cube cube2(0.5f, 0.5f, 1.0f);
 	cube2.transform().pos() = glm::vec3(0.0f, -1.0f, 0.0f);
+	container.mesh().mesh().material().shininess() = 0.01f;
 
-	cube2.mesh().mesh().attach(material1);
+	cube2.mesh().mesh().attach(container_mat);
 
 	//Light
-	std::random_device rd;
-	std::mt19937 gen(rd());
-	std::uniform_real_distribution<float> dismin2_2(-2, 2);
-	std::uniform_real_distribution<float> dis0_1(0.1, 0.9);
-	std::uniform_real_distribution<float> dis1_20(1, 20);	
+	NB::NB_Directional_Light dir_light({ 0.5f, 0.5f, -0.3f });
 
-	NB::NB_Material material2(NB::NB_PEARL);
-	NB::NB_Texture texture0("D:/Programmieren/NB_Graphics/NB_Graphics/NB_Test_Application/res/textures/white.png");
-	material2.add_texture(texture0);
-	std::vector<NB::NB_Cube> light_cubes;
-	std::vector<NB::NB_Point_Light> point_lights;
-	for (int i = 0; i < 32; i++)
+	std::vector<NB::NB_Point_Light> point_lights = {
+		{
+			glm::vec3(1.5f, 0.5f, 0.0f),
+			glm::vec4{ 1.0f, 1.0f, 1.0f, 1.0f }, 1.0f },
+		{
+			glm::vec3(-1.5f, 0.2f, 0.0f),
+			glm::vec4{ 0.0f, 0.0f, 1.0f, 1.0f }, 1.0f },
+		{
+			glm::vec3(1.5f, 1.5f, 0.0f),
+			glm::vec4{ 0.0f, 1.0f, 0.0f, 1.0f }, 1.0f },
+		{
+			glm::vec3(-0.5f, 0.8f, 0.0f),
+			glm::vec4{ 1.0f, 0.0f, 0.0f, 1.0f }, 1.0f }
+	};
+
+	std::vector<NB::NB_Cube>     light_cubes;
+	std::vector<NB::NB_Texture>  custom_textures;
+	std::vector<NB::NB_Material> light_matials(4, NB::NB_PEARL);
+
+	for (int i = 0; i < point_lights.size(); i++)
 	{
-		point_lights.push_back(
-			{glm::vec3(dismin2_2(gen), dismin2_2(gen), dismin2_2(gen) + glm::pi<float>()),
-			glm::vec4{ dis0_1(gen), dis0_1(gen), dis0_1(gen), 1.0f }, 0.1f });
-		
-		light_cubes.push_back({0.1f, 0.1f, 0.1f});
-		light_cubes[i].mesh().mesh().attach(material2);
+		light_cubes.push_back(NB::NB_Cube{ 0.1f, 0.1f, 0.1f });
+
+		//CUSTOM TEXTURE
+		NB::NB_Pixel_Map pixel = { { {point_lights[i].color()},{point_lights[i].color()},{point_lights[i].color()} },
+								   { {point_lights[i].color()},{point_lights[i].color()},{point_lights[i].color()} } ,
+		                           { {point_lights[i].color()},{point_lights[i].color()},{point_lights[i].color()} } };
+		custom_textures.push_back(NB::NB_Texture(pixel));
+		light_matials[i].add_texture(custom_textures[i]);
+		light_cubes[i].mesh().mesh().attach(light_matials[i]);
 	}
 	// uncomment this call to draw in wireframe polygons.
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+
 
 	// render loop
 	// -----------
@@ -123,33 +134,26 @@ int main()
 		NB::NB_Event_Handler::poll_events();
 		nb_window.clear();
 
+
 		NB::NB_Standard_Shader::shader().update_light(dir_light);
 		NB::NB_Standard_Shader::shader().update_camera(camera);
 		NB::NB_Standard_Shader::shader().update_light(point_lights);
 
 		float time = glfwGetTime();
-		//cube.transform().rot().y += 0.01 * cos(time);
-		//cube.transform().rot().x += 0.01 * cos(time);
+		camera.rotate({0.0f, -0.001, 0.0f});
 
-		cube.mesh().mesh().material().shininess() = 0.5f * cos(time) + 0.5f;
-		std::cout << cube.mesh().mesh().material().shininess() << std::endl;
+		point_lights[0].position().z = cos(time);
+		point_lights[1].position().y = cos(time);
+		point_lights[2].position().x = cos(time);
+		point_lights[3].position().z = sin(time);
+		
+		model.transform().rot().y -= 0.005f;
 
-		for (auto& point_light : point_lights)
-		{
-			point_light.position().z += 0.04 * cos(time);
-			point_light.position().x += 0.1 * (-cos(4 * time) + sin(4 * time));
-			point_light.position().y += 0.1 * ( cos(4 * time) + sin(4 * time));
-		}
-		for (int i = 0; i < point_lights.size(); i++)
+		for (int i = 0; i < light_cubes.size(); i++)
 			light_cubes[i].transform().pos() = point_lights[i].position();
-
-		//model.transform().rot().y += 0.001;
-
-		cube.draw();
-		//model.draw();
-	    //cube2.draw();
-		//for (auto& light_cube : light_cubes)	
-		//	light_cube.draw();
+		for (auto light_cube : light_cubes)	
+			light_cube.draw();
+		model.draw();
 
 		nb_window.update();
 	}

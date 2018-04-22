@@ -16,6 +16,13 @@ void NB::NB_Model::load_model(std::string path)
 	this->m_path = path.substr(0, path.find_last_of('/'));
 
 	m_materials.reserve((scene->mNumMaterials)*sizeof(NB_Material));//TODO understand why this is necessary
+
+	if (!scene->mMeshes[0]->HasTangentsAndBitangents())
+	{
+		scene = import.ApplyPostProcessing(aiProcess_CalcTangentSpace);
+	}
+
+
 	this->process_node(scene->mRootNode, scene);
 }
 
@@ -81,9 +88,6 @@ NB::NB_Material NB::NB_Model::process_material(aiMesh* assimp_mesh, const aiScen
 	if (&temp_float != nullptr)
 		material.shininess() = temp_float;
 
-
-
-
 	if (assimp_mesh->mMaterialIndex >= 0)
 	{
 		aiMaterial *assimp_material = scene->mMaterials[assimp_mesh->mMaterialIndex];
@@ -91,7 +95,7 @@ NB::NB_Material NB::NB_Model::process_material(aiMesh* assimp_mesh, const aiScen
 		process_texture(assimp_material, aiTextureType_DIFFUSE, material, NB::NB_DIFFUSE);
 		process_texture(assimp_material, aiTextureType_SPECULAR, material, NB::NB_SPECULAR);
 		process_texture(assimp_material, aiTextureType_NORMALS, material, NB::NB_NORMAL);
-		process_texture(assimp_material, aiTextureType_HEIGHT, material, NB::NB_HEIGHT);
+		process_texture(assimp_material, aiTextureType_HEIGHT, material, NB::NB_NORMAL);//TODO hadle files correctly
 	}
 	return material;
 }
@@ -126,7 +130,9 @@ std::vector<NB::NB_Rendering_Vertex> NB::NB_Model::process_vertices(aiMesh* assi
 				NB::NB_Rendering_Vertex{
 					glm::vec3{ assimp_mesh->mVertices[i].x        , assimp_mesh->mVertices[i].y        , assimp_mesh->mVertices[i].z },
 					glm::vec3{ assimp_mesh->mNormals[i].x         , assimp_mesh->mNormals[i].y         , assimp_mesh->mNormals[i].z },
-					glm::vec2{ assimp_mesh->mTextureCoords[0][i].x, assimp_mesh->mTextureCoords[0][i].y } }
+					glm::vec2{ assimp_mesh->mTextureCoords[0][i].x, assimp_mesh->mTextureCoords[0][i].y },
+					glm::vec3{ assimp_mesh->mTangents->x          , assimp_mesh->mTangents->y          , assimp_mesh->mTangents->z },
+					glm::vec3{ assimp_mesh->mBitangents->x        , assimp_mesh->mBitangents->y        , assimp_mesh->mBitangents->z } }
 			);
 		}
 	}
@@ -137,8 +143,11 @@ std::vector<NB::NB_Rendering_Vertex> NB::NB_Model::process_vertices(aiMesh* assi
 			vertices.push_back
 			(
 				NB::NB_Rendering_Vertex{
-					glm::vec3{ assimp_mesh->mVertices[i].x        , assimp_mesh->mVertices[i].y        , assimp_mesh->mVertices[i].z },
-					glm::vec3{ assimp_mesh->mNormals[i].x         , assimp_mesh->mNormals[i].y         , assimp_mesh->mNormals[i].z }}
+					glm::vec3{ assimp_mesh->mVertices[i].x, assimp_mesh->mVertices[i].y, assimp_mesh->mVertices[i].z },
+					glm::vec3{ assimp_mesh->mNormals[i].x , assimp_mesh->mNormals[i].y , assimp_mesh->mNormals[i].z },
+					glm::vec2{ 0.0f, 0.0f },
+					glm::vec3{ assimp_mesh->mTangents->x  , assimp_mesh->mTangents->y  , assimp_mesh->mTangents->z },
+					glm::vec3{ assimp_mesh->mBitangents->x, assimp_mesh->mBitangents->y, assimp_mesh->mBitangents->z } }
 			);
 		}
 	}

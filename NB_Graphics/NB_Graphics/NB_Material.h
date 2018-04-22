@@ -30,6 +30,7 @@ namespace NB
 		NB_Material(glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, float shininess, NB_Texture& diffuse_map, NB_Texture& specular_map)
 			:m_ambient(ambient), m_diffuse(diffuse), m_specular(specular), m_shininess(shininess), m_diffuse_map(diffuse_map), m_specular_map(specular_map) {}
 
+		~NB_Material() { std::cout << " dest mat "; }
 		//functions
 		void add_texture(const NB_Texture& texture);
 

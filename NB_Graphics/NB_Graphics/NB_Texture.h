@@ -14,10 +14,15 @@ Usage:
 //GLEW
 #include <GL/glew.h>
 
+//GLM
+#include <glm/glm.hpp>
+
 //STL
 #include <string>
+#include <vector>
 #include <unordered_set>
 #include <unordered_map>
+#include <iostream>
 
 namespace NB
 {
@@ -29,6 +34,19 @@ namespace NB
 		NB_NORMAL,
 		NB_HEIGHT
 	};
+
+	struct NB_Pixel
+	{
+		unsigned char r;
+		unsigned char g;
+		unsigned char b;
+		unsigned char a;
+
+		NB_Pixel(const glm::vec4& vec) { r = vec.r * 255; g = vec.g * 255; b = vec.b * 255; a = vec.a * 255; }
+		NB_Pixel(int r, int g, int b, int a) : r(r), g(g), b(b), a(a) {}
+	};
+
+	typedef std::vector<std::vector<NB::NB_Pixel>> NB_Pixel_Map;
 
 	class NB_Texture_Catalog
 	{
@@ -52,9 +70,14 @@ namespace NB
 
 	class NB_Texture
 	{
+		//TODO destructor
 	public:
 		NB_Texture(){}
 		NB_Texture(const std::string& file_name, NB_Texture_Type type = NB_DIFFUSE);
+		NB_Texture(NB_Pixel_Map pixel_map, NB_Texture_Type type = NB_DIFFUSE);
+
+
+		~NB_Texture() { std::cout << " dest text "; }
 
 		NB_Texture_Type& type() { return m_type; }
 
@@ -62,15 +85,6 @@ namespace NB
 		const std::string&     file_path() const { return m_file_path; }
 		const NB_Texture_Type& type()      const { return m_type; }
 
-		//TODO name convention
-		//TODO don't load from picture, use openGL to generate
-		//TODO do I really need an one pixel color generator???
-		//singeltons
-		static NB_Texture& WHITE()
-		{
-			static NB_Texture static_texture("../res/standard textures/white.png");
-			return static_texture;
-		}
 	private:
 		std::string     m_file_path;
 		GLuint          m_id;

@@ -78,9 +78,9 @@ namespace NB
 		//point light
 		const int C_MAX_POINT_LIGHT_COUNT = 32;
 		GLint uni_point_light_count;
-		std::vector<GLint> uni_attenuation_const;
-		std::vector<GLint> uni_attenuation_lin;
-		std::vector<GLint> uni_attenuation_quad;
+		std::vector<GLint> uni_light_attenuation_const;
+		std::vector<GLint> uni_light_attenuation_lin;
+		std::vector<GLint> uni_light_attenuation_quad;
 		std::vector<GLint> uni_light_strength;
 		std::vector<GLint> uni_light_pos;
 		std::vector<GLint> uni_light_color;
