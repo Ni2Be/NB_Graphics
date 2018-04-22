@@ -27,11 +27,31 @@ GLuint NB::NB_Texture_Catalog::get_id(std::string path)
 	return m_texture_catalog[path];
 }
 
+
+NB::NB_Texture::NB_Texture(const NB_Texture& rhs)
+	:
+	m_id       (rhs.m_id),
+	m_type     (rhs.m_type)
+{
+}
+
+void NB::swap(NB_Texture& lhs, NB_Texture& rhs)
+{
+	using std::swap;
+	swap(lhs.m_id       , rhs.m_id);
+	swap(lhs.m_type     , rhs.m_type);
+}
+
+NB::NB_Texture& NB::NB_Texture::operator=(const NB_Texture& right)
+{
+	NB::NB_Texture temp(right);
+	NB::swap(*this, temp);
+	return *this;
+}
 NB::NB_Texture::NB_Texture(const std::string& file_name, NB_Texture_Type type)
 	:
-	m_type(type),
-	m_file_path(file_name)
-{	
+	m_type(type)
+{
 	//Texture isn't loaded
 	if (NB_Texture_Catalog::catalog().check(file_name))
 	{

@@ -25,6 +25,7 @@ Usage:
 
 //STL
 #include <vector>
+#include <optional>
 
 //NB
 #include "NB_Material.h"
@@ -79,6 +80,9 @@ namespace NB
 		//functions
 		void setup_mesh();
 		void draw();
+		//will copy the material and update its pointer to that material
+		void add(const NB_Material& material);
+		//will save a pointer to the attached material
 		void attach(NB_Material& material);
 
 		//get/set
@@ -89,7 +93,8 @@ namespace NB
 		std::vector<NB_Rendering_Vertex> m_vertices;
 		std::vector<unsigned int>        m_indices;
 
-		NB_Material* m_material;
+		NB_Material*               m_material;
+		std::optional<NB_Material> m_owned_material;
 
 		GLuint m_EBO;
 		GLuint m_VAO;

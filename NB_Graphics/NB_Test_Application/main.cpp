@@ -47,7 +47,7 @@ int main()
 		1000.0f);
 	camera.look_at(
 		glm::vec3(0.0f, 0.0f, 2.5f),
-		glm::vec3(0.0f, 0.3f, -1.0f),
+		glm::vec3(0.0f, 0.7f, -1.0f),
 		glm::vec3(0.0f, 1.0f, 0.0f));
 
 	//Material
@@ -59,8 +59,8 @@ int main()
 
 
 	NB::NB_Model model("D:/Programmieren/NB_Graphics/NB_Graphics/NB_Test_Application/res/models/nano/nanosuit.obj");
-	model.transform().pos() = glm::vec3(0.5f, -1.2f, 0.0f);
-	model.transform().set_scale(0.17f);
+	model.transform().pos() = glm::vec3(0.5f, -0.0f, 0.0f);
+	model.transform().set_scale(0.14f);
 
 	//NB::NB_Model ground("D:/Programmieren/NB_Graphics/NB_Graphics/NB_Test_Application/res/models/ground/model.obj");
 	//ground.transform().pos() = glm::vec3(0.0f, -1.2f, 0.0f);
@@ -100,7 +100,7 @@ int main()
 			glm::vec3(-1.5f, 0.2f, 0.0f),
 			glm::vec4{ 0.0f, 0.0f, 1.0f, 1.0f }, 1.0f },
 		{
-			glm::vec3(1.5f, 1.5f, 0.0f),
+			glm::vec3(1.5f, 2.5f, 0.0f),
 			glm::vec4{ 0.0f, 1.0f, 0.0f, 1.0f }, 1.0f },
 		{
 			glm::vec3(-0.5f, 0.8f, 0.0f),
@@ -108,9 +108,6 @@ int main()
 	};
 
 	std::vector<NB::NB_Cube>     light_cubes;
-	std::vector<NB::NB_Texture>  custom_textures;
-	std::vector<NB::NB_Material> light_matials(4, NB::NB_PEARL);
-
 	for (int i = 0; i < point_lights.size(); i++)
 	{
 		light_cubes.push_back(NB::NB_Cube{ 0.1f, 0.1f, 0.1f });
@@ -119,9 +116,11 @@ int main()
 		NB::NB_Pixel_Map pixel = { { {point_lights[i].color()},{point_lights[i].color()},{point_lights[i].color()} },
 								   { {point_lights[i].color()},{point_lights[i].color()},{point_lights[i].color()} } ,
 		                           { {point_lights[i].color()},{point_lights[i].color()},{point_lights[i].color()} } };
-		custom_textures.push_back(NB::NB_Texture(pixel));
-		light_matials[i].add_texture(custom_textures[i]);
-		light_cubes[i].mesh().mesh().attach(light_matials[i]);
+
+		NB::NB_Material temp_mat(NB::NB_COPPER);
+		temp_mat.add_texture(NB::NB_Texture(pixel)); //new owner is the material
+
+		light_cubes[i].mesh().mesh().add(temp_mat);
 	}
 	// uncomment this call to draw in wireframe polygons.
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);

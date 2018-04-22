@@ -23,10 +23,12 @@ Usage:
 #include <unordered_set>
 #include <unordered_map>
 #include <iostream>
+#include <sstream>
 
 namespace NB
 {
 	//TODO more types
+	const int CONST_ENUM_COUNT_NB_Texture_Type = 4;
 	enum NB_Texture_Type
 	{
 		NB_DIFFUSE,
@@ -76,19 +78,20 @@ namespace NB
 		NB_Texture(const std::string& file_name, NB_Texture_Type type = NB_DIFFUSE);
 		NB_Texture(NB_Pixel_Map pixel_map, NB_Texture_Type type = NB_DIFFUSE);
 
-
-		~NB_Texture() { std::cout << " dest text "; }
+		//copy
+		NB_Texture(const NB_Texture&);
+		friend void swap(NB_Texture& lhs, NB_Texture& rhs);
+		NB_Texture & operator=(const NB_Texture&);
+		//~NB_Texture() { std::cout << " dest text "; }
 
 		NB_Texture_Type& type() { return m_type; }
 
 		const GLuint&          id()        const { return m_id; }  
-		const std::string&     file_path() const { return m_file_path; }
 		const NB_Texture_Type& type()      const { return m_type; }
-
 	private:
-		std::string     m_file_path;
 		GLuint          m_id;
 		NB_Texture_Type m_type;
 	};
+	void swap(NB::NB_Texture& lhs, NB::NB_Texture& rhs);
 }
 #endif

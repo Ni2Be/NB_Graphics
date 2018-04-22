@@ -10,6 +10,9 @@ Usage:
 #ifndef NB_MATRIAL_H_INCLUDED
 #define NB_MATRIAL_H_INCLUDED
 
+//stl
+#include <optional>
+
 //GLM
 #include <glm/glm.hpp>
 
@@ -28,10 +31,19 @@ namespace NB
 		NB_Material(glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, float shininess)
 			:m_ambient(ambient), m_diffuse(diffuse), m_specular(specular), m_shininess(shininess) {}
 		NB_Material(glm::vec3 ambient, glm::vec3 diffuse, glm::vec3 specular, float shininess, NB_Texture& diffuse_map, NB_Texture& specular_map)
-			:m_ambient(ambient), m_diffuse(diffuse), m_specular(specular), m_shininess(shininess), m_diffuse_map(diffuse_map), m_specular_map(specular_map) {}
+			:m_ambient(ambient), m_diffuse(diffuse), m_specular(specular), m_shininess(shininess), m_diffuse_map(&diffuse_map), m_specular_map(&specular_map) {}
 
-		~NB_Material() { std::cout << " dest mat "; }
+
+		//copy
+		NB_Material(const NB_Material&);
+		friend void swap(NB_Material& lhs, NB_Material& rhs);
+		NB_Material & operator=(const NB_Material&);
+
+
 		//functions
+		//will save a pointer to the attached texture
+		void attach_texture(NB_Texture& texture);
+		//will copy the texture and update its pointer to that texture
 		void add_texture(const NB_Texture& texture);
 
 		//get/set
@@ -44,10 +56,10 @@ namespace NB
 		float& strength()          { return m_strength; }
 		float& ambient_strength()  { return m_ambient_strength; }
 
-		NB_Texture& diffuse_map()  { return m_diffuse_map; }
-		NB_Texture& specular_map() { return m_specular_map; }
-		NB_Texture& normal_map()   { return m_normal_map; }
-		NB_Texture& height_map()   { return m_height_map; }
+		NB_Texture& diffuse_map()  { return *m_diffuse_map; }
+		NB_Texture& specular_map() { return *m_specular_map; }
+		NB_Texture& normal_map()   { return *m_normal_map; }
+		NB_Texture& height_map()   { return *m_height_map; }
 
 		const glm::vec3& ambient()      const { return m_ambient; }
 		const glm::vec3& diffuse()      const { return m_diffuse; }
@@ -58,10 +70,10 @@ namespace NB
 		const float& strength()          const { return m_strength; }
 		const float& ambient_strength()  const { return m_ambient_strength; }
 		 							
-		const NB_Texture& diffuse_map() const { return m_diffuse_map; }
-		const NB_Texture& specular_map()const { return m_specular_map; }
-		const NB_Texture& normal_map()  const { return m_normal_map; }
-		const NB_Texture& height_map()  const { return m_height_map; }
+		const NB_Texture& diffuse_map() const { return *m_diffuse_map; }
+		const NB_Texture& specular_map()const { return *m_specular_map; }
+		const NB_Texture& normal_map()  const { return *m_normal_map; }
+		const NB_Texture& height_map()  const { return *m_height_map; }
 
 		const bool has_diffuse_map() const { return m_has_diffuse_map; }
 		const bool has_specular_map()const { return m_has_specular_map; }
@@ -78,16 +90,24 @@ namespace NB
 		float m_strength;
 		float m_ambient_strength;
 
-		NB_Texture m_diffuse_map;
-		NB_Texture m_specular_map;
-		NB_Texture m_normal_map;
-		NB_Texture m_height_map;
+		//textures that were attached with attach_texture()
+		NB_Texture* m_diffuse_map;
+		NB_Texture* m_specular_map;
+		NB_Texture* m_normal_map;
+		NB_Texture* m_height_map;
+
+		//textures that were added with add_texture()
+		std::optional<NB_Texture> m_owned_diffuse_map;
+		std::optional<NB_Texture> m_owned_specular_map;
+		std::optional<NB_Texture> m_owned_normal_map;
+		std::optional<NB_Texture> m_owned_height_map;
 
 		bool m_has_diffuse_map;
 		bool m_has_specular_map;
 		bool m_has_normal_map;
 		bool m_has_height_map;
 	};
+	void swap(NB::NB_Material& lhs, NB::NB_Material& rhs);
 
 	const NB_Material NB_GOLD{
 		glm::vec3{ 0.24725,	0.1995,	0.0745 },

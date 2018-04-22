@@ -44,6 +44,7 @@ namespace NB
 		//member
 		std::string m_path;
 		std::vector<NB_Material> m_materials;
+		std::vector<NB_Texture>  m_textures;
 		
 		//functions
 		void                             load_model  (std::string path);

@@ -31,18 +31,22 @@ NB::NB_Rendering_Mesh::NB_Rendering_Mesh(const NB_Rendering_Mesh& rhs)
 	NB_Rendering_Mesh(rhs.m_vertices, rhs.m_indices) //setup_mesh() is called
 {
 	this->m_material = rhs.m_material;
+	if (rhs.m_owned_material.has_value())
+		this->add(rhs.m_owned_material.value());
+
 }
 
 void NB::swap(NB_Rendering_Mesh& lhs, NB_Rendering_Mesh& rhs)
 {
 	using std::swap;
-	swap(lhs.m_vertices  , rhs.m_vertices);
-	swap(lhs.m_indices   , rhs.m_indices);
-	swap(lhs.m_EBO       , rhs.m_EBO);
-	swap(lhs.m_VAO       , rhs.m_VAO);
-	swap(lhs.m_VBO       , rhs.m_VBO);
-	swap(lhs.m_draw_count, rhs.m_draw_count);
-	swap(lhs.m_material  , rhs.m_material);
+	swap(lhs.m_vertices      , rhs.m_vertices);
+	swap(lhs.m_indices       , rhs.m_indices);
+	swap(lhs.m_EBO           , rhs.m_EBO);
+	swap(lhs.m_VAO           , rhs.m_VAO);
+	swap(lhs.m_VBO           , rhs.m_VBO);
+	swap(lhs.m_draw_count    , rhs.m_draw_count);
+	swap(lhs.m_material      , rhs.m_material);
+	swap(lhs.m_owned_material, rhs.m_owned_material);
 }
 
 NB::NB_Rendering_Mesh& NB::NB_Rendering_Mesh::operator=(const NB_Rendering_Mesh& right)
@@ -123,4 +127,11 @@ void NB::NB_Rendering_Mesh::draw()
 void NB::NB_Rendering_Mesh::attach(NB_Material& material)
 {
 	this->m_material = &material;
+	m_owned_material.reset();
+}
+
+void NB::NB_Rendering_Mesh::add(const NB_Material& material)
+{
+	this->m_owned_material = material;
+	this->m_material       = &(m_owned_material.value());
 }

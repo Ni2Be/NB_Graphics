@@ -15,14 +15,15 @@ void NB::NB_Model::load_model(std::string path)
 	}
 	this->m_path = path.substr(0, path.find_last_of('/'));
 
-	m_materials.reserve((scene->mNumMaterials)*sizeof(NB_Material));//TODO understand why this is necessary
-
+	//not only for performace also because the pointer positions are needed
+	//DO NOT DELETE!!!
+	m_materials.reserve(scene->mNumMaterials);
+	m_textures.reserve(scene->mNumMaterials * CONST_ENUM_COUNT_NB_Texture_Type);
+	
 	if (!scene->mMeshes[0]->HasTangentsAndBitangents())
 	{
 		scene = import.ApplyPostProcessing(aiProcess_CalcTangentSpace);
 	}
-
-
 	this->process_node(scene->mRootNode, scene);
 }
 
@@ -107,8 +108,8 @@ void NB::NB_Model::process_texture(aiMaterial* assimp_matrial, aiTextureType ass
 	{
 		aiString assimp_texture_path;
 		assimp_matrial->GetTexture(assimp_type, (unsigned int)0, &assimp_texture_path);
-		NB_Texture texture(this->m_path + "/" + assimp_texture_path.C_Str(), nb_type);
-		nb_material.add_texture(texture);
+		m_textures.push_back(NB_Texture(this->m_path + "/" + assimp_texture_path.C_Str(), nb_type));
+		nb_material.attach_texture(m_textures.back());
 
 		NB::event_log("NB::NB_Model::process_texture", "Texture path: "
 			+ this->m_path + "/" + assimp_texture_path.C_Str()
