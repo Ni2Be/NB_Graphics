@@ -6,10 +6,8 @@
 
 #include <iostream>
 
-//TODO use smart pointer 
 
 //TODO should store image and provide a way to manipulate it
-//TODO or it should be possible to get it back from the graca
 
 
 bool NB::NB_Texture_Catalog::check(std::string path)
@@ -17,9 +15,23 @@ bool NB::NB_Texture_Catalog::check(std::string path)
 	return !m_texture_catalog.count(path);
 }
 
-void NB::NB_Texture_Catalog::registarte(std::string path, GLuint texture_id)
+void NB::NB_Texture_Catalog::check_in(std::string path, GLuint texture_id)
 {
 	m_texture_catalog[path] = texture_id;
+	check_in(texture_id);
+}
+
+void NB::NB_Texture_Catalog::check_in(GLuint texture_id)
+{
+	m_texture_id_catalog.insert(texture_id);
+}
+
+int NB::NB_Texture_Catalog::check_out(std::string path, GLuint texture_id)
+{
+	m_texture_id_catalog.extract(texture_id);
+	if (m_texture_id_catalog.count(texture_id) == 0)
+		m_texture_catalog.erase(path);
+	return m_texture_id_catalog.count(texture_id);
 }
 
 GLuint NB::NB_Texture_Catalog::get_id(std::string path)
@@ -28,29 +40,10 @@ GLuint NB::NB_Texture_Catalog::get_id(std::string path)
 }
 
 
-NB::NB_Texture::NB_Texture(const NB_Texture& rhs)
-	:
-	m_id       (rhs.m_id),
-	m_type     (rhs.m_type)
-{
-}
-
-void NB::swap(NB_Texture& lhs, NB_Texture& rhs)
-{
-	using std::swap;
-	swap(lhs.m_id       , rhs.m_id);
-	swap(lhs.m_type     , rhs.m_type);
-}
-
-NB::NB_Texture& NB::NB_Texture::operator=(const NB_Texture& right)
-{
-	NB::NB_Texture temp(right);
-	NB::swap(*this, temp);
-	return *this;
-}
 NB::NB_Texture::NB_Texture(const std::string& file_name, NB_Texture_Type type)
 	:
-	m_type(type)
+	m_type(type),
+	m_path(file_name)
 {
 	//Texture isn't loaded
 	if (NB_Texture_Catalog::catalog().check(file_name))
@@ -83,20 +76,22 @@ NB::NB_Texture::NB_Texture(const std::string& file_name, NB_Texture_Type type)
 			stbi_image_free(image_data);
 		}
 		//registrate new texture
-		NB_Texture_Catalog::catalog().registarte(file_name, this->m_id);
+		NB_Texture_Catalog::catalog().check_in(file_name, this->m_id);
 	}
 	//texture is loaded
 	else
 	{
 		NB::event_log("NB::NB_Texture::NB_Texture", "from texture catalog: " + file_name);
 		this->m_id = NB_Texture_Catalog::catalog().get_id(file_name);
+		NB_Texture_Catalog::catalog().check_in(this->m_id);
 	}
 }
 
 
 NB::NB_Texture::NB_Texture(NB_Pixel_Map pixel_map, NB_Texture_Type type)
 	:
-	m_type(type)
+	m_type(type),
+	m_path("none")
 {
 	NB::event_log("NB_Texture", "create rgba image");
 
@@ -127,7 +122,42 @@ NB::NB_Texture::NB_Texture(NB_Pixel_Map pixel_map, NB_Texture_Type type)
 	
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
+	
 	glBindTexture(GL_TEXTURE_2D, 0);
 	free(image_data);
+
+	NB::NB_Texture_Catalog::catalog().check_in(m_id);
+}
+
+NB::NB_Texture::~NB_Texture() 
+{ 
+	if (NB::NB_Texture_Catalog::catalog().check_out(m_path, m_id) == 0)
+	{
+		NB::event_log("NB::NB_Texture::~NB_Texture() ", "destroyed texture: " + std::to_string(m_id));
+		glDeleteTextures(1, &m_id);
+	}
+}
+
+NB::NB_Texture::NB_Texture(const NB_Texture& rhs)
+	:
+	m_id       (rhs.m_id),
+	m_type     (rhs.m_type),
+	m_path     (rhs.m_path)
+{
+	NB_Texture_Catalog::catalog().check_in(this->m_path, this->m_id);
+}
+
+void NB::swap(NB_Texture& lhs, NB_Texture& rhs)
+{
+	using std::swap;
+	swap(lhs.m_id       , rhs.m_id);
+	swap(lhs.m_type     , rhs.m_type);
+	swap(lhs.m_path     , rhs.m_path);
+}
+
+NB::NB_Texture& NB::NB_Texture::operator=(const NB_Texture& right)
+{
+	NB::NB_Texture temp(right);
+	NB::swap(*this, temp);
+	return *this;
 }

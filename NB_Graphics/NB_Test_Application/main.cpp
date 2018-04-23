@@ -61,21 +61,16 @@ int main()
 	NB::NB_Model model("D:/Programmieren/NB_Graphics/NB_Graphics/NB_Test_Application/res/models/nano/nanosuit.obj");
 	model.transform().pos() = glm::vec3(0.5f, -0.0f, 0.0f);
 	model.transform().set_scale(0.14f);
-
-	//NB::NB_Model ground("D:/Programmieren/NB_Graphics/NB_Graphics/NB_Test_Application/res/models/ground/model.obj");
-	//ground.transform().pos() = glm::vec3(0.0f, -1.2f, 0.0f);
-	//ground.transform().rot().x = 2.5 + glm::half_pi<float>();
-
-
+	
 	//NB::NB_Model model("D:/Programmieren/NB_Graphics/NB_Graphics/NB_Test_Application/res/models/lion/kobanB.obj");
 	//NB::NB_Texture texture3("D:/Programmieren/NB_Graphics/NB_Graphics/NB_Test_Application/res/textures/okapi-101-spec.jpg", NB::NB_SPECULAR);
-	//model.transform().pos() = glm::vec3(0.0f, 0.35f, 0.0f);
+	//model.transform().pos() = glm::vec3(0.0f, 1.35f, 0.0f);
 	//model.transform().set_scale(0.5f);
 	//model.mesh().mesh().material().add_texture(texture3);
 	//model.mesh().mesh().material().shininess() = 0.9f;
 
 	//NB::NB_Model model("D:/Programmieren/NB_Graphics/NB_Graphics/NB_Test_Application/res/models/turtle/Turtle_fixed.obj");
-	//model.transform().pos() = glm::vec3(0.0f, -0.2f, -1.0f);
+	//model.transform().pos() = glm::vec3(0.0f, 1.2f, -1.0f);
 	//model.transform().rot().x = 3 * glm::half_pi<float>();
 	//model.transform().set_scale(0.007f);
 
@@ -108,6 +103,8 @@ int main()
 	};
 
 	std::vector<NB::NB_Cube>     light_cubes;
+
+
 	for (int i = 0; i < point_lights.size(); i++)
 	{
 		light_cubes.push_back(NB::NB_Cube{ 0.1f, 0.1f, 0.1f });
@@ -117,11 +114,17 @@ int main()
 								   { {point_lights[i].color()},{point_lights[i].color()},{point_lights[i].color()} } ,
 		                           { {point_lights[i].color()},{point_lights[i].color()},{point_lights[i].color()} } };
 
-		NB::NB_Material temp_mat(NB::NB_COPPER);
-		temp_mat.add_texture(NB::NB_Texture(pixel)); //new owner is the material
+		NB::NB_Material temp_mat1(NB::NB_COPPER);
+		temp_mat1.add_texture(NB::NB_Texture(pixel)); //new owner is the material
 
-		light_cubes[i].mesh().mesh().add(temp_mat);
+
+		light_cubes[i].mesh().mesh().add(temp_mat1);
 	}
+
+	for (auto& p : NB::NB_Texture_Catalog::catalog().texture_catalog())
+		std::cout << "Path: " << p.first << std::endl;
+	std::cout << "\npath count: " << NB::NB_Texture_Catalog::catalog().texture_catalog().size() << std::endl;
+	std::cout << "\ntex count: " << NB::NB_Texture_Catalog::catalog().texture_id_catalog().size() << std::endl;
 	// uncomment this call to draw in wireframe polygons.
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
@@ -150,7 +153,7 @@ int main()
 
 		for (int i = 0; i < light_cubes.size(); i++)
 			light_cubes[i].transform().pos() = point_lights[i].position();
-		for (auto light_cube : light_cubes)	
+		for (auto& light_cube : light_cubes)	
 			light_cube.draw();
 		model.draw();
 

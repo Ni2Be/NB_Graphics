@@ -14,6 +14,7 @@ NB::NB_Mesh::NB_Mesh(const NB_Rendering_Mesh& mesh)
 {
 	//TODO init fuction that is used by all constructors
 	//TODO order by material diffuse id
+	//TODO maybe find better way to order than diffuse id
 	m_sub_meshes.push_back(mesh);
 }
 
@@ -29,17 +30,17 @@ void NB::NB_Mesh::draw()
 	m_shader->use();//TODO make clear where to call use()
 	m_shader->update_transform(m_transform);
 
-	(*m_shader).update_material(m_sub_meshes[0].material());
+	m_shader->update_material(m_sub_meshes[0].material());
 	m_sub_meshes[0].draw();
 	//materials are ordered by their diffuse map id
-	for (int i = 1, material_id = m_sub_meshes[1].material().diffuse_map().id(); i < m_sub_meshes.size(); i++)
+	for (int i = 1, material_id = m_sub_meshes[0].material().diffuse_map().id(); i < m_sub_meshes.size(); i++)
 	{
 		//only update if new material is used
-		//if (m_sub_meshes[i].material().diffuse_map().id() != material_id)
-		//{
+		if (m_sub_meshes[i].material().diffuse_map().id() != material_id)
+		{
 			material_id = m_sub_meshes[i].material().diffuse_map().id();
-			(*m_shader).update_material(m_sub_meshes[i].material());
-		//}
+			m_shader->update_material(m_sub_meshes[i].material());
+		}
 		m_sub_meshes[i].draw();
 	}
 }

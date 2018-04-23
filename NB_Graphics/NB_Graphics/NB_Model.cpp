@@ -15,16 +15,16 @@ void NB::NB_Model::load_model(std::string path)
 	}
 	this->m_path = path.substr(0, path.find_last_of('/'));
 
-	//not only for performace also because the pointer positions are needed
-	//DO NOT DELETE!!!
-	m_materials.reserve(scene->mNumMaterials);
-	m_textures.reserve(scene->mNumMaterials * CONST_ENUM_COUNT_NB_Texture_Type);
-	
+
 	if (!scene->mMeshes[0]->HasTangentsAndBitangents())
 	{
 		scene = import.ApplyPostProcessing(aiProcess_CalcTangentSpace);
 	}
+
+	NB_Object::m_mesh.sub_meshes().reserve(scene->mNumMeshes);
 	this->process_node(scene->mRootNode, scene);
+
+	fix_mesh();
 }
 
 void NB::NB_Model::process_node(aiNode* node, const aiScene* scene)
@@ -51,7 +51,6 @@ NB::NB_Rendering_Mesh NB::NB_Model::process_mesh(aiMesh* assimp_mesh, const aiSc
 
 	//material
 	const NB::NB_Material& material = process_material(assimp_mesh, scene);
-	m_materials.push_back(material);
 
 	//verticies
 	const std::vector<NB_Rendering_Vertex>& vertices = process_vertices(assimp_mesh, scene);
@@ -60,7 +59,7 @@ NB::NB_Rendering_Mesh NB::NB_Model::process_mesh(aiMesh* assimp_mesh, const aiSc
 	const std::vector<GLuint>& indices = process_indices(assimp_mesh, scene);
 
 	NB_Rendering_Mesh rendering_mesh(vertices, indices);
-	rendering_mesh.attach(m_materials.back());
+	rendering_mesh.add(material);
 	return rendering_mesh;
 }
 
@@ -108,8 +107,7 @@ void NB::NB_Model::process_texture(aiMaterial* assimp_matrial, aiTextureType ass
 	{
 		aiString assimp_texture_path;
 		assimp_matrial->GetTexture(assimp_type, (unsigned int)0, &assimp_texture_path);
-		m_textures.push_back(NB_Texture(this->m_path + "/" + assimp_texture_path.C_Str(), nb_type));
-		nb_material.attach_texture(m_textures.back());
+		nb_material.add_texture(NB_Texture(this->m_path + "/" + assimp_texture_path.C_Str(), nb_type));
 
 		NB::event_log("NB::NB_Model::process_texture", "Texture path: "
 			+ this->m_path + "/" + assimp_texture_path.C_Str()
@@ -165,4 +163,20 @@ std::vector<GLuint> NB::NB_Model::process_indices(aiMesh* assimp_mesh, const aiS
 			indices.push_back(face.mIndices[j]);
 	}
 	return indices;
+}
+
+
+void NB::NB_Model::fix_mesh()
+{
+	default_diffuse_map();
+}
+
+void NB::NB_Model::default_diffuse_map()
+{
+
+	for (auto& mesh : m_mesh.sub_meshes())
+	{
+		if (!mesh.material().has_diffuse_map())
+			mesh.material().add_texture(m_mesh.mesh().material().diffuse_map());
+	}
 }

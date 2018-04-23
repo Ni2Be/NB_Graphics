@@ -53,6 +53,7 @@ NB::NB_Cube::NB_Cube(
 	height /= 2;
 	depth  /= 2;
 
+	//TODO add bi/tangents 
 	NB_Rendering_Mesh mesh({
 				//Front
 				NB::NB_Rendering_Vertex{ glm::vec3{ -width, +height, +depth }, glm::vec3{ 0.0f, 0.0f, 1.0f }, glm::vec2{ 0.0f, 1.0f } },

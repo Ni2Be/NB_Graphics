@@ -20,13 +20,16 @@ Usage:
 //STL
 #include <string>
 #include <vector>
-#include <unordered_set>
 #include <unordered_map>
+#include <unordered_set>
 #include <iostream>
 #include <sstream>
 
 namespace NB
 {
+	//TODO make texture catalog less stupid
+
+
 	//TODO more types
 	const int CONST_ENUM_COUNT_NB_Texture_Type = 4;
 	enum NB_Texture_Type
@@ -62,17 +65,23 @@ namespace NB
 
 		//functions
 		//returns true if texture is new else false
-		bool   check     (std::string path);
-		void   registarte(std::string path, GLuint texture_id);
-		GLuint get_id    (std::string path);
+		bool   check            (std::string path);
+		void   check_in         (std::string path, GLuint texture_id);
+		void   check_in         (GLuint texture_id);
+		int    check_out        (std::string path, GLuint texture_id);
+		GLuint get_id           (std::string path);
+		int    get_texture_count(GLuint texture_id) { return m_texture_id_catalog.count(texture_id); };
+
+		const std::unordered_map<std::string, GLuint>& texture_catalog() const { return m_texture_catalog; }
+		const std::unordered_multiset<GLuint>&         texture_id_catalog() const { return m_texture_id_catalog; }
 	private:
 		//member
 		std::unordered_map<std::string, GLuint> m_texture_catalog;
+		std::unordered_multiset<GLuint> m_texture_id_catalog;
 	};
 
 	class NB_Texture
 	{
-		//TODO destructor
 	public:
 		NB_Texture(){}
 		NB_Texture(const std::string& file_name, NB_Texture_Type type = NB_DIFFUSE);
@@ -82,7 +91,7 @@ namespace NB
 		NB_Texture(const NB_Texture&);
 		friend void swap(NB_Texture& lhs, NB_Texture& rhs);
 		NB_Texture & operator=(const NB_Texture&);
-		//~NB_Texture() { std::cout << " dest text "; }
+		~NB_Texture();
 
 		NB_Texture_Type& type() { return m_type; }
 
@@ -91,6 +100,7 @@ namespace NB
 	private:
 		GLuint          m_id;
 		NB_Texture_Type m_type;
+		std::string     m_path;
 	};
 	void swap(NB::NB_Texture& lhs, NB::NB_Texture& rhs);
 }
