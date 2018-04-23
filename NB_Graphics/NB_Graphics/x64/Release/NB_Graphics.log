@@ -1,7 +1,9 @@
 ﻿  NB_Texture.cpp
-d:\programmieren\nb_graphics\nb_graphics\nb_graphics\nb_texture.h(47): warning C4244: "=": Konvertierung von "float" in "unsigned char", möglicher Datenverlust
-d:\programmieren\nb_graphics\nb_graphics\nb_graphics\nb_texture.h(70): warning C4267: "return": Konvertierung von "size_t" nach "int", Datenverlust möglich
-d:\programmieren\nb_graphics\nb_graphics\nb_graphics\nb_texture.cpp(36): warning C4267: "return": Konvertierung von "size_t" nach "int", Datenverlust möglich
-d:\programmieren\nb_graphics\nb_graphics\nb_graphics\nb_texture.cpp(102): warning C4267: "Initialisierung": Konvertierung von "size_t" nach "int", Datenverlust möglich
-d:\programmieren\nb_graphics\nb_graphics\nb_graphics\nb_texture.cpp(103): warning C4267: "Initialisierung": Konvertierung von "size_t" nach "int", Datenverlust möglich
+d:\programmieren\nb_graphics\nb_graphics\nb_graphics\nb_texture.h(51): warning C4244: "=": Konvertierung von "float" in "unsigned char", möglicher Datenverlust
+d:\programmieren\nb_graphics\nb_graphics\nb_graphics\nb_texture.h(95): warning C4267: "return": Konvertierung von "size_t" nach "int", Datenverlust möglich
+d:\programmieren\nb_graphics\nb_graphics\nb_graphics\nb_texture.cpp(48): warning C4267: "Initialisierung": Konvertierung von "size_t" nach "int", Datenverlust möglich
+d:\programmieren\nb_graphics\nb_graphics\nb_graphics\nb_texture.cpp(49): warning C4267: "Initialisierung": Konvertierung von "size_t" nach "int", Datenverlust möglich
+d:\programmieren\nb_graphics\nb_graphics\nb_graphics\nb_texture.cpp(88): warning C4267: "return": Konvertierung von "size_t" nach "int", Datenverlust möglich
+d:\programmieren\nb_graphics\nb_graphics\nb_graphics\nb_texture.cpp(201): warning C4267: "=": Konvertierung von "size_t" nach "int", Datenverlust möglich
+d:\programmieren\nb_graphics\nb_graphics\nb_graphics\nb_texture.cpp(202): warning C4267: "=": Konvertierung von "size_t" nach "int", Datenverlust möglich
   NB_Graphics.vcxproj -> D:\Programmieren\NB_Graphics\NB_Graphics\x64\Release\NB_Graphics.lib

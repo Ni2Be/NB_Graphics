@@ -102,6 +102,9 @@ namespace NB
 		std::optional<NB_Texture> m_owned_normal_map;
 		std::optional<NB_Texture> m_owned_height_map;
 
+		//TODO should be updated if texture type is changed
+		//TODO or should hold the textures in a container and shader should
+		//TODO considre what it is
 		bool m_has_diffuse_map;
 		bool m_has_specular_map;
 		bool m_has_normal_map;

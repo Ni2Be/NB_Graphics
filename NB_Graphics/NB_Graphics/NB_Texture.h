@@ -42,16 +42,38 @@ namespace NB
 
 	struct NB_Pixel
 	{
-		unsigned char r;
-		unsigned char g;
-		unsigned char b;
-		unsigned char a;
+		unsigned char r = 0;
+		unsigned char g = 0;
+		unsigned char b = 0;
+		unsigned char a = 0;
 
-		NB_Pixel(const glm::vec4& vec) { r = vec.r * 255; g = vec.g * 255; b = vec.b * 255; a = vec.a * 255; }
+		NB_Pixel() {}
+		NB_Pixel(const glm::vec4& vec, bool multiply_255 = false) { if (multiply_255){r = vec.r * 255; g = vec.g * 255; b = vec.b * 255; a = vec.a * 255; }}
 		NB_Pixel(int r, int g, int b, int a) : r(r), g(g), b(b), a(a) {}
 	};
 
-	typedef std::vector<std::vector<NB::NB_Pixel>> NB_Pixel_Map;
+	//typedef std::vector<std::vector<NB::NB_Pixel>> NB_Pixel_Map;
+	struct NB_Pixel_Map : public std::vector<std::vector<NB::NB_Pixel>>
+	{
+		NB_Pixel_Map(int height, int width)
+			:
+			std::vector<std::vector<NB::NB_Pixel>>(height, std::vector<NB_Pixel>(width))
+		{}
+		NB_Pixel_Map(const std::vector<std::vector<NB::NB_Pixel>>& pixel_map)
+			:
+			std::vector<std::vector<NB::NB_Pixel>>(pixel_map)
+		{}
+		NB_Pixel_Map(std::initializer_list<std::vector<NB::NB_Pixel>> il)
+			:
+			std::vector<std::vector<NB::NB_Pixel>>(il)
+		{}
+
+		NB_Pixel_Map(const std::string file_path);
+
+		void save_to_file(const std::string file_path);
+	};
+
+
 
 	class NB_Texture_Catalog
 	{
@@ -85,7 +107,7 @@ namespace NB
 	public:
 		NB_Texture(){}
 		NB_Texture(const std::string& file_name, NB_Texture_Type type = NB_DIFFUSE);
-		NB_Texture(NB_Pixel_Map pixel_map, NB_Texture_Type type = NB_DIFFUSE);
+		NB_Texture(const NB_Pixel_Map& pixel_map, NB_Texture_Type type = NB_DIFFUSE);
 
 		//copy
 		NB_Texture(const NB_Texture&);
@@ -93,6 +115,13 @@ namespace NB
 		NB_Texture & operator=(const NB_Texture&);
 		~NB_Texture();
 
+		//functions
+		void update(const NB_Pixel_Map& pixel_map, bool create_new_sampler = false);
+		//void update(const std::string& file_name, bool create_new_sampler = false);
+
+		NB_Pixel_Map get_pixel_map();
+
+		//get/set
 		NB_Texture_Type& type() { return m_type; }
 
 		const GLuint&          id()        const { return m_id; }  
@@ -101,6 +130,8 @@ namespace NB
 		GLuint          m_id;
 		NB_Texture_Type m_type;
 		std::string     m_path;
+		int             m_width;
+		int             m_height;
 	};
 	void swap(NB::NB_Texture& lhs, NB::NB_Texture& rhs);
 }

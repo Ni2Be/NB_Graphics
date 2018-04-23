@@ -52,7 +52,7 @@ int main()
 
 	//Material
 	NB::NB_Material container_mat(NB::NB_PEARL);
-	//NB::NB_Texture container_dif("D:/Programmieren/NB_Graphics/NB_Graphics/NB_Test_Application/res/textures/container2.png");
+	NB::NB_Texture container_dif("D:/Programmieren/NB_Graphics/NB_Graphics/NB_Test_Application/res/textures/container2.png");
 	//NB::NB_Texture container_spec("D:/Programmieren/NB_Graphics/NB_Graphics/NB_Test_Application/res/textures/container2_specular.png", NB::NB_SPECULAR);
 	//container_mat.add_texture(container_dif);
 	//container_mat.add_texture(container_spec);
@@ -102,7 +102,7 @@ int main()
 			glm::vec4{ 1.0f, 0.0f, 0.0f, 1.0f }, 1.0f }
 	};
 
-	std::vector<NB::NB_Cube>     light_cubes;
+	std::vector<NB::NB_Cube> light_cubes;
 
 
 	for (int i = 0; i < point_lights.size(); i++)
@@ -110,9 +110,7 @@ int main()
 		light_cubes.push_back(NB::NB_Cube{ 0.1f, 0.1f, 0.1f });
 
 		//CUSTOM TEXTURE
-		NB::NB_Pixel_Map pixel = { { {point_lights[i].color()},{point_lights[i].color()},{point_lights[i].color()} },
-								   { {point_lights[i].color()},{point_lights[i].color()},{point_lights[i].color()} } ,
-		                           { {point_lights[i].color()},{point_lights[i].color()},{point_lights[i].color()} } };
+		NB::NB_Pixel_Map pixel = { { { point_lights[i].color(), true } } };
 
 		NB::NB_Material temp_mat1(NB::NB_COPPER);
 		temp_mat1.add_texture(NB::NB_Texture(pixel)); //new owner is the material
@@ -120,11 +118,22 @@ int main()
 
 		light_cubes[i].mesh().mesh().add(temp_mat1);
 	}
+	//light_cubes[0].mesh().mesh().material().diffuse_map().update({ {{1,1,1,1}} });
+	NB::NB_Pixel_Map pm("D:/Programmieren/NB_Graphics/NB_Graphics/NB_Test_Application/res/textures/white.png");
+	for (auto& v : pm)
+	{
+		std::cout << "\n";
+		for (auto& p : v)
+			std::cout << " (" << (int)p.r << ", " << (int)p.g << ", " << (int)p.b << ", " << (int)p.a << ")";
+	}
 
-	for (auto& p : NB::NB_Texture_Catalog::catalog().texture_catalog())
-		std::cout << "Path: " << p.first << std::endl;
-	std::cout << "\npath count: " << NB::NB_Texture_Catalog::catalog().texture_catalog().size() << std::endl;
-	std::cout << "\ntex count: " << NB::NB_Texture_Catalog::catalog().texture_id_catalog().size() << std::endl;
+	//NB::NB_Pixel_Map pm2("D:/Programmieren/NB_Graphics/NB_Graphics/NB_Test_Application/res/textures/container2.png");
+	//pm2.save_to_file("D:/Programmieren/NB_Graphics/NB_Graphics/NB_Test_Application/res/test_image");
+
+	//for (auto& p : NB::NB_Texture_Catalog::catalog().texture_catalog())
+	//	std::cout << "Path: " << p.first << std::endl;
+	//std::cout << "\npath count: " << NB::NB_Texture_Catalog::catalog().texture_catalog().size() << std::endl;
+	//std::cout << "\ntex count: " << NB::NB_Texture_Catalog::catalog().texture_id_catalog().size() << std::endl;
 	// uncomment this call to draw in wireframe polygons.
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
