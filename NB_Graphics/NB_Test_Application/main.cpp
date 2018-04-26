@@ -130,10 +130,10 @@ int main()
 	//NB::NB_Pixel_Map pm2("D:/Programmieren/NB_Graphics/NB_Graphics/NB_Test_Application/res/textures/container2.png");
 	//pm2.save_to_file("D:/Programmieren/NB_Graphics/NB_Graphics/NB_Test_Application/res/test_image");
 
-	//for (auto& p : NB::NB_Texture_Catalog::catalog().texture_catalog())
-	//	std::cout << "Path: " << p.first << std::endl;
-	//std::cout << "\npath count: " << NB::NB_Texture_Catalog::catalog().texture_catalog().size() << std::endl;
-	//std::cout << "\ntex count: " << NB::NB_Texture_Catalog::catalog().texture_id_catalog().size() << std::endl;
+	for (auto& p : NB::NB_Texture_Catalog::catalog().texture_catalog())
+		std::cout << "Path: " << p.first << std::endl;
+	std::cout << "\npath count: " << NB::NB_Texture_Catalog::catalog().texture_catalog().size() << std::endl;
+	std::cout << "\ntex count: " << NB::NB_Texture_Catalog::catalog().texture_id_catalog().size() << std::endl;
 	// uncomment this call to draw in wireframe polygons.
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 

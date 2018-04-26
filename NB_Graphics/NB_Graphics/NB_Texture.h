@@ -24,6 +24,7 @@ Usage:
 #include <unordered_set>
 #include <iostream>
 #include <sstream>
+#include <memory>
 
 namespace NB
 {
@@ -53,8 +54,10 @@ namespace NB
 	};
 
 	//typedef std::vector<std::vector<NB::NB_Pixel>> NB_Pixel_Map;
-	struct NB_Pixel_Map : public std::vector<std::vector<NB::NB_Pixel>>
+	class NB_Pixel_Map : public std::vector<std::vector<NB::NB_Pixel>>
 	{
+	public:
+		//constructor
 		NB_Pixel_Map(int height, int width)
 			:
 			std::vector<std::vector<NB::NB_Pixel>>(height, std::vector<NB_Pixel>(width))
@@ -67,14 +70,17 @@ namespace NB
 			:
 			std::vector<std::vector<NB::NB_Pixel>>(il)
 		{}
-
 		NB_Pixel_Map(const std::string file_path);
 
 		void save_to_file(const std::string file_path);
+		std::unique_ptr<GLubyte, decltype(free)*> convert_to_gl_data() const;
+		void convert_from_gl_data(GLubyte* image_data, int width, int height);
+
+		//set/get
+		const int height() const { return this->size(); }
+		const int width()  const { return (*this)[0].size(); }
 	};
-
-
-
+	
 	class NB_Texture_Catalog
 	{
 	public:
@@ -91,6 +97,8 @@ namespace NB
 		void   check_in         (std::string path, GLuint texture_id);
 		void   check_in         (GLuint texture_id);
 		int    check_out        (std::string path, GLuint texture_id);
+		int    check_out        (GLuint texture_id);
+
 		GLuint get_id           (std::string path);
 		int    get_texture_count(GLuint texture_id) { return m_texture_id_catalog.count(texture_id); };
 
