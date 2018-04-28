@@ -60,6 +60,8 @@ out vec4 frag_color;
 vec3 calc_directional_light(Directional_Light light, vec3 vertex_pos, vec3 view_direction, vec2 vertex_uv, vec3 fragment_normal);
 vec3 calc_point_light(Point_Light light, vec3 vertex_pos, vec3 view_direction, vec2 vertex_uv, vec3 fragment_normal);
 
+vec3 get_texture_color(sampler2D tex, vec2 pos);
+
 void main()
 {
 	vec3 view_direction   = normalize(camera_pos - vs_out.pos);
@@ -84,7 +86,8 @@ void main()
    
 
    //DEBUG
-   //frag_color = texture(diffuse_map, vertex_uv);
+   //frag_color = vec4(0);
+
 }
 
 vec3 calc_directional_light(Directional_Light light, vec3 vertex_pos, vec3 view_direction, vec2 vertex_uv, vec3 fragment_normal)
@@ -93,17 +96,17 @@ vec3 calc_directional_light(Directional_Light light, vec3 vertex_pos, vec3 view_
 	vec3 light_sum;
 	if (has_diffuse_map)
 	{
-		light_sum += light.ambient_strength * light.color * vec3(texture(diffuse_map, vertex_uv));
+		light_sum += light.ambient_strength * light.color * vec3(get_texture_color(diffuse_map, vertex_uv));
 		light_sum += max(dot(fragment_normal, -light.direction), 0.0f) 
 		                 * light.strength 
-						 * vec3(texture(diffuse_map, vertex_uv))
+						 * vec3(get_texture_color(diffuse_map, vertex_uv))
 						 * light.color;
 	}
 	if (has_specular_map)
 	{
 		vec3 halfway_direction  = normalize(light.direction + view_direction);
 		float specular_strength = pow(max(dot(fragment_normal, halfway_direction), 0.0), material.shininess * 128);
-		light_sum               += specular_strength * light.color * vec3(texture(specular_map, vertex_uv));
+		light_sum               += specular_strength * light.color * vec3(get_texture_color(specular_map, vertex_uv));
 	}
 	return light_sum;
 }
@@ -113,11 +116,11 @@ vec3 calc_point_light(Point_Light light, vec3 vertex_pos, vec3 view_direction, v
 	vec3 light_direction = normalize(light.position - vertex_pos);
 
 	//Ambient
-	vec3 ambient_light = light.ambient_strength * light.color * vec3(texture(diffuse_map, vertex_uv));
+	vec3 ambient_light = light.ambient_strength * light.color * vec3(get_texture_color(diffuse_map, vertex_uv));
 
 	//Diffuse
 	float diffuse_strength = max(dot(fragment_normal, light_direction), 0.0f);
-	vec3 diffuse_light     = light.strength * diffuse_strength * light.color * vec3(texture(diffuse_map, vertex_uv));
+	vec3 diffuse_light     = light.strength * diffuse_strength * light.color * vec3(get_texture_color(diffuse_map, vertex_uv));
 
 	//Specular	
 	vec3 specular_light    = vec3(0.0f,0.0f,0.0f);
@@ -125,7 +128,7 @@ vec3 calc_point_light(Point_Light light, vec3 vertex_pos, vec3 view_direction, v
 	{
 		vec3 halfway_direction = normalize(light_direction + view_direction);
 		float specular_strength = pow(max(dot(fragment_normal, halfway_direction), 0.0), material.shininess * 128);
-		specular_light          += specular_strength * light.color * vec3(texture(specular_map, vertex_uv));
+		specular_light          += specular_strength * light.color * vec3(get_texture_color(specular_map, vertex_uv));
 	}
 
 	//Attenuation
@@ -135,4 +138,36 @@ vec3 calc_point_light(Point_Light light, vec3 vertex_pos, vec3 view_direction, v
 	//SUM
 	vec3 light_sum = ambient_light * attenuation + diffuse_light * attenuation + specular_light * attenuation;
     return light_sum;
+}
+vec3 get_texture_color(sampler2D tex, vec2 pos)
+{
+//TESTING
+	//vec4 texture_color = vec4(0);
+	//int detail = 6;	
+	//while((texture_color.r == 0 && texture_color.g == 0 && texture_color.b == 0) && detail >= 0)
+	//{
+	//	ivec2 texture_size = textureSize(tex, detail);
+	//	ivec2 texel_pos = ivec2(pos * texture_size);
+	//	if(texel_pos.x < 0)
+	//	{
+	//		  texel_pos.x = texel_pos.x + texture_size.x;
+	//	}   
+	//	else if(texel_pos.x >= texture_size.x)
+	//	{
+	//		  texel_pos.x = texel_pos.x - texture_size.x;
+	//	}
+	//	if(texel_pos.y < 0)
+	//	{
+	//		  texel_pos.y = texel_pos.y + texture_size.y;
+	//	} 
+	//	else if(texel_pos.y >= texture_size.y)
+	//	{
+	//		  texel_pos.y = texel_pos.y + texture_size.y;
+	//	}
+	//	texture_color = texelFetch(tex, texel_pos, detail);
+	//	detail = detail - 1;
+	//}
+	//return vec3(texture_color);
+//ENDTESTING
+	return vec3(texture(tex, pos));
 }
