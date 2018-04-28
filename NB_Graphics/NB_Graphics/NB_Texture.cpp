@@ -8,68 +8,96 @@
 #include <stb-master/stb_image_write.h>
 
 #include <iostream>
+#include <algorithm>
 
 
 //TODO use smartpointer
 //TODO should store image and provide a way to manipulate it
 
+//NB_PIXEL
+NB::NB_Pixel::NB_Pixel(const glm::vec4& vec, bool multiply_255)
+{
+	if (multiply_255)
+	{
+		r = vec.r * 255;
+		g = vec.g * 255;
+		b = vec.b * 255;
+		a = vec.a * 255;
+	}
+}
+
+NB::NB_Pixel::NB_Pixel(GLubyte r, GLubyte g, GLubyte b, GLubyte a)
+	:
+	r(r), g(g), b(b), a(a)
+{}
+
+std::ostream& NB::operator<<(std::ostream& stream, const NB_Pixel& pixel)
+{
+	return stream
+		<< "(" << (int)pixel.r 
+		<< ", " << (int)pixel.g
+		<< ", " << (int)pixel.b
+		<< ")";
+}
+
 
 //NB_PIXEL_MAP
 NB::NB_Pixel_Map::NB_Pixel_Map(const std::string file_path)
 {
-	NB::event_log("NB::NB_Pixel_Map::NB_Pixel_Map", "loading: " + file_path);
-	int gl_width, gl_height, color_channels;
-	//stbi_set_flip_vertically_on_load(1);
-	std::unique_ptr<GLubyte, decltype(stbi_image_free)*> image_data(reinterpret_cast<GLubyte*>(stbi_load(file_path.c_str(), &gl_width, &gl_height, &color_channels, 4)), stbi_image_free);
+	NB::event_log("NB::NB_Pixel_Map::NB_Pixel_Map(const std::string file_path)", "loading: " + file_path);
+	int color_channels;
+	stbi_set_flip_vertically_on_load(1);
+	std::unique_ptr<GLubyte, decltype(stbi_image_free)*> 
+		image_data(reinterpret_cast<GLubyte*>(stbi_load(file_path.c_str(), &m_width, &m_height, &color_channels, 4)), stbi_image_free);
 
 	if (image_data.get() == nullptr)
 	{
 		NB::error_log("NB::NB_Pixel_Map::NB_Pixel_Map", "Texture loading fail: " + file_path);
 	}
 
-	this->convert_from_gl_data(image_data.get(), gl_width, gl_height);
+	this->convert_from_bit_data(image_data.get(), m_width, m_height);
+}
+
+
+NB::NB_Pixel_Map::NB_Pixel_Map(const std::initializer_list<std::vector<NB::NB_Pixel>>& il)
+	:
+	m_height(il.size()),
+	m_width(il.begin()->size())
+{
+	m_pixel.reserve(il.size() * il.begin()->size());
+
+	for (auto it = std::rbegin(il); it != std::rend(il); it++)
+		for (auto& pixel : *it)
+		{
+			m_pixel.push_back(pixel);
+			if (it->size() != m_width)
+				NB::error_log("NB::NB_Pixel_Map::NB_Pixel_Map(const std::initializer_list<std::vector<NB::NB_Pixel>>& il)", "initializer_list width varies");
+		}
 }
 
 void NB::NB_Pixel_Map::save_to_file(const std::string file_path)
 {
-	NB::event_log("NB::NB_Pixel_Map::save_to_file", "saving to: " + file_path + ".bmp");
-	auto&& image_data = convert_to_gl_data();
+	NB::event_log("NB::NB_Pixel_Map::save_to_file(const std::string file_path)", "saving to: " + file_path + ".bmp");
 	stbi_flip_vertically_on_write(1);
-	stbi_write_bmp((file_path + ".bmp").c_str(), this->width(), this->height(), STBI_rgb_alpha, image_data.get());
+	stbi_write_bmp((file_path + ".bmp").c_str(), this->width(), this->height(), STBI_rgb_alpha, &(m_pixel.begin()->r));
 }
 
-std::unique_ptr<GLubyte, decltype(free)*> NB::NB_Pixel_Map::convert_to_gl_data() const
+void NB::NB_Pixel_Map::convert_from_bit_data(GLubyte* image_data, int width, int height)
 {
-	std::unique_ptr<GLubyte, decltype(free)*> image_data(reinterpret_cast<GLubyte*>(malloc(this->width() * this->height() * 4 * sizeof(GLubyte))), free);
-	for (int h = 0; h < this->height(); h++)
+	this->m_height = height;
+	this->m_width  = width;
+	m_pixel.reserve(width * height);
+	for (int i = 0; i < width * height * 4; i += 4)
 	{
-		for (int w = 0; w < this->width(); w++)
-		{
-			int current_pixel = h * this->width() * 4 + w * 4;
-			image_data.get()[current_pixel + 0] = (*this)[this->height() - 1 - h][w].r;
-			image_data.get()[current_pixel + 1] = (*this)[this->height() - 1 - h][w].g;
-			image_data.get()[current_pixel + 2] = (*this)[this->height() - 1 - h][w].b;
-			image_data.get()[current_pixel + 3] = (*this)[this->height() - 1 - h][w].a;
-		}
+		m_pixel.push_back(
+			NB_Pixel(
+				image_data[i],
+				image_data[i + 1],
+				image_data[i + 2],
+				image_data[i + 3]
+				)
+		);
 	}
-	return image_data;
-}
-
-void NB::NB_Pixel_Map::convert_from_gl_data(GLubyte* image_data, int width, int height)
-{	
-	NB_Pixel_Map temp(width, height);
-	for (int h = 0; h < height; h++)
-	{
-		for (int w = 0; w < width; w++)
-		{
-			int current_pixel = h * width * 4 + w * 4;
-			temp[height - 1 - h][w].r = image_data[current_pixel + 0];
-			temp[height - 1 - h][w].g = image_data[current_pixel + 1];
-			temp[height - 1 - h][w].b = image_data[current_pixel + 2];
-			temp[height - 1 - h][w].a = image_data[current_pixel + 3];
-		}
-	}
-	std::swap(*this, temp);
 }
 
 //NB_TEXTURE_CATALOG
@@ -81,7 +109,6 @@ bool NB::NB_Texture_Catalog::check(std::string path)
 void NB::NB_Texture_Catalog::check_in(std::string path, GLuint texture_id)
 {
 	m_texture_catalog[path] = texture_id;
-	check_in(texture_id);
 }
 
 void NB::NB_Texture_Catalog::check_in(GLuint texture_id)
@@ -118,39 +145,18 @@ NB::NB_Texture::NB_Texture(const std::string& file_name, NB_Texture_Type type)
 	//Texture isn't loaded
 	if (NB_Texture_Catalog::catalog().check(file_name))
 	{
-		NB::event_log("NB_Texture", "loading: " + file_name);
-		//load picture
-		int color_channels;//TODO use color_channels
+		NB::event_log("NB::NB_Texture::NB_Texture(const std::string& file_name, NB_Texture_Type type)", "loading: " + file_name);
 
-		stbi_set_flip_vertically_on_load(1);
-		std::unique_ptr<GLubyte, decltype(stbi_image_free)*> image_data(reinterpret_cast<GLubyte*>(stbi_load(file_name.c_str(), &m_width, &m_height, &color_channels, 4)), stbi_image_free);
+		NB_Pixel_Map pixel_map(file_name);
+		create_new_sampler(pixel_map);
 
-		if (image_data.get() == nullptr)
-		{
-			NB::error_log("NB::NB_Texture::NB_Texture", "Texture loading fail: " + file_name);
-		}
-		else
-		{
-			glGenTextures(1, &m_id);
-			glBindTexture(GL_TEXTURE_2D, m_id);
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_width, m_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image_data.get());
-			glGenerateMipmap(GL_TEXTURE_2D);
-
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-			glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-			glBindTexture(GL_TEXTURE_2D, 0);
-		}
-		//registrate new texture
+		//registrate new texture path
 		NB_Texture_Catalog::catalog().check_in(file_name, this->m_id);
 	}
 	//texture is loaded
 	else
 	{
-		NB::event_log("NB::NB_Texture::NB_Texture", "from texture catalog: " + file_name);
+		NB::event_log("NB::NB_Texture::NB_Texture(const std::string& file_name, NB_Texture_Type type)", "from texture catalog: " + file_name);
 		this->m_id = NB_Texture_Catalog::catalog().get_id(file_name);
 		NB_Texture_Catalog::catalog().check_in(this->m_id);
 	}
@@ -162,8 +168,8 @@ NB::NB_Texture::NB_Texture(const NB_Pixel_Map& pixel_map, NB_Texture_Type type)
 	m_type(type),
 	m_path("none")
 {
-	NB::event_log("NB_Texture", "create rgba image");
-	update(pixel_map, true);
+	NB::event_log("NB::NB_Texture::NB_Texture(const NB_Pixel_Map& pixel_map, NB_Texture_Type type)", "create rgba image");
+	create_new_sampler(pixel_map);
 }
 
 NB::NB_Texture::~NB_Texture() 
@@ -208,22 +214,18 @@ NB::NB_Texture& NB::NB_Texture::operator=(const NB_Texture& right)
 }
 
 
-void NB::NB_Texture::update(const NB_Pixel_Map& pixel_map, bool create_new_sampler)
+void NB::NB_Texture::update(const NB_Pixel_Map& pixel_map)
 {
-	if(!create_new_sampler)
-		NB::event_log("NB_Texture", "update rgba image");
-	if (create_new_sampler)
-		glGenTextures(1, &m_id);
+	NB::event_log("NB::NB_Texture::update(const NB_Pixel_Map& pixel_map)", "update rgba image");
 
-	if (pixel_map.size() == 0)
-		error_log("NB::NB_Texture::update", "pixel vector is empty");
+	if (pixel_map.is_empty())
+		error_log("NB::NB_Texture::update(const NB_Pixel_Map& pixel_map)", "pixel vector is empty");
 
 	m_height = pixel_map.width();
 	m_width  = pixel_map.height();
-	auto&& image_data = pixel_map.convert_to_gl_data();
 
 	glBindTexture(GL_TEXTURE_2D, m_id);
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_width, m_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, image_data.get());
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, m_width, m_height, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixel_map.get_data_pointer());
 	glGenerateMipmap(GL_TEXTURE_2D);
 	
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -234,17 +236,26 @@ void NB::NB_Texture::update(const NB_Pixel_Map& pixel_map, bool create_new_sampl
 	
 	glBindTexture(GL_TEXTURE_2D, 0);
 
-	if (create_new_sampler)
-		NB::NB_Texture_Catalog::catalog().check_in(m_id);
+}
+
+void NB::NB_Texture::create_new_sampler(const NB_Pixel_Map& pixel_map)
+{
+	NB::event_log("NB::NB_Texture::create_new_sampler(const NB_Pixel_Map& pixel_map)", "prepare rgba image");
+	glGenTextures(1, &m_id);
+	update(pixel_map);
+	NB::NB_Texture_Catalog::catalog().check_in(m_id);
 }
 
 NB::NB_Pixel_Map NB::NB_Texture::get_pixel_map()
 {
-	std::unique_ptr<GLubyte, decltype(free)*> image_data(reinterpret_cast<GLubyte*>(malloc(m_width * m_height * 4 * sizeof(GLubyte))), free);
-	glGetTextureImage(m_id, 0, GL_RGBA, GL_UNSIGNED_BYTE, m_width * m_height * 4 * sizeof(GLubyte), image_data.get());
+	//std::vector<GLubyte> image_data(m_width * m_height * 4);
 
-	NB_Pixel_Map pixel_map(0, 0); 
-	pixel_map.convert_from_gl_data(image_data.get(), m_width, m_height);
+	NB_Pixel_Map pixel_map(m_width, m_height);
+
+	glGetTextureImage(m_id, 0, GL_RGBA, GL_UNSIGNED_BYTE, pixel_map.height() * pixel_map.width() * 4 * sizeof(GLubyte), pixel_map.get_data_pointer());
+	//
+	//NB_Pixel_Map pixel_map(0, 0); 
+	//pixel_map.convert_from_bit_data(image_data.data(), m_width, m_height);
 	
 	return pixel_map;
 }

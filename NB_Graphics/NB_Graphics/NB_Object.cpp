@@ -9,7 +9,7 @@ void NB::NB_Object::draw()
 	m_mesh.draw();
 }
 
-std::ostream& NB::operator<<(std::ostream& stream, NB_Object& object)
+std::ostream& NB::operator<<(std::ostream& stream, const NB_Object& object)
 {
 	return stream
 		<< "pos:\n\tx: " << object.m_transform.pos().x

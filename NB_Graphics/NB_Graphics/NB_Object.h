@@ -40,13 +40,13 @@ namespace NB
 		const NB_Mesh&          mesh()      const { return m_mesh; }
 
 		//for debug
-		friend std::ostream& operator<<(std::ostream& stream, NB_Object& object);
+		friend std::ostream& operator<<(std::ostream& stream, const NB_Object& object);
 	protected:
 		NB::NB_Transform m_transform;
 		glm::vec4        m_color;
 		NB::NB_Mesh      m_mesh;
 	};
-	std::ostream& operator<<(std::ostream& stream, NB_Object& object);
+	std::ostream& operator<<(std::ostream& stream, const NB_Object& object);
 
 	//class NB_Square : public NB_Object
 	//{

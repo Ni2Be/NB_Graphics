@@ -28,7 +28,7 @@ Usage:
 
 namespace NB
 {
-	//TODO make texture catalog less stupid
+	//TODO texture catalog could save pixel_map to each texture ID
 
 
 	//TODO more types
@@ -48,37 +48,50 @@ namespace NB
 		unsigned char b = 0;
 		unsigned char a = 0;
 
+		//constructor
 		NB_Pixel() {}
-		NB_Pixel(const glm::vec4& vec, bool multiply_255 = false) { if (multiply_255){r = vec.r * 255; g = vec.g * 255; b = vec.b * 255; a = vec.a * 255; }}
-		NB_Pixel(int r, int g, int b, int a) : r(r), g(g), b(b), a(a) {}
+		NB_Pixel(const glm::vec4& vec, bool multiply_255 = false);
+		NB_Pixel(GLubyte r, GLubyte g, GLubyte b, GLubyte a);
+		
+		//ostream
+		friend std::ostream& operator<<(std::ostream& stream, const NB_Pixel& pixel);
 	};
+	std::ostream& operator<<(std::ostream& stream, const NB_Pixel& pixel);
 
-	//typedef std::vector<std::vector<NB::NB_Pixel>> NB_Pixel_Map;
-	class NB_Pixel_Map : public std::vector<std::vector<NB::NB_Pixel>>
+
+	class NB_Pixel_Map
 	{
 	public:
 		//constructor
 		NB_Pixel_Map(int height, int width)
 			:
-			std::vector<std::vector<NB::NB_Pixel>>(height, std::vector<NB_Pixel>(width))
+			m_pixel (height * width),
+			m_height(height),
+			m_width (width)
 		{}
-		NB_Pixel_Map(const std::vector<std::vector<NB::NB_Pixel>>& pixel_map)
-			:
-			std::vector<std::vector<NB::NB_Pixel>>(pixel_map)
-		{}
-		NB_Pixel_Map(std::initializer_list<std::vector<NB::NB_Pixel>> il)
-			:
-			std::vector<std::vector<NB::NB_Pixel>>(il)
-		{}
+		NB_Pixel_Map(const std::initializer_list<std::vector<NB::NB_Pixel>>& il);
 		NB_Pixel_Map(const std::string file_path);
 
-		void save_to_file(const std::string file_path);
-		std::unique_ptr<GLubyte, decltype(free)*> convert_to_gl_data() const;
-		void convert_from_gl_data(GLubyte* image_data, int width, int height);
-
+		//functions
+		void save_to_file         (const std::string file_path);
+		void convert_from_bit_data(GLubyte* image_data, int width, int height);
+		
 		//set/get
-		const int height() const { return this->size(); }
-		const int width()  const { return (*this)[0].size(); }
+		void* get_data_pointer() { return m_pixel.data(); }
+		NB_Pixel&       operator()(int height, int width)       { return m_pixel[height * m_width + width]; }
+		const NB_Pixel& operator()(int height, int width) const { return m_pixel[height * m_width + width]; }
+		const int height() const { return this->m_height; }
+		const int width()  const { return this->m_width; }
+		const void* get_data_pointer() const { return m_pixel.data(); }
+		const bool is_empty()          const { return m_height == 0 || m_width == 0; }
+		std::vector<NB_Pixel>::iterator begin() { return m_pixel.begin(); }
+		std::vector<NB_Pixel>::iterator end()   { return m_pixel.end(); }
+		std::vector<NB_Pixel>::const_iterator begin() const { return m_pixel.begin(); }
+		std::vector<NB_Pixel>::const_iterator end()   const { return m_pixel.end(); }  
+	private:
+		std::vector<NB_Pixel> m_pixel;
+		int                   m_height = 0;
+		int                   m_width  = 0;
 	};
 	
 	class NB_Texture_Catalog
@@ -107,14 +120,14 @@ namespace NB
 	private:
 		//member
 		std::unordered_map<std::string, GLuint> m_texture_catalog;
-		std::unordered_multiset<GLuint> m_texture_id_catalog;
+		std::unordered_multiset<GLuint>         m_texture_id_catalog;
 	};
 
 	class NB_Texture
 	{
 	public:
 		NB_Texture(){}
-		NB_Texture(const std::string& file_name, NB_Texture_Type type = NB_DIFFUSE);
+		NB_Texture(const std::string&  file_name, NB_Texture_Type type = NB_DIFFUSE);
 		NB_Texture(const NB_Pixel_Map& pixel_map, NB_Texture_Type type = NB_DIFFUSE);
 
 		//copy
@@ -122,11 +135,9 @@ namespace NB
 		friend void swap(NB_Texture& lhs, NB_Texture& rhs);
 		NB_Texture & operator=(const NB_Texture&);
 		~NB_Texture();
-
+		
 		//functions
-		void update(const NB_Pixel_Map& pixel_map, bool create_new_sampler = false);
-		//void update(const std::string& file_name, bool create_new_sampler = false);
-
+		void         update(const NB_Pixel_Map& pixel_map);
 		NB_Pixel_Map get_pixel_map();
 
 		//get/set
@@ -140,6 +151,9 @@ namespace NB
 		std::string     m_path;
 		int             m_width;
 		int             m_height;
+
+
+		void create_new_sampler(const NB_Pixel_Map& pixel_map);
 	};
 	void swap(NB::NB_Texture& lhs, NB::NB_Texture& rhs);
 }
