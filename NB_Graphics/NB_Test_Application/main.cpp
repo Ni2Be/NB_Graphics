@@ -138,6 +138,11 @@ int main()
 	}
 	//light_cubes[3].mesh().mesh().material().diffuse_map().update(pm3);
 	
+
+	//Calculate Normals
+	model.mesh().calculate_normals();
+
+
 	// render loop
 	// -----------
 	while (nb_window.is_running())

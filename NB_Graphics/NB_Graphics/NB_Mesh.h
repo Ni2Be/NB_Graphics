@@ -29,6 +29,12 @@ namespace NB
 {
 	class NB_Shader;
 
+	enum NB_Mesh_Flags
+	{
+		NB_SOFT_EDGES,
+		NB_HARD_EDGES
+	};
+
 	class NB_Mesh
 	{
 	public:
@@ -39,7 +45,8 @@ namespace NB
 
 		//functions
 		void draw();
-
+		void calculate_normals(NB_Mesh_Flags mode = NB_SOFT_EDGES, float cut_off_alpha = glm::pi<float>());
+		
 		//get/set
 		NB_Rendering_Mesh&              mesh()              { return m_sub_meshes[0]; }
 		NB_Rendering_Mesh&              sub_mesh(int index) { return m_sub_meshes[index]; }

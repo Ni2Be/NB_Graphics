@@ -68,6 +68,7 @@ void NB::NB_Rendering_Mesh::setup_mesh()
 {
 	m_draw_count = static_cast<GLuint>(m_indices.size());
 
+	//TODO DELETE OLD MESH IF ONE IS THERE
 	glGenVertexArrays(1, &m_VAO);
 	glGenBuffers	 (1, &m_VBO);
 	glGenBuffers	 (1, &m_EBO);
