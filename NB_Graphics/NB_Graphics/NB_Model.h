@@ -31,6 +31,12 @@ namespace NB
 	{
 	public:
 		NB_Model(
+			glm::vec4          color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f))
+			:
+			NB_Object(color)
+		{}
+
+		NB_Model(
 			const std::string& path, 
 			glm::vec4          color = glm::vec4(1.0f, 1.0f, 1.0f, 1.0f))
 			:
@@ -39,13 +45,13 @@ namespace NB
 			this->load_model(path);
 		}
 
+		void load_model(std::string path);
 		//TODO implement animation
 	private:
 		//member
 		std::string m_path;
 
 		//functions
-		void                             load_model  (std::string path);
 		void                             process_node(aiNode* node, const aiScene* scene);
 		NB_Rendering_Mesh                process_mesh(aiMesh* assimp_mesh, const aiScene* scene);
 		void                             fix_mesh();

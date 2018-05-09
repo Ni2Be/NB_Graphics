@@ -19,6 +19,12 @@
     <Filter Include="res\textures">
       <UniqueIdentifier>{2763b03e-401f-4db8-86f2-2107dfbcafb4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Test Applications">
+      <UniqueIdentifier>{c56eab91-e5a9-4217-bf78-59f246ed86d2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Test Applications\Model">
+      <UniqueIdentifier>{ff005a5b-824b-4b0b-8571-f1047be8fe8e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shader\test_shader_simple.frag">
@@ -29,13 +35,19 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="NB_Simple_Test_Shader.h">
+    <ClInclude Include="NB_Test_Simple_Shader.h">
       <Filter>Headerdateien</Filter>
+    </ClInclude>
+    <ClInclude Include="NB_Test_Model_Load.h">
+      <Filter>Test Applications\Model</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Quelldateien</Filter>
+    </ClCompile>
+    <ClCompile Include="NB_Test_Model_Load.cpp">
+      <Filter>Test Applications\Model</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

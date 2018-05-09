@@ -48,12 +48,25 @@ void NB::NB_Mesh::draw()
 }
 
 
-void NB::NB_Mesh::calculate_normals(NB_Mesh_Flags mode, float cut_off_alpha)
+void NB::NB_Mesh::calculate_normals()
 {
-	event_log("NB::NB_Mesh::calculate_normals", "Calculate Normals");
+	int vertices_count = 0;
+	int indices_count = 0;
+	for (const auto& meshes : m_sub_meshes)
+	{
+		vertices_count += meshes.m_vertices.size();
+		indices_count += meshes.m_indices.size();
+	}
+	event_log("NB::NB_Mesh::calculate_normals", "process " + std::to_string(vertices_count) + " vertices with " + std::to_string(indices_count) + " indices" );
+
 	for (auto& r_mesh : m_sub_meshes)
 	{
-		//update vertices
+		//delete old normals
+		for (auto& v : r_mesh.m_vertices)
+		{
+			v.m_normal = glm::vec3(0.0f);
+		}
+		//calculate new normals
 		for (int i = 0; i < r_mesh.m_indices.size(); i += 3)
 		{
 			int p1 = r_mesh.m_indices[i];
@@ -67,12 +80,12 @@ void NB::NB_Mesh::calculate_normals(NB_Mesh_Flags mode, float cut_off_alpha)
 			r_mesh.m_vertices[p2].m_normal += new_normal;
 			r_mesh.m_vertices[p3].m_normal += new_normal;
 		}
+		//normalize
 		for (auto& v : r_mesh.m_vertices)
 		{
 			v.m_normal = glm::normalize(v.m_normal);
 		}
 		//setup new mesh
 		r_mesh.setup_mesh();
-	}
-	//TODO modes
+	}	
 }

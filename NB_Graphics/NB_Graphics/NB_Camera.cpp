@@ -11,6 +11,11 @@ NB::NB_Camera::NB_Camera(float fov, float aspect, float z_near, float z_far)
 	m_projection    = glm::perspective(fov, aspect, z_near, z_far);
 }
 
+void NB::NB_Camera::update_projection(float fov, float aspect, float z_near, float z_far)
+{
+	m_projection = glm::perspective(fov, aspect, z_near, z_far);
+}
+
 void NB::NB_Camera::update()
 {
 	m_view       = glm::lookAt(m_pos, m_pos + m_front, m_up);

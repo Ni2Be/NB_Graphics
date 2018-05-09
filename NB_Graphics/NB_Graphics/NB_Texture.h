@@ -69,7 +69,7 @@ namespace NB
 			m_height(height),
 			m_width (width)
 		{}
-		NB_Pixel_Map(const std::initializer_list<std::vector<NB::NB_Pixel>>& il);
+		NB_Pixel_Map(const std::initializer_list<std::initializer_list<NB::NB_Pixel>>& il);
 		NB_Pixel_Map(const std::string file_path);
 
 		//functions
@@ -84,10 +84,15 @@ namespace NB
 		const int width()  const { return this->m_width; }
 		const void* get_data_pointer() const { return m_pixel.data(); }
 		const bool is_empty()          const { return m_height == 0 || m_width == 0; }
-		std::vector<NB_Pixel>::iterator begin() { return m_pixel.begin(); }
-		std::vector<NB_Pixel>::iterator end()   { return m_pixel.end(); }
-		std::vector<NB_Pixel>::const_iterator begin() const { return m_pixel.begin(); }
-		std::vector<NB_Pixel>::const_iterator end()   const { return m_pixel.end(); }  
+
+	private:
+		typedef std::vector<NB_Pixel>::iterator iterator;
+		typedef std::vector<NB_Pixel>::const_iterator const_iterator;
+	public:
+		iterator begin() { return m_pixel.begin(); }
+		iterator end()   { return m_pixel.end(); }
+		const_iterator begin() const { return m_pixel.begin(); }
+		const_iterator end()   const { return m_pixel.end(); }  
 	private:
 		std::vector<NB_Pixel> m_pixel;
 		int                   m_height = 0;

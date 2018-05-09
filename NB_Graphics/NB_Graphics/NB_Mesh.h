@@ -29,11 +29,14 @@ namespace NB
 {
 	class NB_Shader;
 
-	enum NB_Mesh_Flags
-	{
-		NB_SOFT_EDGES,
-		NB_HARD_EDGES
-	};
+	//TODO implement normal calculation modes
+	//enum NB_Mesh_Flags
+	//{
+	//	NB_SOFT_EDGES,
+	//	NB_HARD_EDGES
+	//};
+	//TODO implement vertices optimization, delete multiple
+	//     vertices if they have the same normal
 
 	class NB_Mesh
 	{
@@ -45,7 +48,7 @@ namespace NB
 
 		//functions
 		void draw();
-		void calculate_normals(NB_Mesh_Flags mode = NB_SOFT_EDGES, float cut_off_alpha = glm::pi<float>());
+		void calculate_normals();
 		
 		//get/set
 		NB_Rendering_Mesh&              mesh()              { return m_sub_meshes[0]; }

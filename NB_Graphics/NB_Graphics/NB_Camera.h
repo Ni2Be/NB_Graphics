@@ -41,13 +41,14 @@ namespace NB
 
 		virtual void rotate(glm::vec3 roation);
 
-		void update_front  (glm::vec3 front);
-		void update_up     (glm::vec3 up);
-		void update_pos    (glm::vec3 pos);
-		void update_fov    (GLfloat   fov);
-		void update_aspect (GLfloat   aspect);
-		void update_z_far  (GLfloat   z_far);
-		void aupdate_z_near(GLfloat   z_near);
+		void update_projection(float fov, float aspect, float z_near, float z_far);
+		void update_front     (glm::vec3 front);
+		void update_up        (glm::vec3 up);
+		void update_pos       (glm::vec3 pos);
+		void update_fov       (GLfloat   fov);
+		void update_aspect    (GLfloat   aspect);
+		void update_z_far     (GLfloat   z_far);
+		void aupdate_z_near   (GLfloat   z_near);
 
 		GLfloat fov()            const { return this->m_fov; }
 		GLfloat aspect()         const { return this->m_aspect; }

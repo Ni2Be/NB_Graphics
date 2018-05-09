@@ -59,7 +59,7 @@ NB::NB_Pixel_Map::NB_Pixel_Map(const std::string file_path)
 }
 
 
-NB::NB_Pixel_Map::NB_Pixel_Map(const std::initializer_list<std::vector<NB::NB_Pixel>>& il)
+NB::NB_Pixel_Map::NB_Pixel_Map(const std::initializer_list<std::initializer_list<NB::NB_Pixel>>& il)
 	:
 	m_height(il.size()),
 	m_width(il.begin()->size())

@@ -134,10 +134,12 @@
     <None Include="res\shader\test_shader_simple.vert" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="NB_Simple_Test_Shader.h" />
+    <ClInclude Include="NB_Test_Simple_Shader.h" />
+    <ClInclude Include="NB_Test_Model_Load.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="NB_Test_Model_Load.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\textures\awesomeface.png" />
