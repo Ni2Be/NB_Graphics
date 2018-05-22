@@ -98,6 +98,7 @@ void NB::NB_Test::NB_Model_Test_Application::event_loop()
 		float time = glfwGetTime();
 		camera.rotate({ 0.0f, -0.001, 0.0f });
 
+		
 		point_lights[0].position().z = cos(time);
 		point_lights[1].position().y = cos(time);
 		point_lights[2].position().x = cos(time);
@@ -107,6 +108,7 @@ void NB::NB_Test::NB_Model_Test_Application::event_loop()
 
 		for (int i = 0; i < light_cubes.size(); i++)
 			light_cubes[i].transform().pos() = point_lights[i].position();
+
 		for (auto& light_cube : light_cubes)
 			light_cube.draw();
 		model.draw();
