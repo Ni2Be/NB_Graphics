@@ -25,6 +25,9 @@
     <Filter Include="Test Applications\Model">
       <UniqueIdentifier>{ff005a5b-824b-4b0b-8571-f1047be8fe8e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Test Applications\Mesh">
+      <UniqueIdentifier>{0355b61d-945a-4ecb-b185-569039ce254b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shader\test_shader_simple.frag">
@@ -41,6 +44,9 @@
     <ClInclude Include="NB_Test_Model_Load.h">
       <Filter>Test Applications\Model</Filter>
     </ClInclude>
+    <ClInclude Include="NB_Test_Planet_Mesh.h">
+      <Filter>Test Applications\Mesh</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -48,6 +54,9 @@
     </ClCompile>
     <ClCompile Include="NB_Test_Model_Load.cpp">
       <Filter>Test Applications\Model</Filter>
+    </ClCompile>
+    <ClCompile Include="NB_Test_Planet_Mesh.cpp">
+      <Filter>Test Applications\Mesh</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
