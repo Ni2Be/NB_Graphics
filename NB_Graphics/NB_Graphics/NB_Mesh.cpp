@@ -48,6 +48,7 @@ void NB::NB_Mesh::draw()
 }
 
 
+
 void NB::NB_Mesh::calculate_normals()
 {
 	int vertices_count = 0;
@@ -61,31 +62,36 @@ void NB::NB_Mesh::calculate_normals()
 
 	for (auto& r_mesh : m_sub_meshes)
 	{
-		//delete old normals
-		for (auto& v : r_mesh.m_vertices)
-		{
-			v.m_normal = glm::vec3(0.0f);
-		}
-		//calculate new normals
-		for (int i = 0; i < r_mesh.m_indices.size(); i += 3)
-		{
-			int p1 = r_mesh.m_indices[i];
-			int p2 = r_mesh.m_indices[i + 1];
-			int p3 = r_mesh.m_indices[i + 2];
-			glm::vec3 p1_vector = r_mesh.m_vertices[p1].m_pos;
-			glm::vec3 p2_vector = r_mesh.m_vertices[p2].m_pos;
-			glm::vec3 p3_vector = r_mesh.m_vertices[p3].m_pos;
-			glm::vec3 new_normal = glm::cross(p2_vector - p1_vector, p3_vector - p1_vector);
-			r_mesh.m_vertices[p1].m_normal += new_normal;
-			r_mesh.m_vertices[p2].m_normal += new_normal;
-			r_mesh.m_vertices[p3].m_normal += new_normal;
-		}
-		//normalize
-		for (auto& v : r_mesh.m_vertices)
-		{
-			v.m_normal = glm::normalize(v.m_normal);
-		}
-		//setup new mesh
-		r_mesh.setup_mesh();
+		calculate_normals(r_mesh);
 	}	
+}
+
+void NB::NB_Mesh::calculate_normals(NB_Rendering_Mesh& r_mesh)
+{
+	//delete old normals
+	for (auto& v : r_mesh.m_vertices)
+	{
+		v.m_normal = glm::vec3(0.0f);
+	}
+	//calculate new normals
+	for (int i = 0; i < r_mesh.m_indices.size(); i += 3)
+	{
+		int p1 = r_mesh.m_indices[i];
+		int p2 = r_mesh.m_indices[i + 1];
+		int p3 = r_mesh.m_indices[i + 2];
+		glm::vec3 p1_vector = r_mesh.m_vertices[p1].m_pos;
+		glm::vec3 p2_vector = r_mesh.m_vertices[p2].m_pos;
+		glm::vec3 p3_vector = r_mesh.m_vertices[p3].m_pos;
+		glm::vec3 new_normal = glm::cross(p2_vector - p1_vector, p3_vector - p1_vector);
+		r_mesh.m_vertices[p1].m_normal += new_normal;
+		r_mesh.m_vertices[p2].m_normal += new_normal;
+		r_mesh.m_vertices[p3].m_normal += new_normal;
+	}
+	//normalize
+	for (auto& v : r_mesh.m_vertices)
+	{
+		v.m_normal = glm::normalize(v.m_normal);
+	}
+	//setup new mesh
+	r_mesh.setup_mesh();
 }

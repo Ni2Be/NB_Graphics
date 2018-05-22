@@ -80,14 +80,23 @@ namespace NB
 		//functions
 		void setup_mesh();
 		void draw();
+
 		//will copy the material and update its pointer to that material
 		void add(const NB_Material& material);
 		//will save a pointer to the attached material
 		void attach(NB_Material& material);
 
 		//get/set
-		NB_Material& material() { return *m_material; }
+		NB_Material&       material()       { return *m_material; }
 		const NB_Material& material() const { return *m_material; }
+
+		//setup_mesh() needs to be called after updating the vertices
+		std::vector<NB_Rendering_Vertex>&       vertices()       { return m_vertices; };
+		const std::vector<NB_Rendering_Vertex>& vertices() const { return m_vertices; };
+
+		//setup_mesh() needs to be called after updating the indices
+		std::vector<unsigned int>&       indices()       { return m_indices; }
+		const std::vector<unsigned int>& indices() const { return m_indices; }
 	private:
 		//member
 		std::vector<NB_Rendering_Vertex> m_vertices;

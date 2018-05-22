@@ -49,6 +49,7 @@ namespace NB
 		//functions
 		void draw();
 		void calculate_normals();
+		static void calculate_normals(NB_Rendering_Mesh& mesh);
 		
 		//get/set
 		NB_Rendering_Mesh&              mesh()              { return m_sub_meshes[0]; }

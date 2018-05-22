@@ -3,7 +3,7 @@
 
 NB::NB_Test::NB_Model_Test_Application::NB_Model_Test_Application()
 	:
-	nb_window(SCR_WIDTH, SCR_HEIGHT, "NB Test")
+	nb_window(SCR_WIDTH, HEIGHT, "NB Test")
 {}
 
 void NB::NB_Test::NB_Model_Test_Application::start()
@@ -14,7 +14,7 @@ void NB::NB_Test::NB_Model_Test_Application::start()
 	//camera
 	camera.update_projection(
 		glm::radians(45.0f),
-		(GLfloat)SCR_WIDTH / (GLfloat)SCR_HEIGHT,
+		(GLfloat)SCR_WIDTH / (GLfloat)HEIGHT,
 		0.1f,
 		1000.0f);
 	camera.look_at(
@@ -77,7 +77,7 @@ void NB::NB_Test::NB_Model_Test_Application::start()
 
 	// uncomment this call to draw in wireframe polygons.
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
-
+		
 	event_loop();
 }
 

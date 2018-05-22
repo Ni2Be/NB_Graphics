@@ -9,6 +9,7 @@
 
 //NB Test
 #include "NB_Test_Model_Load.h"
+#include "NB_Test_Planet_Mesh.h"
 
 //stl
 #include <random>
@@ -20,9 +21,11 @@ int main()
 {
 	NB::NB_Graphics::init();
 
-	NB::NB_Test::NB_Model_Test_Application model_test;
-	model_test.start();
+	//NB::NB_Test::NB_Model_Test_Application model_test;
+	//model_test.start();
 
+	NB::NB_Test::NB_Planet_Test_Application planet_test;
+	planet_test.start();
 
 	NB::NB_Graphics::terminate();
 
