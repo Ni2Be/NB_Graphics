@@ -63,6 +63,7 @@ namespace NB
 	{
 	public:
 		//constructor
+		NB_Pixel_Map(){}
 		NB_Pixel_Map(int height, int width)
 			:
 			m_pixel (height * width),
@@ -73,7 +74,8 @@ namespace NB
 		NB_Pixel_Map(const std::string file_path);
 
 		//functions
-		void save_to_file         (const std::string file_path);
+		void save_file            (const std::string file_path);
+		void load_file            (const std::string file_path);
 		void convert_from_bit_data(GLubyte* image_data, int width, int height);
 		
 		//set/get
