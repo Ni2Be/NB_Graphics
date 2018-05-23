@@ -1,9 +1,9 @@
 ﻿  NB_Test_Planet_Mesh.cpp
-d:\programmieren\nb_graphics\nb_graphics\nb_graphics\nb_texture.h(121): warning C4267: "return": Konvertierung von "size_t" nach "int", Datenverlust möglich
-d:\programmieren\nb_graphics\nb_graphics\nb_test_application\nb_test_planet_mesh.cpp(74): warning C4244: "Initialisierung": Konvertierung von "double" in "float", möglicher Datenverlust
+d:\programmieren\nb_graphics\nb_graphics\nb_graphics\nb_texture.h(123): warning C4267: "return": Konvertierung von "size_t" nach "int", Datenverlust möglich
+d:\programmieren\nb_graphics\nb_graphics\nb_test_application\nb_test_planet_mesh.cpp(75): warning C4244: "Initialisierung": Konvertierung von "double" in "float", möglicher Datenverlust
   Code wird generiert.
-  483 of 1879 functions (25.7%) were compiled, the rest were copied from previous compilation.
+  4 of 1879 functions ( 0.2%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    27 functions had inline decision re-evaluated but remain unchanged
+    0 functions had inline decision re-evaluated but remain unchanged
   Codegenerierung ist abgeschlossen.
   NB_Test_Application.vcxproj -> D:\Programmieren\NB_Graphics\NB_Graphics\x64\Release\NB_Test_Application.exe

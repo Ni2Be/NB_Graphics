@@ -22,7 +22,7 @@ void main()
 {
 	vs_out.uv     = uv;
 	vs_out.pos    = vec3(transform * vec4(pos, 1.0f));
-	vs_out.normal = normal;
+	vs_out.normal = vec3(transform * vec4(normal, 0.0f));
 	vec3 t = normalize(vec3(transform * vec4(tangent, 0.0f)));
 	vec3 b = normalize(vec3(transform * vec4(bi_tangent, 0.0f)));
 	vec3 n = normalize(vec3(transform * vec4(normal, 0.0f)));

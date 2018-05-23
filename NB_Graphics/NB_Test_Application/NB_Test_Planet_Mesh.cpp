@@ -54,6 +54,7 @@ void NB::NB_Test::NB_Planet_Test_Application::start()
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 	setup_planet();
+
 	event_loop();
 }
 

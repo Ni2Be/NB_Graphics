@@ -75,7 +75,7 @@ NB::NB_Pixel_Map::NB_Pixel_Map(const std::initializer_list<std::initializer_list
 		}
 }
 
-void NB::NB_Pixel_Map::save_to_file(const std::string file_path)
+void NB::NB_Pixel_Map::save_file(const std::string file_path)
 {
 	NB::event_log("NB::NB_Pixel_Map::save_to_file(const std::string file_path)", "saving to: " + file_path + ".bmp");
 	stbi_flip_vertically_on_write(1);
