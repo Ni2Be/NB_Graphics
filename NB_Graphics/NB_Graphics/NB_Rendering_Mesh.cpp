@@ -26,9 +26,21 @@ NB::NB_Rendering_Mesh::NB_Rendering_Mesh(const std::vector<NB_Rendering_Vertex>&
 	setup_mesh();
 }
 
+
+NB::NB_Rendering_Mesh::NB_Rendering_Mesh(const std::vector<NB_Rendering_Vertex>& vertices,
+	                                     const std::vector<unsigned int>&        indices,
+	                                     const std::vector<vertex_pair>&         identical_vertices_indices) 
+	:
+	m_vertices(vertices),
+	m_indices(indices),
+	m_identical_vertices_indices(identical_vertices_indices)
+{
+	setup_mesh();
+}
+
 NB::NB_Rendering_Mesh::NB_Rendering_Mesh(const NB_Rendering_Mesh& rhs)
 	:
-	NB_Rendering_Mesh(rhs.m_vertices, rhs.m_indices) //setup_mesh() is called
+	NB_Rendering_Mesh(rhs.m_vertices, rhs.m_indices, rhs.m_identical_vertices_indices) //setup_mesh() is called
 {
 	this->m_material = rhs.m_material;
 	if (rhs.m_owned_material.has_value())
@@ -39,14 +51,16 @@ NB::NB_Rendering_Mesh::NB_Rendering_Mesh(const NB_Rendering_Mesh& rhs)
 void NB::swap(NB_Rendering_Mesh& lhs, NB_Rendering_Mesh& rhs)
 {
 	using std::swap;
-	swap(lhs.m_vertices      , rhs.m_vertices);
-	swap(lhs.m_indices       , rhs.m_indices);
-	swap(lhs.m_EBO           , rhs.m_EBO);
-	swap(lhs.m_VAO           , rhs.m_VAO);
-	swap(lhs.m_VBO           , rhs.m_VBO);
-	swap(lhs.m_draw_count    , rhs.m_draw_count);
-	swap(lhs.m_material      , rhs.m_material);
-	swap(lhs.m_owned_material, rhs.m_owned_material);
+	swap(lhs.m_vertices                  , rhs.m_vertices);
+	swap(lhs.m_indices                   , rhs.m_indices);
+	swap(lhs.m_EBO                       , rhs.m_EBO);
+	swap(lhs.m_VAO                       , rhs.m_VAO);
+	swap(lhs.m_VBO                       , rhs.m_VBO);
+	swap(lhs.m_draw_count                , rhs.m_draw_count);
+	swap(lhs.m_material                  , rhs.m_material);
+	swap(lhs.m_owned_material            , rhs.m_owned_material);
+	swap(lhs.m_identical_vertices_indices, rhs.m_identical_vertices_indices);
+	
 }
 
 NB::NB_Rendering_Mesh& NB::NB_Rendering_Mesh::operator=(const NB_Rendering_Mesh& right)

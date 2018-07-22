@@ -41,6 +41,8 @@ namespace NB
 			
 			void setup_planet();
 			NB_Rendering_Mesh generate_icosahedron();
+			NB_Rendering_Mesh generate_octahedron();
+			void              split_octahedron(NB::NB_Rendering_Mesh& octahedron, int split_count);
 		};
 	}
 }

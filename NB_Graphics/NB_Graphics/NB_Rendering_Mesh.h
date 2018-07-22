@@ -38,12 +38,12 @@ namespace NB
 		friend class NB_Rendering_Mesh;
 		friend class NB_Mesh;
 	public:
-		//constructor
+		//constructor normal second
 		NB_Rendering_Vertex(
 			const glm::vec3& pos,
-			const glm::vec3& normal = glm::vec3{ 0.0f, 0.0f, 0.0f },
-			const glm::vec2& uv = glm::vec2{ 0.0f, 0.0f },
-			const glm::vec3& tangent = glm::vec3{ 0.0f, 0.0f, 0.0f },
+			const glm::vec3& normal     = glm::vec3{ 0.0f, 0.0f, 0.0f },
+			const glm::vec2& uv         = glm::vec2{ 0.0f, 0.0f },
+			const glm::vec3& tangent    = glm::vec3{ 0.0f, 0.0f, 0.0f },
 			const glm::vec3& bi_tangent = glm::vec3{ 0.0f, 0.0f, 0.0f })
 			:
 			m_pos   (pos),
@@ -52,6 +52,31 @@ namespace NB
 			m_tangent(tangent),
 			m_bi_tangent(bi_tangent)
 		{}
+		//constructor uv second
+		NB_Rendering_Vertex(
+			const glm::vec3& pos,
+			const glm::vec2& uv,
+			const glm::vec3& normal     = glm::vec3{ 0.0f, 0.0f, 0.0f },
+			const glm::vec3& tangent    = glm::vec3{ 0.0f, 0.0f, 0.0f },
+			const glm::vec3& bi_tangent = glm::vec3{ 0.0f, 0.0f, 0.0f })
+			:
+			m_pos   (pos),
+			m_uv    (uv),
+			m_normal(normal),
+			m_tangent(tangent),
+			m_bi_tangent(bi_tangent)
+		{}
+		//get / set
+		glm::vec3& pos()        { return m_pos; };
+		glm::vec2& uv()         { return m_uv; };
+		glm::vec3& normal()     { return m_normal; };
+		glm::vec3& tangent()    { return m_tangent; };
+		glm::vec3& bi_tangent() { return m_bi_tangent; };
+		const glm::vec3& pos()        const { return m_pos; };
+		const glm::vec2& uv()         const { return m_uv; };
+		const glm::vec3& normal()     const { return m_normal; };
+		const glm::vec3& tangent()    const { return m_tangent; };
+		const glm::vec3& bi_tangent() const { return m_bi_tangent; };
 	private:
 		//member
 		glm::vec3 m_pos;
@@ -65,11 +90,16 @@ namespace NB
 	{
 		friend class NB_Mesh;
 	public:
+		typedef std::pair<unsigned int, unsigned int> vertex_pair;
+
 		//constructor
 		NB_Rendering_Mesh() {}
 		NB_Rendering_Mesh(const std::vector<NB_Rendering_Vertex>& vertices);
 		NB_Rendering_Mesh(const std::vector<NB_Rendering_Vertex>& vertices,
 			              const std::vector<unsigned int>&        indices);
+		NB_Rendering_Mesh(const std::vector<NB_Rendering_Vertex>& vertices,
+			              const std::vector<unsigned int>&        indices,
+				          const std::vector<vertex_pair>&         identical_vertices_indices);
 		//destructor
 		~NB_Rendering_Mesh();
 		//copy
@@ -97,10 +127,16 @@ namespace NB
 		//setup_mesh() needs to be called after updating the indices
 		std::vector<unsigned int>&       indices()       { return m_indices; }
 		const std::vector<unsigned int>& indices() const { return m_indices; }
+
+		
+		//to take effect calculate_normals() needs to be called after updating the identical_vertices_indices
+		std::vector<vertex_pair>&       identical_vertices_indices()       { return m_identical_vertices_indices; }
+		const std::vector<vertex_pair>& identical_vertices_indices() const { return m_identical_vertices_indices; }
 	private:
 		//member
-		std::vector<NB_Rendering_Vertex> m_vertices;
-		std::vector<unsigned int>        m_indices;
+		std::vector<NB_Rendering_Vertex>  m_vertices;
+		std::vector<unsigned int>         m_indices;
+		std::vector<vertex_pair>          m_identical_vertices_indices;
 
 		NB_Material*               m_material;
 		std::optional<NB_Material> m_owned_material;

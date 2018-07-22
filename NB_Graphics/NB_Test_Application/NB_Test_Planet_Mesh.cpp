@@ -51,7 +51,7 @@ void NB::NB_Test::NB_Planet_Test_Application::start()
 		light_cubes[i].transform().pos() = point_lights[i].position();
 
 	// uncomment this call to draw in wireframe polygons.
-	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 
 	setup_planet();
 
@@ -86,7 +86,9 @@ void NB::NB_Test::NB_Planet_Test_Application::event_loop()
 
 void NB::NB_Test::NB_Planet_Test_Application::setup_planet()
 {
-	NB_Rendering_Mesh icosahedron = generate_icosahedron();
+	NB_Rendering_Mesh&& icosahedron = generate_octahedron();
+	split_octahedron(icosahedron, 3);
+
 
 	NB_Pixel_Map pixel = { { { 155, 155, 155, 255 } } };
 	icosahedron.add(NB_BONZE);
@@ -97,6 +99,84 @@ void NB::NB_Test::NB_Planet_Test_Application::setup_planet()
 	planet.transform().set_scale(0.3f);
 	planet.transform().pos().y = 2.0f;
 	planet.calculate_normals();
+
+}
+
+NB::NB_Rendering_Mesh NB::NB_Test::NB_Planet_Test_Application::generate_octahedron()
+{
+
+	//Vertices
+	std::vector<NB_Rendering_Vertex> vertices{
+		NB_Rendering_Vertex{ { 0.0f, 0.0f, 1.0f }, { 0.00f, 0.5f } },//0
+		NB_Rendering_Vertex{ { 1.0f, 0.0f, 0.0f }, { 0.25f, 0.5f } },//1
+		NB_Rendering_Vertex{ { 0.0f, 0.0f,-1.0f }, { 0.50f, 0.5f } },//2
+		NB_Rendering_Vertex{ {-1.0f, 0.0f, 0.0f }, { 0.75f, 0.5f } },//3
+		NB_Rendering_Vertex{ { 0.0f, 0.0f, 1.0f }, { 1.00f, 0.5f } },//4
+		NB_Rendering_Vertex{ { 0.0f,-1.0f, 0.0f }, { 0.50f, 0.0f } },//5
+		NB_Rendering_Vertex{ { 0.0f, 1.0f, 0.0f }, { 0.50f, 1.0f } },//6
+	};
+
+	//Triangles
+	std::vector<unsigned int> indices{
+		0,1,6,
+		0,5,1,
+		1,2,6,
+		1,5,2,
+		2,3,6,
+		2,5,3,
+		3,4,6,
+		3,5,4
+	};
+
+	//Identical Vertices
+	std::vector<NB::NB_Rendering_Mesh::vertex_pair> identical_vertices_indices{
+		{0,4}
+	};
+
+	return NB_Rendering_Mesh(vertices, indices, identical_vertices_indices);
+}
+
+void NB::NB_Test::NB_Planet_Test_Application::split_octahedron(NB::NB_Rendering_Mesh& octahedron, int split_count)
+{
+	std::vector<NB_Rendering_Vertex>                new_vertices;
+	std::vector<unsigned int>                       new_indices;
+	std::vector<NB::NB_Rendering_Mesh::vertex_pair> new_identical_vertices_indices;
+
+
+	int   k = 0;
+	float r = 1.0f;
+	float alpha     = glm::quarter_pi<float>() / static_cast<float>(split_count);
+	float beta      = glm::quarter_pi<float>() - alpha * k;
+	float tan_alpha = glm::tan(alpha);
+
+	int i = 0;
+	//for (unsigned int i = 0; i < octahedron.indices().size(); i += 3)
+	//{
+		//triangle edges
+		glm::vec3 p0 = octahedron.vertices()[octahedron.indices()[i]].pos();
+		glm::vec3 p1 = octahedron.vertices()[octahedron.indices()[i + 1]].pos();
+		glm::vec3 p2 = octahedron.vertices()[octahedron.indices()[i + 2]].pos();
+
+		//split in halfs
+		glm::vec3 a { (p0 + p1) / 2.0f };
+		glm::vec3 b { (p1 + p2) / 2.0f };
+		glm::vec3 c { (p0 + p2) / 2.0f };
+
+		//split futher
+		//for (int s = 1; s < split_count; s++)
+		//{
+			//p0 / a
+		float new_x = r / (tan_alpha - glm::tan(glm::pi<float>() - beta));//(in this case new z)
+		glm::vec3 p_k = { tan_alpha * new_x, 0.0f, new_x };
+		std::cout << p_k.x << ", " << p_k.y << ", " << p_k.z << std::endl;
+
+		k = 1;
+		beta = glm::quarter_pi<float>() - alpha * k;
+		new_x = r / (tan_alpha - glm::tan(glm::pi<float>() - beta));
+		glm::vec3 p_k1 = { tan_alpha * new_x, 0.0f, new_x };
+		std::cout << p_k1.x << ", " << p_k1.y << ", " << p_k1.z << std::endl;
+		//}
+	//}
 }
 
 NB::NB_Rendering_Mesh NB::NB_Test::NB_Planet_Test_Application::generate_icosahedron()

@@ -51,14 +51,22 @@ void NB::NB_Mesh::draw()
 
 void NB::NB_Mesh::calculate_normals()
 {
-	int vertices_count = 0;
-	int indices_count = 0;
+	//event log
+	int vertices_count           = 0;
+	int indices_count            = 0;
+	int identical_vertices_count = 0;
 	for (const auto& meshes : m_sub_meshes)
 	{
-		vertices_count += meshes.m_vertices.size();
-		indices_count += meshes.m_indices.size();
+		vertices_count           += meshes.m_vertices.size();
+		indices_count            += meshes.m_indices.size();
+		identical_vertices_count += meshes.m_identical_vertices_indices.size();
 	}
-	event_log("NB::NB_Mesh::calculate_normals", "process " + std::to_string(vertices_count) + " vertices with " + std::to_string(indices_count) + " indices" );
+	event_log("NB::NB_Mesh::calculate_normals", "process " 
+		+ std::to_string(vertices_count) 
+		+ " vertices with " 
+		+ std::to_string(indices_count) + " indices and "
+	    + std::to_string(identical_vertices_count) + " identical vertices");
+	//end event log
 
 	for (auto& r_mesh : m_sub_meshes)
 	{
@@ -86,6 +94,15 @@ void NB::NB_Mesh::calculate_normals(NB_Rendering_Mesh& r_mesh)
 		r_mesh.m_vertices[p1].m_normal += new_normal;
 		r_mesh.m_vertices[p2].m_normal += new_normal;
 		r_mesh.m_vertices[p3].m_normal += new_normal;
+	}
+	//calculate identical vertices normals
+	for (int i = 0; i < r_mesh.m_identical_vertices_indices.size(); i++)
+	{
+		int p1 = r_mesh.m_identical_vertices_indices[i].first;
+		int p2 = r_mesh.m_identical_vertices_indices[i].second;
+		glm::vec3 new_normal = r_mesh.m_vertices[p1].m_normal + r_mesh.m_vertices[p2].m_normal;
+		r_mesh.m_vertices[p1].m_normal = new_normal;
+		r_mesh.m_vertices[p2].m_normal = new_normal;
 	}
 	//normalize
 	for (auto& v : r_mesh.m_vertices)
