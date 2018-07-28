@@ -1,0 +1,3 @@
+
+ERROR location: "NB::Utility"
+Error id: 65543, WGL: Driver does not support OpenGL version 99.99

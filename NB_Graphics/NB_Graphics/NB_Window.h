@@ -33,7 +33,6 @@ namespace NB
 	class NB_Window
 	{
 	public:
-		struct NB_Window_Properties;
 		//constructor
 		NB_Window(int width, int height, std::string title);
 		

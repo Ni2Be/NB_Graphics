@@ -21,14 +21,13 @@ NB::NB_Window::NB_Window(int width, int height, std::string title)
 		//set up callbacks
 		glfwSetFramebufferSizeCallback(m_window, cb_framebuffer_size);
 		glfwSetWindowSizeCallback(m_window, cb_window_size);
-		glfwSetErrorCallback(cb_error);
 }
 
 void NB::NB_Window::set_up_glfw(int width, int height, const std::string title)
 {
 	if (!glfwInit())
 	{
-		error_log("NB::NB_Display::NB_Display", "Failed to initiate GLFW");
+		error_log("NB::NB_Window::NB_Window", "Failed to initiate GLFW");
 		exit(EXIT_FAILURE);
 	}
 
@@ -40,7 +39,7 @@ void NB::NB_Window::set_up_glfw(int width, int height, const std::string title)
 	this->m_window = glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
 	if (this->m_window == nullptr)
 	{
-		error_log("NB::NB_Display::NB_Display", "Failed to create GLFW window");
+		error_log("NB::NB_Window::NB_Window", "Failed to create GLFW window");
 		glfwTerminate();
 		exit(EXIT_FAILURE);
 	}
@@ -53,7 +52,7 @@ void NB::NB_Window::set_up_glew()
 	glewExperimental = GL_TRUE;
 	if (glewInit() != GLEW_OK)
 	{
-		error_log("NB::NB_Display::NB_Display", "Failed to initialize GLFW");
+		error_log("NB::NB_Window::NB_Window", "Failed to initialize GLEW");
 		exit(EXIT_FAILURE);
 	}
 
@@ -87,10 +86,6 @@ void NB::cb_framebuffer_size(GLFWwindow* window, int width, int height)
 	glViewport(0, 0, width, height);
 }
 
-void NB::cb_error(int error, const char* description)
-{
-	fputs(description, stderr);
-}
 
 void NB::cb_window_size(GLFWwindow* window, int width, int height)
 {

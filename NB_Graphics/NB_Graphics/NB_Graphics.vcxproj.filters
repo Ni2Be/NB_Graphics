@@ -84,6 +84,9 @@
     <ClCompile Include="NB_Model.cpp">
       <Filter>NB_Object</Filter>
     </ClCompile>
+    <ClCompile Include="NB_Console_Handler.cpp">
+      <Filter>NB_Utility</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="NB_Light.h">
@@ -139,6 +142,9 @@
     </ClInclude>
     <ClInclude Include="NB_Model.h">
       <Filter>NB_Object</Filter>
+    </ClInclude>
+    <ClInclude Include="NB_Console_Handler.h">
+      <Filter>NB_Utility</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

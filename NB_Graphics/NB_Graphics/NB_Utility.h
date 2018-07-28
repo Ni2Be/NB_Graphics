@@ -12,35 +12,34 @@ Usage:
 //#define NB_DEBUG
 #endif // _DEBUG
 
+//NB
+#include "NB_Console_Handler.h"
 
+//stl
 #include <string>
 
 // GLFW
 #include <GLFW/glfw3.h>
 
-
 #define NB_EVENT_LOG
+#define NB_ERROR_LOG
 
 namespace NB
 {
 	namespace NB_Graphics
 	{
-		static void init()
-		{
-			glfwInit();
-		}
+		void init();
 
-		static void terminate()
-		{
-			glfwTerminate();
-		}
+		void terminate();
 	}
+
+	void cb_error(int error, const char* description);
 
 	void error_log(const std::string location, 
 		           const std::string error);
 
-	void event_log(const std::string location, 
-		     const std::string error);
+	void event_log(const std::string location,
+				   const std::string error);
 
 	std::string load_file_to_string(const std::string& file_name);
 

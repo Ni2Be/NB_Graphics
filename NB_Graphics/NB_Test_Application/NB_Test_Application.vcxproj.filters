@@ -28,6 +28,12 @@
     <Filter Include="Test Applications\Mesh">
       <UniqueIdentifier>{0355b61d-945a-4ecb-b185-569039ce254b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Test Applications\Utility">
+      <UniqueIdentifier>{113f74ed-cf9c-4e6c-8787-47c8aff8057b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Test Utility">
+      <UniqueIdentifier>{9deca985-e061-4d56-8c8e-94e51b8e6262}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shader\test_shader_simple.frag">
@@ -41,22 +47,34 @@
     <ClInclude Include="NB_Test_Simple_Shader.h">
       <Filter>Headerdateien</Filter>
     </ClInclude>
-    <ClInclude Include="NB_Test_Model_Load.h">
+    <ClInclude Include="NB_Planet_Test_Application.h">
+      <Filter>Test Applications\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="NB_Model_Test_Application.h">
       <Filter>Test Applications\Model</Filter>
     </ClInclude>
-    <ClInclude Include="NB_Test_Planet_Mesh.h">
-      <Filter>Test Applications\Mesh</Filter>
+    <ClInclude Include="NB_Utility_Test_Application.h">
+      <Filter>Test Applications\Utility</Filter>
+    </ClInclude>
+    <ClInclude Include="NB_Test_Utility.h">
+      <Filter>Test Utility</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Quelldateien</Filter>
     </ClCompile>
-    <ClCompile Include="NB_Test_Model_Load.cpp">
+    <ClCompile Include="NB_Planet_Test_Application.cpp">
+      <Filter>Test Applications\Mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="NB_Model_Test_Application.cpp">
       <Filter>Test Applications\Model</Filter>
     </ClCompile>
-    <ClCompile Include="NB_Test_Planet_Mesh.cpp">
-      <Filter>Test Applications\Mesh</Filter>
+    <ClCompile Include="NB_Utility_Test_Application.cpp">
+      <Filter>Test Applications\Utility</Filter>
+    </ClCompile>
+    <ClCompile Include="NB_Test_Utility.cpp">
+      <Filter>Test Utility</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

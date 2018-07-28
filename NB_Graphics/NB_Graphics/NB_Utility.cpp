@@ -2,26 +2,48 @@
 
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include <regex>
 
+
+
 #ifdef NB_ERROR_LOG
-#include "../N2B_Error_Log/NB_Error_Log.hpp"
-//Set up the Error Log:
-NB::NB_Error_Log<> NB_Err;
+//Set up Error Log
 #endif
+
+void NB::NB_Graphics::init()
+{
+	glfwInit();
+	glfwSetErrorCallback(cb_error);
+}
+
+void NB::NB_Graphics::terminate()
+{
+		glfwTerminate();
+
+
+}
+
+void NB::cb_error(int error, const char* description)
+{
+	NB::error_log("NB::Utility", "Error id: " + std::to_string(error) + ", " + std::string(description));
+}
 
 void NB::error_log(const std::string location, const std::string error)
 {
 #ifdef NB_ERROR_LOG
-	NB_Err.err_log(NB::NB_Error(NB::NB_ERROR, location, error));
+	std::stringstream ss;
+	ss << std::endl << "ERROR location: \"" << location << "\"" << std::endl << error << std::endl;
+	std::cerr << ss.str();
 #endif
-	NB::event_log("ERROR " + location, error);
 }
 
 void NB::event_log(const std::string location, const std::string info)
 {
 #ifdef NB_EVENT_LOG
-	std::cout << std::endl << "location: \"" << location << "\"" << std::endl << info << std::endl;
+	std::stringstream ss;
+	ss << std::endl << "location: \"" << location << "\"" << std::endl << info << std::endl;
+	std::cout << ss.str();
 #endif
 }
 

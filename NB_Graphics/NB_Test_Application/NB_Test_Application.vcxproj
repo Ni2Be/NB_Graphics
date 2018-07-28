@@ -89,6 +89,7 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>glew32.lib;glew32s.lib;glfw3.lib;glfw3dll.lib;openGL32.lib;assimp-vc140-mt.lib;user32.lib;gdi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -127,6 +128,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalDependencies>NB_Graphics.lib;glew32.lib;glew32s.lib;glfw3.lib;glfw3dll.lib;openGL32.lib;assimp-vc140-mt.lib;user32.lib;gdi32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <SubSystem>Console</SubSystem>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -134,14 +136,18 @@
     <None Include="res\shader\test_shader_simple.vert" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="NB_Test_Planet_Mesh.h" />
+    <ClInclude Include="NB_Planet_Test_Application.h" />
     <ClInclude Include="NB_Test_Simple_Shader.h" />
-    <ClInclude Include="NB_Test_Model_Load.h" />
+    <ClInclude Include="NB_Model_Test_Application.h" />
+    <ClInclude Include="NB_Test_Utility.h" />
+    <ClInclude Include="NB_Utility_Test_Application.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="NB_Test_Model_Load.cpp" />
-    <ClCompile Include="NB_Test_Planet_Mesh.cpp" />
+    <ClCompile Include="NB_Model_Test_Application.cpp" />
+    <ClCompile Include="NB_Planet_Test_Application.cpp" />
+    <ClCompile Include="NB_Test_Utility.cpp" />
+    <ClCompile Include="NB_Utility_Test_Application.cpp" />
   </ItemGroup>
   <ItemGroup>
     <Image Include="res\textures\awesomeface.png" />
