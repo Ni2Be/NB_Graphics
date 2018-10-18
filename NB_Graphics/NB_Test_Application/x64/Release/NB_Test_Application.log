@@ -1,7 +1,11 @@
-﻿  NB_Utility_Test_Application.cpp
+﻿  NB_Model_Test_Application.cpp
+c:\program files (x86)\windows kits\10\include\10.0.17134.0\shared\minwindef.h(130): warning C4005: "APIENTRY": Makro-Neudefinition
+  d:\programmieren\nb_graphics\nb_graphics\libs\glfw\include\glfw\glfw3.h(98): note: Siehe vorherige Definition von "APIENTRY"
+d:\programmieren\nb_graphics\nb_graphics\nb_graphics\nb_texture.h(123): warning C4267: "return": Konvertierung von "size_t" nach "int", Datenverlust möglich
+d:\programmieren\nb_graphics\nb_graphics\nb_test_application\nb_model_test_application.cpp(98): warning C4244: "Initialisierung": Konvertierung von "double" in "float", möglicher Datenverlust
   Code wird generiert.
-  51 of 1176 functions ( 4.3%) were compiled, the rest were copied from previous compilation.
-    46 functions were new in current compilation
+  0 of 2121 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
     0 functions had inline decision re-evaluated but remain unchanged
   Codegenerierung ist abgeschlossen.
   NB_Test_Application.vcxproj -> D:\Programmieren\NB_Graphics\NB_Graphics\x64\Release\NB_Test_Application.exe

@@ -1,26 +1,3 @@
-﻿  NB_Console_Handler.cpp
-  NB_Mesh.cpp
+﻿  NB_Model.cpp
 d:\programmieren\nb_graphics\nb_graphics\nb_graphics\nb_texture.h(123): warning C4267: "return": Konvertierung von "size_t" nach "int", Datenverlust möglich
-d:\programmieren\nb_graphics\nb_graphics\nb_graphics\nb_mesh.cpp(60): warning C4267: "+=": Konvertierung von "size_t" nach "int", Datenverlust möglich
-d:\programmieren\nb_graphics\nb_graphics\nb_graphics\nb_mesh.cpp(61): warning C4267: "+=": Konvertierung von "size_t" nach "int", Datenverlust möglich
-d:\programmieren\nb_graphics\nb_graphics\nb_graphics\nb_mesh.cpp(62): warning C4267: "+=": Konvertierung von "size_t" nach "int", Datenverlust möglich
-  NB_Model.cpp
-d:\programmieren\nb_graphics\nb_graphics\nb_graphics\nb_texture.h(123): warning C4267: "return": Konvertierung von "size_t" nach "int", Datenverlust möglich
-  NB_Shader.cpp
-  NB_Standard_Shader.cpp
-d:\programmieren\nb_graphics\nb_graphics\nb_graphics\nb_texture.h(123): warning C4267: "return": Konvertierung von "size_t" nach "int", Datenverlust möglich
-d:\programmieren\nb_graphics\nb_graphics\nb_graphics\nb_standard_shader.cpp(154): warning C4267: "Argument": Konvertierung von "size_t" nach "GLint", Datenverlust möglich
-  NB_Texture.cpp
-d:\programmieren\nb_graphics\nb_graphics\nb_graphics\nb_texture.h(123): warning C4267: "return": Konvertierung von "size_t" nach "int", Datenverlust möglich
-d:\programmieren\nb_graphics\nb_graphics\nb_graphics\nb_texture.cpp(22): warning C4244: "=": Konvertierung von "float" in "unsigned char", möglicher Datenverlust
-d:\programmieren\nb_graphics\nb_graphics\nb_graphics\nb_texture.cpp(23): warning C4244: "=": Konvertierung von "float" in "unsigned char", möglicher Datenverlust
-d:\programmieren\nb_graphics\nb_graphics\nb_graphics\nb_texture.cpp(24): warning C4244: "=": Konvertierung von "float" in "unsigned char", möglicher Datenverlust
-d:\programmieren\nb_graphics\nb_graphics\nb_graphics\nb_texture.cpp(25): warning C4244: "=": Konvertierung von "float" in "unsigned char", möglicher Datenverlust
-d:\programmieren\nb_graphics\nb_graphics\nb_graphics\nb_texture.cpp(66): warning C4267: "Initialisierung": Konvertierung von "size_t" nach "int", Datenverlust möglich
-d:\programmieren\nb_graphics\nb_graphics\nb_graphics\nb_texture.cpp(122): warning C4267: "return": Konvertierung von "size_t" nach "int", Datenverlust möglich
-d:\programmieren\nb_graphics\nb_graphics\nb_graphics\nb_texture.cpp(130): warning C4267: "return": Konvertierung von "size_t" nach "int", Datenverlust möglich
-  NB_Utility.cpp
-  NB_Window.cpp
-c:\program files (x86)\windows kits\10\include\10.0.16299.0\shared\minwindef.h(130): warning C4005: "APIENTRY": Makro-Neudefinition
-  d:\programmieren\nb_graphics\nb_graphics\libs\glfw\include\glfw\glfw3.h(98): note: Siehe vorherige Definition von "APIENTRY"
   NB_Graphics.vcxproj -> D:\Programmieren\NB_Graphics\NB_Graphics\x64\Release\NB_Graphics.lib

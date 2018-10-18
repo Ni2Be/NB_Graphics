@@ -16,7 +16,10 @@ Usage:
 //GLM
 #include <glm/glm.hpp>
 
-//
+//If anonther version of assimp is used make sure
+//it does not collide with windows.h
+//try #define NOMINMAX or fix the assimp code
+
 #include <assimp/Importer.hpp>
 #include <assimp/scene.h>
 #include <assimp/postprocess.h>
