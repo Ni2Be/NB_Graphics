@@ -2,7 +2,7 @@
 
 The project is currently on ice.
 
-![Model with pointlights](https://github.com/Ni2Be/NB_Graphics/blob/master/model.gif)
+![Model with pointlights](https://github.com/Ni2Be/NB_Graphics/blob/master/readme_model.gif)
 
 
 A simple OpenGL graphics framework.
