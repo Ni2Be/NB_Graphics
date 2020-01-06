@@ -112,3 +112,8 @@ while (nb_window.is_running())
   nb_window.update();
 }
 ```
+
+
+### Class diagram
+![Class diagram](https://github.com/Ni2Be/NB_Graphics/blob/master/class.PNG)
+
