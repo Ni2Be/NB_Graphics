@@ -20,7 +20,7 @@ dir_light.direction() = { 0.5f, 0.5f, -0.3f };
 point_lights = {
   {
     glm::vec3(1.5f, 0.5f, 0.0f),                 //position
-    glm::vec4{ 1.0f, 1.0f, 1.0f, 1.0f }, 1.0f }, //color
+    glm::vec4{ 1.0f, 1.0f, 1.0f, 1.0f }, 1.0f }, //color, brightness
   {
     glm::vec3(-1.5f, 0.2f, 0.0f),
     glm::vec4{ 0.0f, 0.0f, 1.0f, 1.0f }, 1.0f }
