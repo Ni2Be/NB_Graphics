@@ -115,5 +115,5 @@ while (nb_window.is_running())
 
 
 ### Class diagram
-![Class diagram](https://raw.githubusercontent.com/Ni2Be/NB_Graphics/blob/master/class.PNG)
+![Class diagram](https://raw.githubusercontent.com/Ni2Be/NB_Graphics/master/class.PNG)
 
