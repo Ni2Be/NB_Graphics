@@ -2,7 +2,7 @@
 
 The project is currently on ice.
 
-![Model with pointlights](https://github.com/Ni2Be/NB_Graphics/blob/master/readme_model.gif)
+![Model with pointlights](https://raw.githubusercontent.com/Ni2Be/NB_Graphics/master/readme_model.gif)
 
 
 A simple OpenGL graphics framework.
@@ -115,5 +115,5 @@ while (nb_window.is_running())
 
 
 ### Class diagram
-![Class diagram](https://github.com/Ni2Be/NB_Graphics/blob/master/class.PNG)
+![Class diagram](https://raw.githubusercontent.com/Ni2Be/NB_Graphics/blob/master/class.PNG)
 
